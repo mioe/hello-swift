@@ -221,4 +221,6 @@ print(filtered)
  > Создай массив из чисел и выведи сумму всех его элементов
  */
 let fooSum = duplicates.reduce(into: 0) { $0 += $1 }
+let fooSum2 = duplicates.reduce(0, +)
 print(fooSum)
+print(fooSum2)
