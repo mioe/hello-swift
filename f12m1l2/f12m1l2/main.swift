@@ -12,7 +12,8 @@ import Foundation
  Задание #1
  > Объяви переменную name типа String?, сначала присвой ей nil, а потом своё имя. Выведи её в консоль.
  */
-let name: String? = readLine()
+var name: String? = nil
+name = "duck"
 print("output name: \(name ?? "nil")")  // crtl+c в терминале сбрасывает ввод, возможен null
 
 /*
@@ -28,7 +29,7 @@ print(age == nil ? "Возраст не указан" : "Возраст: \(age!)
 	 - "Твой ник: ErrorNil" – если значение есть
 	 - "Ника нет" – если nil.
  */
-let nickname: String? = "duck"
+let nickname: String? = "goose"
 print(nickname == nil ? "Ника нет" : "Твой ник: \(nickname!)")
 
 /*
@@ -38,7 +39,7 @@ print(nickname == nil ? "Ника нет" : "Твой ник: \(nickname!)")
 	 - "Email не задан", если nil.
  */
 let email: String? = nil
-if let e = email {
+if let e = email { // сахар: if true -> let e = email
 	print("Твой email: \(e)")
 } else {
 	print("Email не задан")
@@ -148,8 +149,25 @@ if let n = Int(fooNumberString!) {
  */
 var fooUsername: String? = "Alice"
 var barPassword: String? = nil
-if let n = fooUsername, let p = barPassword {
-	print("Добро пожаловать, \(fooUsername!)!")
+if let n = fooUsername,  let _ = barPassword {
+	print("Добро пожаловать, \(n)!")
 } else {
 	print("Введите имя и пароль")
+}
+
+/*
+ Задание #3
+ > var name: String? = "Bob"
+	 var email: String? = nil
+	 var country: String? = "Kazakhstan"
+	 С помощью if let выведи "Профиль: <name>, <email>, <country>", если все три значения есть.
+	 Иначе выведи "Заполните все поля".
+ */
+var ZooName: String? = "Bob"
+var BooEmail: String? = nil
+var QweCountry: String? = "Kazakhstan"
+if let n = ZooName, let e = BooEmail, let c = QweCountry {
+	print("Профиль: \(n), \(e), \(c)")
+} else {
+	print("Заполните все поля")
 }
