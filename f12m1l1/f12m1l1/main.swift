@@ -113,4 +113,39 @@ print("output: isEven \(inputTestInt.isMultiple(of: 2))")
 print("\n\n")
 
 
+// MARK: Переменные и константы
+/// Задание #1
+var currentTemperature = 15
+currentTemperature = readInt("temperature now:")
+print("output: \(currentTemperature)")
 
+/// Задание #2
+let birthYear = 1996
+// birthYear = readInt("birth year:") // IDE: Cannot assign to value: 'birthYear' is a 'let' constant
+
+///Задание #3
+var ccount = 10
+// ccount = readLine()! // любой ввод пользователя String!
+
+
+print("\n\n")
+
+
+// MARK: Логические значения и условные операторы
+/// Задание #1
+let dd = readInt("input dd:")
+if (dd > 1) {
+	print("Положительное число")
+} else if (dd == 0) {
+	print ("Ноль")
+} else {
+	print("Все остально, отрицательное")
+}
+
+/// Задание #2
+let userAge = readInt("input userAge:")
+if (userAge >= 18) {
+	print("Доступ разрешён")
+} else {
+	print("Доступ запрещён")
+}
