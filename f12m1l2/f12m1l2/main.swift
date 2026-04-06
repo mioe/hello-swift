@@ -171,3 +171,17 @@ if let n = ZooName, let e = BooEmail, let c = QweCountry {
 } else {
 	print("Заполните все поля")
 }
+
+// MARK: - сахар
+var p: Int? = 1
+if let p { // === if let p = p - блочная scoped видимость
+	print(p)
+}
+
+let t = 40
+switch t {
+case 0..<10: print("Холодно") // можно указывать диапазон
+case 10..<20: print("Нормально")
+case 20..<30: print("Тепло")
+default: print("Мороз")
+}
