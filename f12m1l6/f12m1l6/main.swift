@@ -162,4 +162,63 @@ appEvent(.purchase(user: "duck8", payment: .crypto(wallet: "0x1A2B3C", amount: 9
 	 .system(message: String)
 	 Напиши функцию handle(notification:), которая выводит разные сообщения в зависимости от типа уведомления.
  */
+enum Notification {
+	case message(user: String, text: String)
+	case friendRequest(user: String)
+	case system(message: String)
+}
 
+func handleToast(notification: Notification) {
+	switch notification {
+	case .message(let user, let text):
+		print("💬 : \(user) : \(text)")
+	case .friendRequest(let user):
+		print("👥 : \(user) wants to be your friend")
+	case .system(let message):
+		print("🔔 : \(message)")
+	}
+}
+
+handleToast(notification: .message(user: "duck", text: "goose"))
+handleToast(notification: .friendRequest(user: "duck"))
+handleToast(notification: .system(message: "Welcome"))
+
+
+/*
+ Задание #6
+ > Результат загрузки файла
+	 Создай enum DownloadResult:
+	 .success(filePath: String, size: Int)
+	 .failure(error: String)
+	 Используй switch, чтобы:
+	 При успехе вывести путь и размер
+	 При ошибке — сообщение об ошибке.
+ */
+indirect enum DownloadResult { // !(странная штука спрашивают на собесах)
+	case success(filePath: String, size: Int)
+	case failure(error: String)
+	case multi(files: [DownloadResult]) // постарался придумать где могло быть indirect
+}
+
+func handleDownload(_ result: DownloadResult) {
+	switch result {
+	case .success(let filePath, let size):
+		print("✅ : \(filePath) : \(size)kb")
+	case .failure(let error):
+		print("❌ : \(error)")
+	case .multi(let files):
+		print("📦 : \(files.count) files")
+		files.forEach { handleDownload($0) } // рекурсия
+	}
+}
+
+handleDownload(.success(filePath: "dog.jpg", size: 99))
+
+handleDownload(.multi(files: [
+	.success(filePath: "duck.png", size: 1024),
+	.failure(error: "403"),
+	.multi(files: [
+		.success(filePath: "goose.webp", size: 2048),
+		.failure(error: "404"),
+	])
+]))
