@@ -116,7 +116,7 @@ print("₹: \("₹".count)")
 
 print("🍏 utf8: \("🍏".utf8.map { $0 })")
 print("🫪 utf8: \("🫪".utf8.map { $0 })")
-print("₹ utf8: \("₹".utf8.map { $0 })")ß
+print("₹ utf8: \("₹".utf8.map { $0 })")
 
 print("🍏 utf8 count: \("🍏".utf8.count)")  // 4
 print("🫪 utf8 count: \("🫪".utf8.count)")  // 7
