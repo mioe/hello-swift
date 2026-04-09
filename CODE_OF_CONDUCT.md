@@ -28,5 +28,5 @@ curl -L https://github.com/mioe/hello-swift/archive/refs/heads/feat/<f*m*l*>.zip
 Пример:
 
 ```bash
-curl -L https://github.com/mioe/hello-swift/archive/refs/heads/feat/f12m2l2.zip -o f12m2l2.zip
+curl -L https://github.com/mioe/hello-swift/archive/refs/heads/feat/f12m2l2.zip -o ~/Downloads/f12m2l2.zip
 ```
