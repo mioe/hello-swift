@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		379492282F87D64200A938BC /* .editorconfig in Resources */ = {isa = PBXBuildFile; fileRef = 379492262F87D64200A938BC /* .editorconfig */; };
 		379492292F87D64200A938BC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 379492272F87D64200A938BC /* .gitignore */; };
+		3794923E2F88116600A938BC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3794923D2F88116600A938BC /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3794920E2F87D5F000A938BC /* f12m2l2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = f12m2l2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		379492262F87D64200A938BC /* .editorconfig */ = {isa = PBXFileReference; lastKnownFileType = text; path = .editorconfig; sourceTree = "<group>"; };
 		379492272F87D64200A938BC /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		3794923D2F88116600A938BC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +38,11 @@
 			path = f12m2l2;
 			sourceTree = "<group>";
 		};
+		3794923A2F88112C00A938BC /* .docs */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = .docs;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +61,8 @@
 			children = (
 				379492262F87D64200A938BC /* .editorconfig */,
 				379492272F87D64200A938BC /* .gitignore */,
+				3794923D2F88116600A938BC /* README.md */,
+				3794923A2F88112C00A938BC /* .docs */,
 				379492102F87D5F000A938BC /* f12m2l2 */,
 				3794920F2F87D5F000A938BC /* Products */,
 			);
@@ -84,6 +93,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				379492102F87D5F000A938BC /* f12m2l2 */,
+				3794923A2F88112C00A938BC /* .docs */,
 			);
 			name = f12m2l2;
 			packageProductDependencies = (
@@ -131,6 +141,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3794923E2F88116600A938BC /* README.md in Resources */,
 				379492282F87D64200A938BC /* .editorconfig in Resources */,
 				379492292F87D64200A938BC /* .gitignore in Resources */,
 			);
