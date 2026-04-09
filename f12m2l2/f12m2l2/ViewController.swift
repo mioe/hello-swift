@@ -7,9 +7,9 @@ class ViewController: UIViewController {
 	let xPadding: CGFloat = 16
 	lazy var rounded: CGFloat = hField / 2
 
-	lazy var emailField = initField(placeholder: "Email", type: .email)
-	lazy var passwordField = initField(placeholder: "Password", type: .password)
-	lazy var topicField = initField(placeholder: "Тема", type: .text)
+	lazy var emailField = initField(placeholder: String(localized: "email"), type: .email)
+	lazy var passwordField = initField(placeholder: String(localized: "password"), type: .password)
+	lazy var topicField = initField(placeholder: String(localized: "тема"), type: .text)
 
 	lazy var picture: UIImageView = {
 		let pictureView = UIImageView()
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
 	lazy var label: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.text = "Сообщение"
+		label.text = String(localized: "сообщение")
 		label.font = .systemFont(ofSize: 24, weight: .medium)
 		return label
 	}()
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
 
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.text = "Содержимое"
+		label.text = String(localized: "содержимое")
 		label.font = .systemFont(ofSize: 14, weight: .regular)
 
 		let textarea = UITextView()
@@ -94,7 +94,7 @@ class ViewController: UIViewController {
 	lazy var button: UIButton = {
 		let button = UIButton()
 		button.translatesAutoresizingMaskIntoConstraints = false
-		button.setTitle("Отправить", for: .normal)
+		button.setTitle(String(localized: "оправить"), for: .normal)
 		button.setTitleColor(.white, for: .normal)
 		button.backgroundColor = .black
 		button.layer.cornerRadius = rounded
