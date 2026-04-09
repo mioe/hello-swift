@@ -130,3 +130,61 @@ print(redis.all())
 	 userAges.set(25, for: "Alice")
 	 print(userAges.get(for: "Alice") ?? 0) // 25
  */
+class KeyValueStore<Key: Hashable, Value> {
+	var storage: [Key: Value] = [:]
+	func set(_ value: Value, for key: Key) { storage[key] = value }
+	func get(for key: Key) -> Value? { storage[key] }
+}
+let userAges = KeyValueStore<String, Int>()
+userAges.set(25, for: "Alice")
+userAges.set(userAges.get(for: "Alice")! + 25, for: "Alice")
+print(userAges.get(for: "Alice") ?? 0)
+
+
+/*
+ Задание #3
+ >  Класс Logger
+	 Создай класс Logger, который принимает сообщения любого типа и сохраняет их в массив.
+	 пример
+	 let intLogger = Logger<Int>()
+	 intLogger.add(1)
+	 intLogger.add(2)
+	 intLogger.showAll() // 1 2
+	 let stringLogger = Logger<String>()
+	 stringLogger.add("Start")
+	 stringLogger.add("End")
+	 stringLogger.showAll() // Start End
+ */
+class Logger<T> {
+	var storage: [T] = []
+	func add(_ value: T) { storage.append(value) }
+	func showAll() { print(storage.map(\.self)) }
+}
+let intLogger = Logger<Int>()
+intLogger.add(1)
+intLogger.add(2)
+intLogger.showAll() // 1 2
+let stringLogger = Logger<String>()
+stringLogger.add("Start")
+stringLogger.add("End")
+stringLogger.showAll() // Start End
+
+
+/*
+ Задание #4
+ > Создай протокол Repository, который хранит данные любого типа (ассоциативный тип) и имеет методы save и getAll. Реализуй этот протокол для дженерик класса
+ */
+protocol Repository {
+	associatedtype T
+	func save(_ value: T)
+	func getAll() -> [T]
+}
+class RepositoryImpl<T>: Repository {
+	var storage: [T] = []
+	func save(_ value: T) { storage.append(value) }
+	func getAll() -> [T] { storage }
+}
+let repo = RepositoryImpl<Int>()
+repo.save(1)
+repo.save(2)
+print(repo.getAll()) 
