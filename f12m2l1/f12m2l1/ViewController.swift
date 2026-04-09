@@ -20,18 +20,18 @@ class ViewController: UIViewController {
 
 			🐥🐥🐤
 			"""
-		// MARK: - methods
-		let handleEdit = UIAction { _ in
-			h1Text = "top secret"
-			descriptionText = "999 old"
-			areaText = "empty..."
-		}
-
-		let handleRemove = UIAction { _ in
-			h1Text = "nil"
-			descriptionText = "nil"
-			areaText = "nil"
-		}
+		/// НЕ РАБОТАЕТ не перерисовывается
+//		let handleEdit = UIAction { _ in
+//			h1Text = "top secret"
+//			descriptionText = "999 old"
+//			areaText = "empty..."
+//		}
+//		
+//		let handleRemove = UIAction { _ in
+//			h1Text = "nil"
+//			descriptionText = "nil"
+//			areaText = "nil"
+//		}
 
 		/// consts
 		let wFull = view.frame.width - 64
@@ -82,7 +82,12 @@ class ViewController: UIViewController {
 		description.textColor = .secondaryLabel
 		description.sizeToFit()
 		header.addSubview(description)
-
+		
+		let handleEdit = UIAction { _ in
+			h1.text = "top secret"
+			description.text = "999 old"
+		}
+		
 		let editButton = UIButton(
 			frame: CGRect(
 				x: 32,
@@ -127,6 +132,19 @@ class ViewController: UIViewController {
 		article.backgroundColor = .secondarySystemBackground
 		article.sizeToFit()
 		view.addSubview(article)
+		
+		let handleRemove = UIAction { ev in
+			article.text = "nil"
+			article.sizeToFit()
+			
+			let target = ev.sender as! UIButton // ev.target js
+			target.frame = CGRect(
+				x: 32,
+				y: article.frame.maxY + 16,
+				width: wBtn,
+				height: hBtn
+			)
+		}
 
 		let removeButton = UIButton(
 			frame: CGRect(
@@ -155,6 +173,5 @@ class ViewController: UIViewController {
 		footer.image = .duckRight
 		view.addSubview(footer)
 		///< footer
-
 	}
 }
