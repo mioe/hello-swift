@@ -15,7 +15,7 @@ class ViewController: UIViewController {
 	lazy var header: UIView = {
 		$0.translatesAutoresizingMaskIntoConstraints = false
 		$0.heightAnchor.constraint(equalToConstant: 100).isActive = true  // костыль но нужно фиксировать высоту
-		
+
 		let picture = UIImageView()
 		picture.translatesAutoresizingMaskIntoConstraints = false
 		let username = UILabel()
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
 
 		let text = UILabel()
 		text.translatesAutoresizingMaskIntoConstraints = false
-		
+
 		let btn = UIButton(primaryAction: routerPush)
 		btn.translatesAutoresizingMaskIntoConstraints = false
 		btn.setTitle("Редактировать", for: .normal)
@@ -94,9 +94,9 @@ class ViewController: UIViewController {
 
 		text.text = """
 			Специализируюсь на Vue3/Astro, TypeScript, Nest/Hono и PostgreSQL. Строю продукты с нуля и масштабирую существующие: от архитектуры фронтенда до CI/CD и биллинговых систем. Умею нанимать, менторить и растить разработчиков внутри команды.
-			
+
 			 В свободное время слежу за новостями в мире IT, изучаю новые технологии и пробую применять их в личных проектах.
-			
+
 			 🐥🐥🐤
 			"""
 		text.font = .systemFont(ofSize: 16, weight: .regular)
@@ -116,7 +116,7 @@ class ViewController: UIViewController {
 				equalTo: $0.trailingAnchor,
 				constant: 0
 			),
-			
+
 			// text
 			text.topAnchor.constraint(
 				equalTo: title.bottomAnchor,
@@ -130,7 +130,7 @@ class ViewController: UIViewController {
 				equalTo: $0.trailingAnchor,
 				constant: 0
 			),
-			
+
 			// btn
 			btn.topAnchor.constraint(
 				equalTo: text.bottomAnchor,
@@ -195,7 +195,7 @@ class ViewController: UIViewController {
 				equalTo: view.trailingAnchor,
 				constant: -32
 			),
-			
+
 			// article
 			article.topAnchor.constraint(
 				equalTo: header.bottomAnchor,
@@ -209,21 +209,21 @@ class ViewController: UIViewController {
 				equalTo: view.trailingAnchor,
 				constant: -32
 			),
-			
+
 			// не работает article еще не занимает height
-//			// routerLink
-//			routerLink.topAnchor.constraint(
-//				equalTo: article.topAnchor,
-//				constant: 16
-//			),
-//			routerLink.leadingAnchor.constraint(
-//				equalTo: view.leadingAnchor,
-//				constant: 32
-//			),
-//			routerLink.trailingAnchor.constraint(
-//				equalTo: view.trailingAnchor,
-//				constant: -32
-//			),
+			//			// routerLink
+			//			routerLink.topAnchor.constraint(
+			//				equalTo: article.topAnchor,
+			//				constant: 16
+			//			),
+			//			routerLink.leadingAnchor.constraint(
+			//				equalTo: view.leadingAnchor,
+			//				constant: 32
+			//			),
+			//			routerLink.trailingAnchor.constraint(
+			//				equalTo: view.trailingAnchor,
+			//				constant: -32
+			//			),
 		])
 	}
 
