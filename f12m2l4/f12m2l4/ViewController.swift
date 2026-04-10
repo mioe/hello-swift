@@ -3,7 +3,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-	let DEBUG: Bool = false
+	let DEBUG: Bool = true
 	
 	enum Rounded {
 		case sm
@@ -199,12 +199,63 @@ class ViewController: UIViewController {
 		return $0
 	}(UIView())
 	
+	lazy var popularTrip: UIView = {
+		$0.translatesAutoresizingMaskIntoConstraints = false
+		
+		let header: UIView = {
+			$0.translatesAutoresizingMaskIntoConstraints = false
+			if (DEBUG) { $0.backgroundColor = .systemGray6 }
+			
+			let title = UILabel()
+			title.translatesAutoresizingMaskIntoConstraints = false
+			
+			title.text = "Popular Trip"
+			title.font = .systemFont(ofSize: 18, weight: .bold)
+			title.textColor = .sTextColorPrimary
+			
+			let btn = UIButton()
+			btn.translatesAutoresizingMaskIntoConstraints = false
+			
+			btn.setTitle("see all", for: .normal)
+			btn.setTitleColor(.sTextColorSecondary, for: .normal)
+			btn.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
+			
+			$0.addSubview(title)
+			$0.addSubview(btn)
+			
+			NSLayoutConstraint.activate([
+				// title
+				title.leadingAnchor.constraint(equalTo: $0.leadingAnchor, constant: 0),
+				title.topAnchor.constraint(equalTo: $0.topAnchor, constant: 0),
+				title.bottomAnchor.constraint(equalTo: $0.bottomAnchor, constant: 0),
+				
+				// btn
+				btn.centerYAnchor.constraint(equalTo: $0.centerYAnchor, constant: 0),
+				btn.trailingAnchor.constraint(equalTo: $0.trailingAnchor, constant: 0),
+			])
+			
+			return $0
+		}(UIView())
+		
+		$0.addSubview(header)
+		
+		NSLayoutConstraint.activate([
+			// header
+			header.topAnchor.constraint(equalTo: $0.topAnchor, constant: 0),
+			header.leadingAnchor.constraint(equalTo: $0.leadingAnchor, constant: 0),
+			header.trailingAnchor.constraint(equalTo: $0.trailingAnchor, constant: 0),
+		])
+		
+		return $0
+	}(UIView())
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
 		
 		view.addSubview(welcome)
 		view.addSubview(search)
+		view.addSubview(popularTrip)
 		
 		NSLayoutConstraint.activate([
 			// welcome
@@ -216,6 +267,11 @@ class ViewController: UIViewController {
 			search.topAnchor.constraint(equalTo: welcome.bottomAnchor, constant: 48),
 			search.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
 			search.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+			
+			// popularTrip
+			popularTrip.topAnchor.constraint(equalTo: search.bottomAnchor, constant: 48),
+			popularTrip.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+			popularTrip.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
 		])
 	}
 }
