@@ -14,7 +14,11 @@ class SettingsViewController: UIViewController {
 	
 	lazy var routerLink: UIButton = {
 		$0.translatesAutoresizingMaskIntoConstraints = false
-		$0.setTitle("save", for: .normal)
+		$0.setTitle("Сохранить", for: .normal)
+		$0.setTitleColor(.white, for: .normal)
+		$0.backgroundColor = .systemGreen
+		$0.layer.cornerRadius = 14
+		$0.heightAnchor.constraint(equalToConstant: 40).isActive = true
 		return $0
 	}(UIButton(primaryAction: routerPop))
 	
@@ -39,8 +43,19 @@ class SettingsViewController: UIViewController {
 		navigationItem.largeTitleDisplayMode = .never
 		
 		NSLayoutConstraint.activate([
-			routerLink.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			routerLink.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+			// routerLink
+			routerLink.bottomAnchor.constraint(
+				equalTo: view.bottomAnchor,
+				constant: -32
+			),
+			routerLink.leadingAnchor.constraint(
+				equalTo: view.leadingAnchor,
+				constant: 32
+			),
+			routerLink.trailingAnchor.constraint(
+				equalTo: view.trailingAnchor,
+				constant: -32
+			),
 		])
 	}
 	
