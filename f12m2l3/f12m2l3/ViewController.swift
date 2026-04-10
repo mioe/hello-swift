@@ -11,6 +11,16 @@ class ViewController: UIViewController {
 		// 2
 		self?.navigationController?.pushViewController(settingsView, animated: true)
 	}
+	
+	lazy var routerLink: UIButton = {
+		$0.translatesAutoresizingMaskIntoConstraints = false
+		$0.setTitle("Hardcore", for: .normal)
+		$0.setTitleColor(.white, for: .normal)
+		$0.backgroundColor = .systemRed
+		$0.layer.cornerRadius = 14
+		$0.heightAnchor.constraint(equalToConstant: 40).isActive = true
+		return $0
+	}(UIButton(primaryAction: routerPush))
 
 	lazy var header: UIView = {
 		$0.translatesAutoresizingMaskIntoConstraints = false
@@ -144,6 +154,10 @@ class ViewController: UIViewController {
 				equalTo: $0.trailingAnchor,
 				constant: 0
 			),
+			btn.bottomAnchor.constraint( // важно установить нижнию границу!
+				equalTo: $0.bottomAnchor,
+				constant: 0
+			),
 		])
 
 		return $0
@@ -170,6 +184,7 @@ class ViewController: UIViewController {
 
 		view.addSubview(header)
 		view.addSubview(article)
+		view.addSubview(routerLink)
 
 		navigationController?.navigationBar.prefersLargeTitles = false
 		navigationItem.largeTitleDisplayMode = .never
@@ -209,21 +224,20 @@ class ViewController: UIViewController {
 				equalTo: view.trailingAnchor,
 				constant: -32
 			),
-
-			// не работает article еще не занимает height
-			//			// routerLink
-			//			routerLink.topAnchor.constraint(
-			//				equalTo: article.topAnchor,
-			//				constant: 16
-			//			),
-			//			routerLink.leadingAnchor.constraint(
-			//				equalTo: view.leadingAnchor,
-			//				constant: 32
-			//			),
-			//			routerLink.trailingAnchor.constraint(
-			//				equalTo: view.trailingAnchor,
-			//				constant: -32
-			//			),
+			
+			// routerLink
+			routerLink.topAnchor.constraint(
+				equalTo: article.bottomAnchor,
+				constant: 16
+			),
+			routerLink.leadingAnchor.constraint(
+				equalTo: view.leadingAnchor,
+				constant: 32
+			),
+			routerLink.trailingAnchor.constraint(
+				equalTo: view.trailingAnchor,
+				constant: -32
+			),
 		])
 	}
 
