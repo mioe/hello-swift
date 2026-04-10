@@ -3,10 +3,220 @@
 import UIKit
 
 class ViewController: UIViewController {
+	let DEBUG: Bool = false
+	
+	enum Rounded {
+		case sm
+		case md
+	}
+	
+	class ShadowView<T: UIView>: UIView {
+		private let slot: T
+		private let rounded: Rounded
+		
+		var getRoundedValue: CGFloat {
+			switch rounded {
+			case .sm: return 18
+			case .md: return 26
+			}
+		}
+		
+		var getShadowOffetY: CGFloat {
+			switch rounded {
+			case .sm: return 12
+			case .md: return 24
+			}
+		}
+		
+		init (_ slot: T, rounded: Rounded = .sm) {
+			self.slot = slot
+			self.rounded = rounded
+			super.init(frame: .zero)
+			setup()
+		}
+		
+		required init?(coder: NSCoder) {
+			fatalError("init(coder:) has not been implemented")
+		}
+		
+		private func setup() {
+			translatesAutoresizingMaskIntoConstraints = false
+			slot.translatesAutoresizingMaskIntoConstraints = false
+			
+			slot.layer.cornerRadius = getRoundedValue
+			
+			self.layer.shadowColor = UIColor.black.cgColor
+			self.layer.shadowOpacity = 0.12
+			self.layer.shadowOffset = CGSize(width: 0, height: getShadowOffetY)  // into figma: X: 0, Y: 24
+			self.layer.shadowRadius = 42 // 84 / 2
+			self.layer.cornerRadius = getRoundedValue
+			
+			self.addSubview(slot)
+			
+			NSLayoutConstraint.activate([
+				slot.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
+				slot.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
+				slot.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
+				slot.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
+			])
+		}
+		
+		deinit {
+			print("deinit ShadowView")
+		}
+	}
 
+	lazy var welcome: UIView = {
+		$0.translatesAutoresizingMaskIntoConstraints = false
+		if (DEBUG) { $0.backgroundColor = .systemGray6 }
+		
+		let ava = UIImageView(image: .IMG_9172_2)
+		ava.translatesAutoresizingMaskIntoConstraints = false
+		
+		ava.heightAnchor.constraint(equalToConstant: 42).isActive = true
+		ava.widthAnchor.constraint(equalToConstant: 42).isActive = true
+		ava.clipsToBounds = true
+		ava.contentMode = .scaleAspectFill
+		ava.layer.cornerRadius = 18
+		
+		let group = UIView()
+		group.translatesAutoresizingMaskIntoConstraints = false
+		
+		let label = UILabel()
+		label.translatesAutoresizingMaskIntoConstraints = false
+		
+		label.text = "welcome"
+		label.font = .systemFont(ofSize: 12)
+		label.textColor = .sTextColorSecondary
+		
+		let username = UILabel()
+		username.translatesAutoresizingMaskIntoConstraints = false
+		
+		username.text = "Misha"
+		username.font = .systemFont(ofSize: 16, weight: .bold)
+		username.textColor = .sTextColorPrimary
+		
+		group.addSubview(label)
+		group.addSubview(username)
+		
+		NSLayoutConstraint.activate([
+			// label
+			label.topAnchor.constraint(equalTo: group.topAnchor),
+			label.leadingAnchor.constraint(equalTo: group.leadingAnchor),
+			label.trailingAnchor.constraint(equalTo: group.trailingAnchor),
+			
+			// username
+			username.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 4),
+			username.leadingAnchor.constraint(equalTo: group.leadingAnchor),
+			username.bottomAnchor.constraint(equalTo: group.bottomAnchor),
+		])
+		
+		let notify = UIImageView(image: .image3)
+		notify.translatesAutoresizingMaskIntoConstraints = false
+		notify.tintColor = .sTextColorSecondary
+		notify.heightAnchor.constraint(equalToConstant: 20).isActive = true
+		notify.widthAnchor.constraint(equalToConstant: 20).isActive = true
+		
+		$0.addSubview(ava)
+		$0.addSubview(group)
+		$0.addSubview(notify)
+		
+		NSLayoutConstraint.activate([
+			// ava
+			ava.topAnchor.constraint(equalTo: $0.topAnchor, constant: 0),
+			ava.leadingAnchor.constraint(equalTo: $0.leadingAnchor, constant: 0),
+			ava.bottomAnchor.constraint(equalTo: $0.bottomAnchor, constant: 0),
+			
+			// group
+			group.centerYAnchor.constraint(equalTo: ava.centerYAnchor, constant: 0),
+			group.leadingAnchor.constraint(equalTo: ava.trailingAnchor, constant: 16),
+			
+			// notify
+			notify.trailingAnchor.constraint(equalTo: $0.trailingAnchor, constant: -6),
+			notify.centerYAnchor.constraint(equalTo: ava.centerYAnchor, constant: 0),
+		])
+		return $0
+	}(UIView())
+	
+	lazy var search: UIView = {
+		$0.translatesAutoresizingMaskIntoConstraints = false
+		if (DEBUG) { $0.backgroundColor = .systemGray6 }
+		
+		let hSearchEl: CGFloat = 50
+		
+		let field = UITextField()
+		let shadowField = ShadowView(field)
+		
+		field.placeholder = "search your trip ..."
+		field.leftView = UIView(
+			frame: CGRect(x: 0, y: 0, width: 16, height: 0)
+		)
+		field.leftViewMode = .always
+		field.rightView = UIView(
+			frame: CGRect(x: 0, y: 0, width: 16, height: 0)
+		)
+		field.rightViewMode = .always
+		field.heightAnchor.constraint(equalToConstant: hSearchEl).isActive = true
+		field.backgroundColor = .white
+		
+		let icon = UIImageView()
+		icon.translatesAutoresizingMaskIntoConstraints = false
+		icon.image = .image4
+		icon.tintColor = .white
+		icon.contentMode = .scaleAspectFit
+		icon.widthAnchor.constraint(equalToConstant: 16).isActive = true
+		icon.heightAnchor.constraint(equalToConstant: 16).isActive = true
+		
+		let btn = UIButton()
+		btn.translatesAutoresizingMaskIntoConstraints = false
+		btn.backgroundColor = .sTextColorPrimary
+		btn.widthAnchor.constraint(equalToConstant: 48).isActive = true
+		btn.heightAnchor.constraint(equalToConstant: 48).isActive = true
+		btn.layer.cornerRadius = 18
+		
+		btn.addSubview(icon)
+		
+		NSLayoutConstraint.activate([
+			icon.centerXAnchor.constraint(equalTo: btn.centerXAnchor, constant: 0),
+			icon.centerYAnchor.constraint(equalTo: btn.centerYAnchor, constant: 0),
+		])
+		
+		$0.addSubview(shadowField)
+		$0.addSubview(btn)
+		
+		NSLayoutConstraint.activate([
+			// shadowField
+			shadowField.topAnchor.constraint(equalTo: $0.topAnchor, constant: 0),
+			shadowField.leadingAnchor.constraint(equalTo: $0.leadingAnchor, constant: 0),
+			shadowField.bottomAnchor.constraint(equalTo: $0.bottomAnchor, constant: 0),
+			shadowField.trailingAnchor.constraint(equalTo: btn.leadingAnchor, constant: -16),
+			// btn
+			btn.topAnchor.constraint(equalTo: $0.topAnchor, constant: 0),
+			btn.bottomAnchor.constraint(equalTo: $0.bottomAnchor, constant: 0),
+			btn.trailingAnchor.constraint(equalTo: $0.trailingAnchor, constant: 0),
+		])
+		
+		return $0
+	}(UIView())
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
+		
+		view.addSubview(welcome)
+		view.addSubview(search)
+		
+		NSLayoutConstraint.activate([
+			// welcome
+			welcome.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+			welcome.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+			welcome.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+			
+			// search
+			search.topAnchor.constraint(equalTo: welcome.bottomAnchor, constant: 48),
+			search.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+			search.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+		])
 	}
 }
 

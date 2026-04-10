@@ -6,8 +6,17 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		37D05BB72F895BBC003AA928 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 37D05BB52F895BBC003AA928 /* .gitignore */; };
+		37D05BB82F895BBC003AA928 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 37D05BB62F895BBC003AA928 /* README.md */; };
+		37D05BB92F895BBC003AA928 /* .editorconfig in Resources */ = {isa = PBXBuildFile; fileRef = 37D05BB42F895BBC003AA928 /* .editorconfig */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		374798332F8954550031457E /* f12m2l4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = f12m2l4.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		37D05BB42F895BBC003AA928 /* .editorconfig */ = {isa = PBXFileReference; lastKnownFileType = text; path = .editorconfig; sourceTree = "<group>"; };
+		37D05BB52F895BBC003AA928 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		37D05BB62F895BBC003AA928 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -45,6 +54,9 @@
 		3747982A2F8954550031457E = {
 			isa = PBXGroup;
 			children = (
+				37D05BB42F895BBC003AA928 /* .editorconfig */,
+				37D05BB52F895BBC003AA928 /* .gitignore */,
+				37D05BB62F895BBC003AA928 /* README.md */,
 				374798352F8954550031457E /* f12m2l4 */,
 				374798342F8954550031457E /* Products */,
 			);
@@ -122,6 +134,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37D05BB72F895BBC003AA928 /* .gitignore in Resources */,
+				37D05BB82F895BBC003AA928 /* README.md in Resources */,
+				37D05BB92F895BBC003AA928 /* .editorconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
