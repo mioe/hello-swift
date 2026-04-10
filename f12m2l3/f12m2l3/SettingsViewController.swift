@@ -72,7 +72,7 @@ class SettingsViewController: UIViewController {
 		}
 
 		deinit {
-			print("deinit FormFieldView: \(label)")
+			print("deinit FormFieldView: \(label.text!)")
 		}
 	}
 
