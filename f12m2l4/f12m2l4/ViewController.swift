@@ -3,16 +3,16 @@
 import UIKit
 
 class ViewController: UIViewController {
-	let DEBUG: Bool = true
+	let DEBUG: Bool = false
 
-	enum Rounded {
+	enum Size {
 		case sm
 		case md
 	}
 
 	class ShadowView<T: UIView>: UIView {
 		private let slot: T
-		private let rounded: Rounded
+		private let rounded: Size
 
 		var getRoundedValue: CGFloat {
 			switch rounded {
@@ -28,7 +28,7 @@ class ViewController: UIViewController {
 			}
 		}
 
-		init(_ slot: T, rounded: Rounded = .sm) {
+		init(_ slot: T, rounded: Size = .sm) {
 			self.slot = slot
 			self.rounded = rounded
 			super.init(frame: .zero)
@@ -68,58 +68,285 @@ class ViewController: UIViewController {
 			print("deinit ShadowView")
 		}
 	}
-	
+
 	class Header: UIView {
 		private let title: String
 		private let debug: Bool
-		
+
 		init(_ title: String, debug: Bool = false) {
 			self.title = title
 			self.debug = debug
 			super.init(frame: .zero)
 			setup()
 		}
-		
+
 		private func setup() {
 			translatesAutoresizingMaskIntoConstraints = false
-			
+
 			if debug { self.backgroundColor = .systemGray6 }
-			
+
 			let title = UILabel()
 			title.translatesAutoresizingMaskIntoConstraints = false
-			
+
 			title.text = self.title
 			title.font = .systemFont(ofSize: 18, weight: .bold)
 			title.textColor = .sTextColorPrimary
-			
+
 			let btn = UIButton()
 			btn.translatesAutoresizingMaskIntoConstraints = false
-			
+
 			btn.setTitle("see all", for: .normal)
 			btn.setTitleColor(.sTextColorSecondary, for: .normal)
 			btn.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
-			
+
 			self.addSubview(title)
 			self.addSubview(btn)
-			
+
 			NSLayoutConstraint.activate([
 				// title
-				title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
+				title.leadingAnchor.constraint(
+					equalTo: self.leadingAnchor,
+					constant: 0
+				),
 				title.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
 				title.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
-				
+
 				// btn
 				btn.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
-				btn.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
+				btn.trailingAnchor.constraint(
+					equalTo: self.trailingAnchor,
+					constant: 0
+				),
 			])
 		}
-		
+
 		required init?(coder: NSCoder) {
 			fatalError("init(coder:) has not been implemented")
 		}
-		
+
 		deinit {
 			print("deinit Header")
+		}
+	}
+
+	class Card: UIView {
+		private let title: String
+		private let subtitle: String
+		private let image: UIImage
+		private let size: Size
+
+		init(
+			_ title: String,
+			_ subtitle: String,
+			_ image: UIImage,
+			size: Size = .md
+		) {
+			self.title = title
+			self.subtitle = subtitle
+			self.image = image
+			self.size = size
+			super.init(frame: .zero)
+			setup()
+		}
+
+		private func setup() {
+			self.translatesAutoresizingMaskIntoConstraints = false
+			self.backgroundColor = .white
+
+			let picture: UIView = {
+				$0.translatesAutoresizingMaskIntoConstraints = false
+
+				let wSize: CGFloat = size == .md ? 142 : 84
+				$0.heightAnchor.constraint(equalToConstant: wSize).isActive = true
+
+				let picture = UIImageView()
+				picture.translatesAutoresizingMaskIntoConstraints = false
+				picture.image = self.image
+				picture.contentMode = size == .md ? .top : .scaleAspectFill
+				picture.clipsToBounds = true
+				picture.layer.cornerRadius = 26
+
+				$0.addSubview(picture)
+
+				NSLayoutConstraint.activate([
+					// picture
+					picture.topAnchor.constraint(equalTo: $0.topAnchor, constant: 12),
+					picture.leadingAnchor.constraint(
+						equalTo: $0.leadingAnchor,
+						constant: 12
+					),
+					picture.trailingAnchor.constraint(
+						equalTo: $0.trailingAnchor,
+						constant: -12
+					),
+					picture.bottomAnchor.constraint(
+						equalTo: $0.bottomAnchor,
+						constant: 0
+					),
+				])
+
+				if size == .md {
+					let icon = UIImageView()
+					icon.translatesAutoresizingMaskIntoConstraints = false
+					icon.image = .image7
+					icon.heightAnchor.constraint(equalToConstant: 24).isActive = true
+					icon.widthAnchor.constraint(equalToConstant: 24).isActive = true
+					$0.addSubview(icon)
+
+					NSLayoutConstraint.activate([
+						// icon
+						icon.topAnchor.constraint(equalTo: picture.topAnchor, constant: 14),
+						icon.trailingAnchor.constraint(
+							equalTo: picture.trailingAnchor,
+							constant: -14
+						),
+					])
+				}
+
+				return $0
+			}(UIView())
+
+			let label: UIView = {
+				$0.translatesAutoresizingMaskIntoConstraints = false
+
+				let title: UILabel = {
+					$0.translatesAutoresizingMaskIntoConstraints = false
+					$0.text = self.title
+					$0.font = .systemFont(ofSize: 18, weight: .bold)
+					$0.textColor = .sTextColorPrimary
+					return $0
+				}(UILabel())
+
+				let subtitle: UILabel = {
+					$0.translatesAutoresizingMaskIntoConstraints = false
+					$0.text = self.subtitle
+					$0.font = .systemFont(ofSize: 12)
+					$0.textColor = .sTextColorSecondary
+					return $0
+				}(UILabel())
+
+				let icon: UIImageView = {
+					$0.translatesAutoresizingMaskIntoConstraints = false
+					$0.image = .image5
+					$0.tintColor = .sTextColorPrimary
+					$0.heightAnchor.constraint(equalToConstant: 20).isActive = true
+					$0.widthAnchor.constraint(equalToConstant: 20).isActive = true
+					return $0
+				}(UIImageView())
+
+				$0.addSubview(title)
+				$0.addSubview(subtitle)
+				$0.addSubview(icon)
+
+				NSLayoutConstraint.activate([
+					// title
+					title.topAnchor.constraint(equalTo: $0.topAnchor, constant: 0),
+					title.leadingAnchor.constraint(
+						equalTo: $0.leadingAnchor,
+						constant: 0
+					),
+					title.trailingAnchor.constraint(
+						equalTo: icon.leadingAnchor,
+						constant: 0,
+					),
+
+					// subtitle
+					subtitle.topAnchor.constraint(
+						equalTo: title.bottomAnchor,
+						constant: 4
+					),
+					subtitle.leadingAnchor.constraint(
+						equalTo: $0.leadingAnchor,
+						constant: 0
+					),
+					subtitle.bottomAnchor.constraint(
+						equalTo: $0.bottomAnchor,
+						constant: 0
+					),
+
+					// icon
+					icon.topAnchor.constraint(equalTo: title.topAnchor, constant: 0),
+					icon.trailingAnchor.constraint(
+						equalTo: $0.trailingAnchor,
+						constant: 0
+					),
+				])
+
+				return $0
+			}(UIView())
+
+			self.addSubview(picture)
+			self.addSubview(label)
+
+			if size == .md {
+				NSLayoutConstraint.activate([
+					// picture
+					picture.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
+					picture.leadingAnchor.constraint(
+						equalTo: self.leadingAnchor,
+						constant: 0
+					),
+					picture.trailingAnchor.constraint(
+						equalTo: self.trailingAnchor,
+						constant: 0
+					),
+
+					// label
+					label.topAnchor.constraint(
+						equalTo: picture.bottomAnchor,
+						constant: 14
+					),
+					label.leadingAnchor.constraint(
+						equalTo: self.leadingAnchor,
+						constant: 24
+					),
+					label.trailingAnchor.constraint(
+						equalTo: self.trailingAnchor,
+						constant: -24
+					),
+					label.bottomAnchor.constraint(
+						equalTo: self.bottomAnchor,
+						constant: -24
+					),
+				])
+			} else if size == .sm {
+				picture.widthAnchor.constraint(equalToConstant: 96).isActive = true
+
+				NSLayoutConstraint.activate([
+					// picture
+					picture.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
+					picture.leadingAnchor.constraint(
+						equalTo: self.leadingAnchor,
+						constant: 0
+					),
+					picture.bottomAnchor.constraint(
+						equalTo: self.bottomAnchor,
+						constant: -12
+					),
+
+					// label
+					label.topAnchor.constraint(
+						equalTo: picture.topAnchor,
+						constant: 24
+					),
+					label.leadingAnchor.constraint(
+						equalTo: picture.trailingAnchor,
+						constant: 0
+					),
+					label.trailingAnchor.constraint(
+						equalTo: self.trailingAnchor,
+						constant: -24
+					),
+				])
+			}
+		}
+
+		required init?(coder: NSCoder) {
+			fatalError("init(coder:) has not been implemented")
+		}
+
+		deinit {
+			print("deinit Card")
 		}
 	}
 
@@ -272,124 +499,9 @@ class ViewController: UIViewController {
 		$0.translatesAutoresizingMaskIntoConstraints = false
 		if DEBUG { $0.backgroundColor = .systemGray5 }
 
-		let header = Header("Popular Category", debug: DEBUG)
+		let header = Header("Popular Trip", debug: DEBUG)
 
-		let card: UIButton = {
-			$0.translatesAutoresizingMaskIntoConstraints = false
-			$0.backgroundColor = .white
-
-			let picture: UIView = {
-				$0.translatesAutoresizingMaskIntoConstraints = false
-				$0.heightAnchor.constraint(equalToConstant: 142).isActive = true
-
-				let picture = UIImageView()
-				picture.translatesAutoresizingMaskIntoConstraints = false
-				picture.image = .image6
-				picture.contentMode = .scaleAspectFill
-				picture.clipsToBounds = true
-				picture.layer.cornerRadius = 26
-				
-				let icon = UIImageView()
-				icon.translatesAutoresizingMaskIntoConstraints = false
-				icon.image = .image7
-				icon.heightAnchor.constraint(equalToConstant: 24).isActive = true
-				icon.widthAnchor.constraint(equalToConstant: 24).isActive = true
-
-				$0.addSubview(picture)
-				$0.addSubview(icon)
-
-				NSLayoutConstraint.activate([
-					// picture
-					picture.topAnchor.constraint(equalTo: $0.topAnchor, constant: 12),
-					picture.leadingAnchor.constraint(
-						equalTo: $0.leadingAnchor,
-						constant: 12
-					),
-					picture.trailingAnchor.constraint(
-						equalTo: $0.trailingAnchor,
-						constant: -12
-					),
-					picture.bottomAnchor.constraint(
-						equalTo: $0.bottomAnchor,
-						constant: 0
-					),
-					
-					// icon
-					icon.topAnchor.constraint(equalTo: picture.topAnchor, constant: 14),
-					icon.trailingAnchor.constraint(equalTo: picture.trailingAnchor, constant: -14),
-				])
-
-				return $0
-			}(UIView())
-			
-			let label: UIView = {
-				$0.translatesAutoresizingMaskIntoConstraints = false
-				
-				let title: UILabel = {
-					$0.translatesAutoresizingMaskIntoConstraints = false
-					$0.text = "Greenland"
-					$0.font = .systemFont(ofSize: 18, weight: .bold)
-					$0.textColor = .sTextColorPrimary
-					return $0
-				}(UILabel())
-				
-				let subtitle: UILabel = {
-					$0.translatesAutoresizingMaskIntoConstraints = false
-					$0.text = "Greenland, North"
-					$0.font = .systemFont(ofSize: 12)
-					$0.textColor = .sTextColorSecondary
-					return $0
-				}(UILabel())
-				
-				let icon: UIImageView = {
-					$0.translatesAutoresizingMaskIntoConstraints = false
-					$0.image = .image5
-					$0.tintColor = .sTextColorPrimary
-					$0.heightAnchor.constraint(equalToConstant: 20).isActive = true
-					$0.widthAnchor.constraint(equalToConstant: 20).isActive = true
-					return $0
-				}(UIImageView())
-				
-				$0.addSubview(title)
-				$0.addSubview(subtitle)
-				$0.addSubview(icon)
-				
-				NSLayoutConstraint.activate([
-					// title
-					title.topAnchor.constraint(equalTo: $0.topAnchor, constant: 0),
-					title.leadingAnchor.constraint(equalTo: $0.leadingAnchor, constant: 0),
-					
-					// subtitle
-					subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 4),
-					subtitle.leadingAnchor.constraint(equalTo: $0.leadingAnchor, constant: 0),
-					subtitle.bottomAnchor.constraint(equalTo: $0.bottomAnchor, constant: 0),
-					
-					// icon
-					icon.topAnchor.constraint(equalTo: title.topAnchor, constant: 0),
-					icon.trailingAnchor.constraint(equalTo: $0.trailingAnchor, constant: 0),
-				])
-				
-				return $0
-			}(UIView())
-			
-			$0.addSubview(picture)
-			$0.addSubview(label)
-
-			NSLayoutConstraint.activate([
-				// picture
-				picture.topAnchor.constraint(equalTo: $0.topAnchor, constant: 0),
-				picture.leadingAnchor.constraint(equalTo: $0.leadingAnchor, constant: 0),
-				picture.trailingAnchor.constraint(equalTo: $0.trailingAnchor, constant: 0),
-				
-				// label
-				label.topAnchor.constraint(equalTo: picture.bottomAnchor, constant: 14),
-				label.leadingAnchor.constraint(equalTo: $0.leadingAnchor, constant: 24),
-				label.trailingAnchor.constraint(equalTo: $0.trailingAnchor, constant: -24),
-				label.bottomAnchor.constraint(equalTo: $0.bottomAnchor, constant: -24),
-			])
-
-			return $0
-		}(UIButton())
+		let card = Card("Greenland", "Greenland, North", UIImage(resource: .image6))
 		let shadowCard = ShadowView(card, rounded: .md)
 
 		$0.addSubview(header)
@@ -419,22 +531,46 @@ class ViewController: UIViewController {
 
 		return $0
 	}(UIView())
-	
+
 	lazy var popularCategory: UIView = {
 		$0.translatesAutoresizingMaskIntoConstraints = false
 		if DEBUG { $0.backgroundColor = .systemGray5 }
-		
-		let header = Header("Popular Trip", debug: DEBUG)
-		
+
+		let header = Header("Popular Category", debug: DEBUG)
+
+		let card = Card(
+			"Mountains",
+			"Greenland",
+			UIImage(resource: .image8),
+			size: .sm
+		)
+		let shadowCard = ShadowView(card, rounded: .md)
+
 		$0.addSubview(header)
-		
+		$0.addSubview(shadowCard)
+
 		NSLayoutConstraint.activate([
 			// header
 			header.topAnchor.constraint(equalTo: $0.topAnchor, constant: 0),
 			header.leadingAnchor.constraint(equalTo: $0.leadingAnchor, constant: 0),
 			header.trailingAnchor.constraint(equalTo: $0.trailingAnchor, constant: 0),
+
+			// shadowCard
+			shadowCard.topAnchor.constraint(
+				equalTo: header.bottomAnchor,
+				constant: 16
+			),
+			shadowCard.leadingAnchor.constraint(
+				equalTo: $0.leadingAnchor,
+				constant: 0
+			),
+			shadowCard.trailingAnchor.constraint(
+				equalTo: $0.trailingAnchor,
+				constant: 0
+			),
+			shadowCard.bottomAnchor.constraint(equalTo: $0.bottomAnchor, constant: 0),
 		])
-		
+
 		return $0
 	}(UIView())
 
@@ -486,7 +622,7 @@ class ViewController: UIViewController {
 				equalTo: view.trailingAnchor,
 				constant: -32
 			),
-			
+
 			// popularCategory
 			popularCategory.topAnchor.constraint(
 				equalTo: popularTrip.bottomAnchor,
