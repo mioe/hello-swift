@@ -3,31 +3,24 @@
 import UIKit
 
 class ViewController: UIViewController {
-	let DEBUG: Bool = false
-
-	struct Post {
-		let title: String
-		let subtitle: String
-		let image: UIImage
-	}
-
 	let posts: [Post] = [
 		Post(
 			title: "Greenland",
 			subtitle: "Greenland, North",
-			image: UIImage(resource: .image6)
+			image: UIImage(resource: .image6),
+			favorite: true
 		),
 		Post(
 			title: "Mountains",
 			subtitle: "Greenland",
-			image: UIImage(resource: .image8)
+			image: UIImage(resource: .image8),
+			favorite: false
 		),
 	]
 	
 	func routerPush(_ post: Post) -> UIAction {
 		UIAction { [weak self] _ in
-			print(post)
-			let detailView = DetailViewController()
+			let detailView = DetailViewController(post)
 			self?.navigationController?.pushViewController(detailView, animated: true)
 		}
 	}
