@@ -5,6 +5,30 @@ import UIKit
 class ViewController: UIViewController {
 	let DEBUG: Bool = false
 
+	struct Post {
+		let title: String
+		let subtitle: String
+		let image: UIImage
+	}
+
+	let posts: [Post] = [
+		Post(
+			title: "Greenland",
+			subtitle: "Greenland, North",
+			image: UIImage(resource: .image6)
+		),
+		Post(
+			title: "Mountains",
+			subtitle: "Greenland",
+			image: UIImage(resource: .image8)
+		),
+	]
+
+	lazy var routerPush: UIAction = UIAction { [weak self] _ in
+		let detailView = DetailViewController()
+		self?.navigationController?.pushViewController(detailView, animated: true)
+	}
+
 	enum Size {
 		case sm
 		case md
@@ -501,7 +525,7 @@ class ViewController: UIViewController {
 
 		let header = Header("Popular Trip", debug: DEBUG)
 
-		let card = Card("Greenland", "Greenland, North", UIImage(resource: .image6))
+		let card = Card(posts[0].title, posts[0].subtitle, posts[0].image)
 		let shadowCard = ShadowView(card, rounded: .md)
 
 		$0.addSubview(header)
@@ -539,9 +563,9 @@ class ViewController: UIViewController {
 		let header = Header("Popular Category", debug: DEBUG)
 
 		let card = Card(
-			"Mountains",
-			"Greenland",
-			UIImage(resource: .image8),
+			posts[1].title,
+			posts[1].subtitle,
+			posts[1].image,
 			size: .sm
 		)
 		let shadowCard = ShadowView(card, rounded: .md)
