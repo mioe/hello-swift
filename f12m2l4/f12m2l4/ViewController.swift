@@ -23,10 +23,13 @@ class ViewController: UIViewController {
 			image: UIImage(resource: .image8)
 		),
 	]
-
-	lazy var routerPush: UIAction = UIAction { [weak self] _ in
-		let detailView = DetailViewController()
-		self?.navigationController?.pushViewController(detailView, animated: true)
+	
+	func routerPush(_ post: Post) -> UIAction {
+		UIAction { [weak self] _ in
+			print(post)
+			let detailView = DetailViewController()
+			self?.navigationController?.pushViewController(detailView, animated: true)
+		}
 	}
 
 	enum Size {
@@ -158,17 +161,20 @@ class ViewController: UIViewController {
 		private let subtitle: String
 		private let image: UIImage
 		private let size: Size
+		private let action: UIAction?
 
 		init(
 			_ title: String,
 			_ subtitle: String,
 			_ image: UIImage,
-			size: Size = .md
+			action: UIAction? = nil,
+			size: Size = .md,
 		) {
 			self.title = title
 			self.subtitle = subtitle
 			self.image = image
 			self.size = size
+			self.action = action
 			super.init(frame: .zero)
 			setup()
 		}
@@ -230,7 +236,7 @@ class ViewController: UIViewController {
 				return $0
 			}(UIView())
 
-			let label: UIView = {
+			let label: UIButton = {
 				$0.translatesAutoresizingMaskIntoConstraints = false
 
 				let title: UILabel = {
@@ -297,7 +303,7 @@ class ViewController: UIViewController {
 				])
 
 				return $0
-			}(UIView())
+			}(UIButton(primaryAction: self.action))
 
 			self.addSubview(picture)
 			self.addSubview(label)
@@ -525,7 +531,7 @@ class ViewController: UIViewController {
 
 		let header = Header("Popular Trip", debug: DEBUG)
 
-		let card = Card(posts[0].title, posts[0].subtitle, posts[0].image)
+		let card = Card(posts[0].title, posts[0].subtitle, posts[0].image, action: routerPush(posts[0]))
 		let shadowCard = ShadowView(card, rounded: .md)
 
 		$0.addSubview(header)
@@ -566,6 +572,7 @@ class ViewController: UIViewController {
 			posts[1].title,
 			posts[1].subtitle,
 			posts[1].image,
+			action: routerPush(posts[1]),
 			size: .sm
 		)
 		let shadowCard = ShadowView(card, rounded: .md)
