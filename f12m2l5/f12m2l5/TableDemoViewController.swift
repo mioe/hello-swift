@@ -21,22 +21,46 @@ class TableDemoViewController: UIViewController {
 }
 
 extension TableDemoViewController: UITableViewDataSource {
+	func numberOfSections(in tableView: UITableView) -> Int {
+		2
+	}
+	
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		switch section {
+		case 0: return "Users"
+		case 1: return "Groups"
+		default: return nil
+		}
+	}
+	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		users.count
+		section == 0 ? users.count : groups.count
+	}
+	
+	func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+		section == 0 ? "Section #\(section) - hello world" : nil
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath)
 		
 		var config = cell.defaultContentConfiguration()
-		config.text = "User #\(indexPath.row)"
-		config.secondaryText = users[indexPath.row].name
-		config.image = UIImage(systemName: users[indexPath.row].icon)
-		config.imageProperties.tintColor = .systemBlue
+		
+		if indexPath.section == 0 {
+			let user = users[indexPath.row]
+			config.text = user.name
+			config.image = UIImage(systemName: user.icon)
+			config.imageProperties.tintColor = .systemOrange
+		} else {
+			let group = groups[indexPath.row]
+			config.text = group.name
+			config.secondaryText = "Group #\(indexPath.row)"
+			config.image = UIImage(systemName: group.icon)
+			config.imageProperties.tintColor = .systemPink
+		}
 		
 		cell.contentConfiguration = config
 		
-		print("recreated")
 		return cell
 	}
 }
