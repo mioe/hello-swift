@@ -68,6 +68,60 @@ class ViewController: UIViewController {
 			print("deinit ShadowView")
 		}
 	}
+	
+	class Header: UIView {
+		private let title: String
+		private let debug: Bool
+		
+		init(_ title: String, debug: Bool = false) {
+			self.title = title
+			self.debug = debug
+			super.init(frame: .zero)
+			setup()
+		}
+		
+		private func setup() {
+			translatesAutoresizingMaskIntoConstraints = false
+			
+			if debug { self.backgroundColor = .systemGray6 }
+			
+			let title = UILabel()
+			title.translatesAutoresizingMaskIntoConstraints = false
+			
+			title.text = self.title
+			title.font = .systemFont(ofSize: 18, weight: .bold)
+			title.textColor = .sTextColorPrimary
+			
+			let btn = UIButton()
+			btn.translatesAutoresizingMaskIntoConstraints = false
+			
+			btn.setTitle("see all", for: .normal)
+			btn.setTitleColor(.sTextColorSecondary, for: .normal)
+			btn.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
+			
+			self.addSubview(title)
+			self.addSubview(btn)
+			
+			NSLayoutConstraint.activate([
+				// title
+				title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
+				title.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
+				title.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
+				
+				// btn
+				btn.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
+				btn.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
+			])
+		}
+		
+		required init?(coder: NSCoder) {
+			fatalError("init(coder:) has not been implemented")
+		}
+		
+		deinit {
+			print("deinit Header")
+		}
+	}
 
 	lazy var welcome: UIView = {
 		$0.translatesAutoresizingMaskIntoConstraints = false
@@ -218,40 +272,7 @@ class ViewController: UIViewController {
 		$0.translatesAutoresizingMaskIntoConstraints = false
 		if DEBUG { $0.backgroundColor = .systemGray5 }
 
-		let header: UIView = {
-			$0.translatesAutoresizingMaskIntoConstraints = false
-			if DEBUG { $0.backgroundColor = .systemGray6 }
-
-			let title = UILabel()
-			title.translatesAutoresizingMaskIntoConstraints = false
-
-			title.text = "Popular Trip"
-			title.font = .systemFont(ofSize: 18, weight: .bold)
-			title.textColor = .sTextColorPrimary
-
-			let btn = UIButton()
-			btn.translatesAutoresizingMaskIntoConstraints = false
-
-			btn.setTitle("see all", for: .normal)
-			btn.setTitleColor(.sTextColorSecondary, for: .normal)
-			btn.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
-
-			$0.addSubview(title)
-			$0.addSubview(btn)
-
-			NSLayoutConstraint.activate([
-				// title
-				title.leadingAnchor.constraint(equalTo: $0.leadingAnchor, constant: 0),
-				title.topAnchor.constraint(equalTo: $0.topAnchor, constant: 0),
-				title.bottomAnchor.constraint(equalTo: $0.bottomAnchor, constant: 0),
-
-				// btn
-				btn.centerYAnchor.constraint(equalTo: $0.centerYAnchor, constant: 0),
-				btn.trailingAnchor.constraint(equalTo: $0.trailingAnchor, constant: 0),
-			])
-
-			return $0
-		}(UIView())
+		let header = Header("Popular Category", debug: DEBUG)
 
 		let card: UIButton = {
 			$0.translatesAutoresizingMaskIntoConstraints = false
@@ -398,6 +419,24 @@ class ViewController: UIViewController {
 
 		return $0
 	}(UIView())
+	
+	lazy var popularCategory: UIView = {
+		$0.translatesAutoresizingMaskIntoConstraints = false
+		if DEBUG { $0.backgroundColor = .systemGray5 }
+		
+		let header = Header("Popular Trip", debug: DEBUG)
+		
+		$0.addSubview(header)
+		
+		NSLayoutConstraint.activate([
+			// header
+			header.topAnchor.constraint(equalTo: $0.topAnchor, constant: 0),
+			header.leadingAnchor.constraint(equalTo: $0.leadingAnchor, constant: 0),
+			header.trailingAnchor.constraint(equalTo: $0.trailingAnchor, constant: 0),
+		])
+		
+		return $0
+	}(UIView())
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -406,6 +445,7 @@ class ViewController: UIViewController {
 		view.addSubview(welcome)
 		view.addSubview(search)
 		view.addSubview(popularTrip)
+		view.addSubview(popularCategory)
 
 		NSLayoutConstraint.activate([
 			// welcome
@@ -443,6 +483,20 @@ class ViewController: UIViewController {
 				constant: 32
 			),
 			popularTrip.trailingAnchor.constraint(
+				equalTo: view.trailingAnchor,
+				constant: -32
+			),
+			
+			// popularCategory
+			popularCategory.topAnchor.constraint(
+				equalTo: popularTrip.bottomAnchor,
+				constant: 48
+			),
+			popularCategory.leadingAnchor.constraint(
+				equalTo: view.leadingAnchor,
+				constant: 32
+			),
+			popularCategory.trailingAnchor.constraint(
 				equalTo: view.trailingAnchor,
 				constant: -32
 			),
