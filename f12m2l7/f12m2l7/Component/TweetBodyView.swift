@@ -3,11 +3,20 @@
 import AVFoundation
 import UIKit
 
+private class PlayerView: UIView {
+	override class var layerClass: AnyClass { AVPlayerLayer.self }
+	var playerLayer: AVPlayerLayer { layer as! AVPlayerLayer }
+}
+
 class TweetBodyView: UIView {
 
 	private let text: String
 	private let media: [String: TweetMediaType]
 	private let bodyType: TweetBodyType
+
+	private var player: AVPlayer?
+	private var muteButton: UIButton?
+	private var loopObserver: NSObjectProtocol?
 
 	init(
 		_ text: String,
@@ -19,6 +28,24 @@ class TweetBodyView: UIView {
 		self.bodyType = bodyType
 		super.init(frame: .zero)
 		self.setup()
+	}
+
+	deinit {
+		if let observer = loopObserver {
+			NotificationCenter.default.removeObserver(observer)
+		}
+	}
+
+	func play() {
+		player?.play()
+	}
+
+	func pause() {
+		player?.pause()
+	}
+
+	var hasVideo: Bool {
+		player != nil
 	}
 
 	private func setup() {
@@ -57,8 +84,6 @@ class TweetBodyView: UIView {
 				return $0
 			}(UIStackView())
 
-			print(media)
-
 			media.forEach {
 				if $0.value == .image {
 					let imageView: UIImageView = {
@@ -81,19 +106,68 @@ class TweetBodyView: UIView {
 					stackView.addArrangedSubview(imageView)
 
 				} else if $0.value == .video {
+					// by claude sonnet 4.6 - все что касается видео
 					let mediaKey = $0.key
 
-					let container = UIView()
-					container.translatesAutoresizingMaskIntoConstraints = false
-					container.layer.cornerRadius = 8
-					container.clipsToBounds = true
+					guard let videoURL = Bundle.main.url(forResource: mediaKey, withExtension: "mp4") else { return }
 
-					let thumbnail: UIImageView = {
-						$0.translatesAutoresizingMaskIntoConstraints = false
-						$0.contentMode = .scaleAspectFill
-						$0.backgroundColor = .black
-						return $0
-					}(UIImageView())
+					let container = PlayerView()
+					container.translatesAutoresizingMaskIntoConstraints = false
+					container.backgroundColor = .black
+
+					// Generate thumbnail for aspect ratio
+					let asset = AVAsset(url: videoURL)
+					let imageGenerator = AVAssetImageGenerator(asset: asset)
+					imageGenerator.appliesPreferredTrackTransform = true
+					if let cgImage = try? imageGenerator.copyCGImage(at: .zero, actualTime: nil) {
+						let thumbImage = UIImage(cgImage: cgImage)
+						let aspectRatio = thumbImage.size.height / thumbImage.size.width
+						let heightConstraint = container.heightAnchor.constraint(
+							equalTo: container.widthAnchor,
+							multiplier: aspectRatio
+						)
+						heightConstraint.priority = UILayoutPriority(999)
+						heightConstraint.isActive = true
+					}
+
+					// AVPlayer
+					let playerItem = AVPlayerItem(url: videoURL)
+					let avPlayer = AVPlayer(playerItem: playerItem)
+					avPlayer.isMuted = true
+					self.player = avPlayer
+
+					container.playerLayer.player = avPlayer
+					container.playerLayer.videoGravity = .resizeAspectFill
+
+					// Loop video
+					loopObserver = NotificationCenter.default.addObserver(
+						forName: .AVPlayerItemDidPlayToEndTime,
+						object: playerItem,
+						queue: .main
+					) { [weak avPlayer] _ in
+						avPlayer?.seek(to: .zero)
+						avPlayer?.play()
+					}
+
+					// Mute button
+					let btn = UIButton(type: .system)
+					btn.translatesAutoresizingMaskIntoConstraints = false
+					let muteIcon = UIImage(systemName: "speaker.slash.fill")
+					btn.setImage(muteIcon, for: .normal)
+					btn.tintColor = .white
+					btn.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+					btn.layer.cornerRadius = 16
+					btn.clipsToBounds = true
+					btn.addTarget(self, action: #selector(handleMutePlayer), for: .touchUpInside)
+					self.muteButton = btn
+
+					container.addSubview(btn)
+					NSLayoutConstraint.activate([
+						btn.widthAnchor.constraint(equalToConstant: 32),
+						btn.heightAnchor.constraint(equalToConstant: 32),
+						btn.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -8),
+						btn.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -8),
+					])
 
 					stackView.addArrangedSubview(container)
 				}
@@ -120,6 +194,14 @@ class TweetBodyView: UIView {
 				textView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
 			])
 		}
+	}
+
+	// by claude sonnet 4.6
+	@objc private func handleMutePlayer() {
+		guard let player = player else { return }
+		player.isMuted.toggle()
+		let iconName = player.isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill"
+		muteButton?.setImage(UIImage(systemName: iconName), for: .normal)
 	}
 
 	required init?(coder: NSCoder) {
