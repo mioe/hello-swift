@@ -46,6 +46,22 @@ struct TweetModel {
 				views: 39524,
 				bookmarks: 2
 			),
+			TweetModel(
+				text: "Today we're unlocking THE DREAMER 🧡",
+				createdAt: Date().addingTimeInterval(-3_600_000),
+				user: UserModel(
+					username: "mymind",
+					nickname: "mymind",
+					avatar: "mymind"
+				),
+				// Dictionary не гарантирует порядок!
+				media: ["img2": .image, "video2": .video],
+				likes: 476,
+				comments: 9,
+				retweets: 19,
+				views: 20353,
+				bookmarks: 0
+			),
 		]
 	}
 }

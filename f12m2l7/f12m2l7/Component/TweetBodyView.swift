@@ -78,7 +78,7 @@ class TweetBodyView: UIView {
 			let stackView: UIStackView = {
 				$0.translatesAutoresizingMaskIntoConstraints = false
 				$0.axis = .horizontal
-				$0.spacing = 8
+				$0.spacing = 4
 				$0.layer.cornerRadius = 8
 				$0.clipsToBounds = true
 				return $0
