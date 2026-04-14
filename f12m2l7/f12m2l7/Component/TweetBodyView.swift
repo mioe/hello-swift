@@ -51,7 +51,7 @@ class TweetBodyView: UIView {
 	private func setup() {
 		self.translatesAutoresizingMaskIntoConstraints = false
 
-		lazy var textView: UILabel = {
+		let textView: UILabel = {
 			$0.translatesAutoresizingMaskIntoConstraints = false
 			$0.font = .systemFont(ofSize: 14)
 			$0.numberOfLines = 0
@@ -75,7 +75,7 @@ class TweetBodyView: UIView {
 		])
 
 		if !media.isEmpty {
-			lazy var stackView: UIStackView = {
+			let stackView: UIStackView = {
 				$0.translatesAutoresizingMaskIntoConstraints = false
 				$0.axis = .horizontal
 				$0.spacing = 8
@@ -116,22 +116,36 @@ class TweetBodyView: UIView {
 					container.backgroundColor = .black
 
 					// Generate thumbnail for aspect ratio
-					let asset = AVAsset(url: videoURL)
+					let asset = AVURLAsset(url: videoURL)
 					let imageGenerator = AVAssetImageGenerator(asset: asset)
 					imageGenerator.appliesPreferredTrackTransform = true
-					if let cgImage = try? imageGenerator.copyCGImage(at: .zero, actualTime: nil) {
-						let thumbImage = UIImage(cgImage: cgImage)
-						let aspectRatio = thumbImage.size.height / thumbImage.size.width
-						let heightConstraint = container.heightAnchor.constraint(
-							equalTo: container.widthAnchor,
-							multiplier: aspectRatio
-						)
-						heightConstraint.priority = UILayoutPriority(999)
-						heightConstraint.isActive = true
+					let heightConstraint = container.heightAnchor.constraint(
+						equalTo: container.widthAnchor,
+						multiplier: 16.0 / 9.0 // default, updated async
+					)
+					heightConstraint.priority = UILayoutPriority(999)
+					heightConstraint.isActive = true
+
+					Task { [weak container] in
+						if let cgImage = try? await imageGenerator.image(at: .zero).image {
+							let thumbImage = UIImage(cgImage: cgImage)
+							let aspectRatio = thumbImage.size.height / thumbImage.size.width
+							await MainActor.run {
+								guard let container = container else { return }
+								heightConstraint.isActive = false
+								let updated = container.heightAnchor.constraint(
+									equalTo: container.widthAnchor,
+									multiplier: aspectRatio
+								)
+								updated.priority = UILayoutPriority(999)
+								updated.isActive = true
+								container.superview?.layoutIfNeeded()
+							}
+						}
 					}
 
 					// AVPlayer
-					let playerItem = AVPlayerItem(url: videoURL)
+					let playerItem = AVPlayerItem(asset: asset)
 					let avPlayer = AVPlayer(playerItem: playerItem)
 					avPlayer.isMuted = true
 					self.player = avPlayer
