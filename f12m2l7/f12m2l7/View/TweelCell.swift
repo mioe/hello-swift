@@ -6,11 +6,13 @@ class TweetCell: UITableViewCell {
 	
 	private lazy var wrapperView: UIView = {
 		$0.translatesAutoresizingMaskIntoConstraints = false
-		$0.layer.shadowColor = UIColor.black.cgColor
-		$0.layer.shadowOpacity = 0.12
-		$0.layer.shadowOffset = CGSize(width: 0, height: 24)
-		$0.layer.shadowRadius = 42
-		$0.layer.cornerRadius = 26
+		return $0
+	}(UIView())
+
+	private lazy var bottomBorder: UIView = {
+		$0.translatesAutoresizingMaskIntoConstraints = false
+		$0.heightAnchor.constraint(equalToConstant: 1).isActive = true
+		$0.backgroundColor = UIColor.separator
 		return $0
 	}(UIView())
 	
@@ -47,14 +49,23 @@ class TweetCell: UITableViewCell {
 			tweet.media,
 			.card,
 		)
+		let tweetFooter = TweetFooterView(
+			comments: tweet.comments,
+			retweets: tweet.retweets,
+			likes: tweet.likes,
+			views: tweet.views,
+			bookmarks: tweet.bookmarks,
+		)
 		
 		self.contentView.addSubview(wrapperView)
 		
 		wrapperView.addSubview(avatar)
 		wrapperView.addSubview(stack)
+		wrapperView.addSubview(bottomBorder)
 		
 		stack.addArrangedSubview(tweetHeader)
 		stack.addArrangedSubview(tweetBody)
+		stack.addArrangedSubview(tweetFooter)
 		
 		NSLayoutConstraint.activate([
 			// wrapperView
@@ -72,6 +83,11 @@ class TweetCell: UITableViewCell {
 			stack.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 8),
 			stack.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
 			stack.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: 0),
+			
+			// bottomBorder
+			bottomBorder.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: 16),
+			bottomBorder.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 0),
+			bottomBorder.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: 0),
 		])
 	}
 	

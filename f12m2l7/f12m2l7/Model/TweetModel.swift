@@ -11,12 +11,13 @@ struct TweetModel {
 	let comments: Int
 	let retweets: Int
 	let views: Int
-	let bookmars: Int
+	let bookmarks: Int
 
 	static func mock() -> [TweetModel] {
 		[
 			TweetModel(
-				text: "ちょうど船のハンドル売ってて、キッチンカーの運転席にいいじゃんって思って置いたら、さっそくシャワーズが運転してくれててうれしかった(見えにくいけどw)",
+				text:
+					"ちょうど船のハンドル売ってて、キッチンカーの運転席にいいじゃんって思って置いたら、さっそくシャワーズが運転してくれててうれしかった(見えにくいけどw)",
 				createdAt: Date().addingTimeInterval(-3600),
 				user: UserModel(
 					username: "もかぽけ@ぽこあポケモン",
@@ -28,7 +29,22 @@ struct TweetModel {
 				comments: 1,
 				retweets: 248,
 				views: 43256,
-				bookmars: 1436
+				bookmarks: 1436
+			),
+			TweetModel(
+				text: "🌧️ Habitat for Tinkmaster 🌧️",
+				createdAt: Date().addingTimeInterval(-36000),
+				user: UserModel(
+					username: "MAGIKARP🦈💦",
+					nickname: "UniteVids",
+					avatar: "UniteVids"
+				),
+				media: ["video1": .video],
+				likes: 2435,
+				comments: 4,
+				retweets: 174,
+				views: 39524,
+				bookmarks: 2
 			),
 		]
 	}

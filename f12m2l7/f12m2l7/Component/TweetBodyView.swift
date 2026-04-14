@@ -1,5 +1,6 @@
 // by mioe
 
+import AVFoundation
 import UIKit
 
 class TweetBodyView: UIView {
@@ -69,16 +70,32 @@ class TweetBodyView: UIView {
 
 					if let image = imageView.image {
 						let aspectRatio = image.size.height / image.size.width
-						imageView.heightAnchor.constraint(
+						let c = imageView.heightAnchor.constraint(
 							equalTo: imageView.widthAnchor,
 							multiplier: aspectRatio
-						).isActive = true
+						)
+						c.priority = UILayoutPriority(999)
+						c.isActive = true
 					}
 
 					stackView.addArrangedSubview(imageView)
 
 				} else if $0.value == .video {
+					let mediaKey = $0.key
 
+					let container = UIView()
+					container.translatesAutoresizingMaskIntoConstraints = false
+					container.layer.cornerRadius = 8
+					container.clipsToBounds = true
+
+					let thumbnail: UIImageView = {
+						$0.translatesAutoresizingMaskIntoConstraints = false
+						$0.contentMode = .scaleAspectFill
+						$0.backgroundColor = .black
+						return $0
+					}(UIImageView())
+
+					stackView.addArrangedSubview(container)
 				}
 			}
 
