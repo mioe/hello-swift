@@ -1,0 +1,82 @@
+// by mioe
+
+import UIKit
+
+class TweetCell: UITableViewCell {
+	
+	private lazy var wrapperView: UIView = {
+		$0.translatesAutoresizingMaskIntoConstraints = false
+		$0.layer.shadowColor = UIColor.black.cgColor
+		$0.layer.shadowOpacity = 0.12
+		$0.layer.shadowOffset = CGSize(width: 0, height: 24)
+		$0.layer.shadowRadius = 42
+		$0.layer.cornerRadius = 26
+		return $0
+	}(UIView())
+	
+	private lazy var avatar: UIImageView = {
+		$0.translatesAutoresizingMaskIntoConstraints = false
+		$0.widthAnchor.constraint(equalToConstant: 48).isActive = true
+		$0.heightAnchor.constraint(equalToConstant: 48).isActive = true
+		$0.layer.cornerRadius = 24
+		$0.clipsToBounds = true
+		return $0
+	}(UIImageView())
+	
+	private lazy var stack: UIStackView = {
+		$0.translatesAutoresizingMaskIntoConstraints = false
+		$0.axis = .vertical
+		$0.spacing = 8
+		return $0
+	}(UIStackView())
+	
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+	}
+	
+	func setup(tweet: TweetModel) {
+		// init data
+		avatar.image = UIImage(named: tweet.user.avatar ?? "img1")
+		let tweetHeader = TweetHeaderView(
+			tweet.user.username,
+			tweet.user.nickname,
+			tweet.createdAt,
+		)
+		let tweetBody = TweetBodyView(
+			tweet.text,
+			tweet.media,
+			.card,
+		)
+		
+		self.contentView.addSubview(wrapperView)
+		
+		wrapperView.addSubview(avatar)
+		wrapperView.addSubview(stack)
+		
+		stack.addArrangedSubview(tweetHeader)
+		stack.addArrangedSubview(tweetBody)
+		
+		NSLayoutConstraint.activate([
+			// wrapperView
+			wrapperView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
+			wrapperView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+			wrapperView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+			wrapperView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
+			
+			// avatar
+			avatar.topAnchor.constraint(equalTo: wrapperView.topAnchor, constant: 0),
+			avatar.leadingAnchor.constraint(equalTo: wrapperView.leadingAnchor, constant: 16),
+			
+			// stack
+			stack.topAnchor.constraint(equalTo: wrapperView.topAnchor, constant: 0),
+			stack.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 8),
+			stack.trailingAnchor.constraint(equalTo: wrapperView.trailingAnchor, constant: -16),
+			stack.bottomAnchor.constraint(equalTo: wrapperView.bottomAnchor, constant: 0),
+		])
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+}
+
