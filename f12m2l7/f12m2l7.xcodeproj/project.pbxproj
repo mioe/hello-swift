@@ -30,6 +30,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		3735EC202F8E7FBE00CF72B9 /* .docs */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = .docs;
+			sourceTree = "<group>";
+		};
 		3793B6042F8E329500056EA4 /* f12m2l7 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -57,6 +62,7 @@
 				3793B61A2F8E32AC00056EA4 /* .editorconfig */,
 				3793B61B2F8E32AC00056EA4 /* .gitignore */,
 				3793B61C2F8E32AC00056EA4 /* README.md */,
+				3735EC202F8E7FBE00CF72B9 /* .docs */,
 				3793B6042F8E329500056EA4 /* f12m2l7 */,
 				3793B6032F8E329500056EA4 /* Products */,
 			);
@@ -86,6 +92,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				3735EC202F8E7FBE00CF72B9 /* .docs */,
 				3793B6042F8E329500056EA4 /* f12m2l7 */,
 			);
 			name = f12m2l7;
