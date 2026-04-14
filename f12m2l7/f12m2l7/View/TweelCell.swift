@@ -89,6 +89,7 @@ class TweetCell: UITableViewCell {
 			tweet.user.username,
 			tweet.user.nickname,
 			tweet.createdAt,
+			.card,
 		)
 		let tweetBody = TweetBodyView(
 			tweet.text,
@@ -102,6 +103,7 @@ class TweetCell: UITableViewCell {
 			likes: tweet.likes,
 			views: tweet.views,
 			bookmarks: tweet.bookmarks,
+			visualType: .card,
 		)
 
 		stack.addArrangedSubview(tweetHeader)

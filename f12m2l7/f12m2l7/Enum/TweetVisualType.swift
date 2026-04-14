@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum TweetBodyType {
+enum TweetVisualType {
 	case card
 	case article
 }

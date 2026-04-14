@@ -55,6 +55,15 @@ extension ViewController: UITableViewDelegate {
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		updateVisibleVideoCells()
 	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+	{
+		let cursor = tableData[indexPath.row]
+		navigationController?.pushViewController(
+			ArticleViewController(tweet: cursor),
+			animated: true
+		)
+	}
 }
 
 extension ViewController: UITableViewDataSource {

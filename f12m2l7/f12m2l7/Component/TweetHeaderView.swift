@@ -7,11 +7,13 @@ class TweetHeaderView: UIView {
 	private let username: String
 	private let nickname: String
 	private let postCreatedAt: Date
+	private let visualType: TweetVisualType
 
-	init(_ username: String, _ nickname: String, _ postCreatedAt: Date) {
+	init(_ username: String, _ nickname: String, _ postCreatedAt: Date, _ visualType: TweetVisualType) {
 		self.username = username
 		self.nickname = nickname
 		self.postCreatedAt = postCreatedAt
+		self.visualType = visualType
 		super.init(frame: .zero)
 		self.setup()
 	}
@@ -22,6 +24,9 @@ class TweetHeaderView: UIView {
 		let usernameLabel: UILabel = {
 			$0.translatesAutoresizingMaskIntoConstraints = false
 			$0.font = .systemFont(ofSize: 12, weight: .semibold)
+			if visualType == .article {
+				$0.textColor = .white
+			}
 			$0.text = self.username
 			return $0
 		}(UILabel())

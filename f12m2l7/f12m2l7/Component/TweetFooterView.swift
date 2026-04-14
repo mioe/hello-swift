@@ -9,13 +9,15 @@ class TweetFooterView: UIView {
 	private let likes: Int
 	private let views: Int
 	private let bookmarks: Int
+	private let visualType: TweetVisualType
 
-	init(comments: Int, retweets: Int, likes: Int, views: Int, bookmarks: Int) {
+	init(comments: Int, retweets: Int, likes: Int, views: Int, bookmarks: Int, visualType: TweetVisualType) {
 		self.comments = comments
 		self.retweets = retweets
 		self.likes = likes
 		self.views = views
 		self.bookmarks = bookmarks
+		self.visualType = visualType
 		super.init(frame: .zero)
 		self.setup()
 	}
@@ -44,7 +46,7 @@ class TweetFooterView: UIView {
 
 				let icon: UIImageView = {
 					$0.translatesAutoresizingMaskIntoConstraints = false
-					$0.tintColor = .systemGray
+					$0.tintColor = visualType == .card ? .systemGray : .white
 					return $0
 				}(UIImageView())
 				icon.image = UIImage(
@@ -57,7 +59,7 @@ class TweetFooterView: UIView {
 				let counter: UILabel = {
 					$0.translatesAutoresizingMaskIntoConstraints = false
 					$0.font = .systemFont(ofSize: 10)
-					$0.textColor = .systemGray
+					$0.textColor = visualType == .card ? .systemGray : .white
 					return $0
 				}(UILabel())
 				counter.text = "\(value)"

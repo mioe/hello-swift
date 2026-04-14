@@ -12,7 +12,7 @@ class TweetBodyView: UIView {
 
 	private let text: String
 	private let media: [String: TweetMediaType]
-	private let bodyType: TweetBodyType
+	private let visualType: TweetVisualType
 
 	private var player: AVPlayer?
 	private var muteButton: UIButton?
@@ -21,11 +21,11 @@ class TweetBodyView: UIView {
 	init(
 		_ text: String,
 		_ media: [String: TweetMediaType],
-		_ bodyType: TweetBodyType
+		_ visualType: TweetVisualType
 	) {
 		self.text = text
 		self.media = media
-		self.bodyType = bodyType
+		self.visualType = visualType
 		super.init(frame: .zero)
 		self.setup()
 	}
@@ -54,6 +54,9 @@ class TweetBodyView: UIView {
 		let textView: UILabel = {
 			$0.translatesAutoresizingMaskIntoConstraints = false
 			$0.font = .systemFont(ofSize: 14)
+			if visualType == .article {
+				$0.textColor = .white
+			}
 			$0.numberOfLines = 0
 			return $0
 		}(UILabel())
@@ -77,7 +80,7 @@ class TweetBodyView: UIView {
 		if !media.isEmpty {
 			let stackView: UIStackView = {
 				$0.translatesAutoresizingMaskIntoConstraints = false
-				$0.axis = .horizontal
+				$0.axis = visualType == .card ? .horizontal : .vertical
 				$0.spacing = 4
 				$0.layer.cornerRadius = 8
 				$0.clipsToBounds = true
