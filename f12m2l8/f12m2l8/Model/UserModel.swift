@@ -5,5 +5,5 @@ import Foundation
 struct UserModel {
 	let username: String
 	let nickname: String
-	let avatar: String?
+	let avatar: String
 }

@@ -6,7 +6,7 @@ struct TweetModel {
 	let text: String
 	let createdAt: Date
 	let user: UserModel
-	let images: [String]
+	let media: [String]
 	let likes: Int
 	let comments: Int
 	let retweets: Int
@@ -24,12 +24,42 @@ struct TweetModel {
 					nickname: "pokopokemokapo",
 					avatar: "pokopokemokapo",
 				),
-				images: ["img1"],
+				media: ["img1"],
 				likes: 5294,
 				comments: 1,
 				retweets: 248,
 				views: 43256,
 				bookmarks: 1436
+			),
+			TweetModel(
+				text: "🌧️ Habitat for Tinkmaster 🌧️",
+				createdAt: Date().addingTimeInterval(-36000),
+				user: UserModel(
+					username: "MAGIKARP🦈💦",
+					nickname: "UniteVids",
+					avatar: "UniteVids"
+				),
+				media: ["img2"],
+				likes: 2435,
+				comments: 4,
+				retweets: 174,
+				views: 39524,
+				bookmarks: 2
+			),
+			TweetModel(
+				text: "Today we're unlocking THE DREAMER 🧡",
+				createdAt: Date().addingTimeInterval(-3_600_000),
+				user: UserModel(
+					username: "mymind",
+					nickname: "mymind",
+					avatar: "mymind"
+				),
+				media: ["img3"],
+				likes: 476,
+				comments: 9,
+				retweets: 19,
+				views: 20353,
+				bookmarks: 0
 			),
 		]
 	}
