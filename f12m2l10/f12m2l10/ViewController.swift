@@ -85,10 +85,10 @@ class ViewController: UIViewController {
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(216))
-		let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
+		let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 1)
 		group.contentInsets = .init(top: 0, leading: 32, bottom: 0, trailing: 32)
 		let section = NSCollectionLayoutSection(group: group)
-		section.orthogonalScrollingBehavior = .continuous
+		section.interGroupSpacing = 16
 		section.contentInsets = .init(top: 0, leading: 0, bottom: 32, trailing: 0)
 		return section
 	}

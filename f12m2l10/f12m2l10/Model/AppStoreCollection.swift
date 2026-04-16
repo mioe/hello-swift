@@ -56,12 +56,12 @@ struct AppStoreCollection: Identifiable {
 			]),
 			AppStoreCollection(items: [
 				AppStoreModel(
-					icon: "twitch",
-					shortName: "Twitch",
-					fullName: "Twitch: Live Streaming",
+					icon: "hbo",
+					shortName: "Max",
+					fullName: "Max: Stream HBO & More",
 					description:
-						"Watch live streams of your favorite games, esports events, and creative content from millions of streamers.",
-					preview: "preview-twitch"
+						"Stream iconic series, blockbuster movies, and exclusive originals from HBO, Warner Bros., and Discovery.",
+					preview: "preview-hbo"
 				),
 				AppStoreModel(
 					icon: "linkedin",
@@ -86,28 +86,32 @@ struct AppStoreCollection: Identifiable {
 					shortName: "Gemini",
 					fullName: "Gemini: AI by Google",
 					description:
-						"Google's AI assistant powered by Gemini models. Get help with writing, planning, learning, and more."
+						"Google's AI assistant powered by Gemini models. Get help with writing, planning, learning, and more.",
+					preview: "preview-gemini"
 				),
 				AppStoreModel(
-					icon: "hbo",
-					shortName: "Max",
-					fullName: "Max: Stream HBO & More",
+					icon: "twitch",
+					shortName: "Twitch",
+					fullName: "Twitch: Live Streaming",
 					description:
-						"Stream iconic series, blockbuster movies, and exclusive originals from HBO, Warner Bros., and Discovery."
+						"Watch live streams of your favorite games, esports events, and creative content from millions of streamers.",
+					preview: "preview-twitch"
 				),
 				AppStoreModel(
 					icon: "meta-ai",
 					shortName: "Meta AI",
 					fullName: "Meta AI: Chat Assistant",
 					description:
-						"An AI assistant from Meta. Have conversations, generate images, and get help with everyday tasks."
+						"An AI assistant from Meta. Have conversations, generate images, and get help with everyday tasks.",
+					preview: "preview-meta-ai"
 				),
 				AppStoreModel(
 					icon: "peacock",
 					shortName: "Peacock",
 					fullName: "Peacock: Stream TV & Movies",
 					description:
-						"Stream hit shows, live sports, and exclusive originals from NBC Universal all in one place."
+						"Stream hit shows, live sports, and exclusive originals from NBC Universal all in one place.",
+					preview: "preview-peacock"
 				),
 			]),
 		]
