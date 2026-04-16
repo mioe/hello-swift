@@ -8,9 +8,8 @@ class EssentialCell: UICollectionViewCell {
 
 	private lazy var previewView: UIImageView = {
 		$0.translatesAutoresizingMaskIntoConstraints = false
-		$0.widthAnchor.constraint(equalToConstant: contentView.bounds.width)
-			.isActive = true
 		$0.contentMode = .scaleAspectFill
+		$0.clipsToBounds = true
 		return $0
 	}(UIImageView())
 
@@ -44,36 +43,13 @@ class EssentialCell: UICollectionViewCell {
 		super.init(frame: frame)
 	}
 
+	private var previewAspectConstraint: NSLayoutConstraint?
+
 	func setup(entity: AppStoreModel) {
 		contentView.subviews.forEach { $0.removeFromSuperview() }
 
-		if entity.preview != nil {
-			previewView.image = UIImage(named: entity.preview!)
-			if let image = previewView.image {
-				let aspectRatio = image.size.height / image.size.width
-				previewView.heightAnchor.constraint(
-					equalTo: previewView.widthAnchor,
-					multiplier: aspectRatio
-				).isActive = true
-			}
-			contentView.addSubview(previewView)
-
-			NSLayoutConstraint.activate([
-				previewView.topAnchor.constraint(equalTo: contentView.topAnchor),
-				previewView.leadingAnchor.constraint(
-					equalTo: contentView.leadingAnchor
-				),
-				previewView.trailingAnchor.constraint(
-					equalTo: contentView.trailingAnchor
-				),
-				previewView.bottomAnchor.constraint(
-					equalTo: contentView.bottomAnchor
-				),
-			])
-		}
-
+		previewView.image = UIImage(named: entity.preview ?? "")
 		iconView.image = UIImage(named: entity.icon)
-
 		fullNameView.text = entity.fullName
 		descriptionView.text = entity.description
 
@@ -81,54 +57,46 @@ class EssentialCell: UICollectionViewCell {
 		self.layer.cornerRadius = 20
 		self.clipsToBounds = true
 
+		contentView.addSubview(previewView)
 		contentView.addSubview(blurView)
 		contentView.addSubview(iconView)
 		contentView.addSubview(fullNameView)
 		contentView.addSubview(descriptionView)
 
+		if let prev = previewAspectConstraint {
+			previewView.removeConstraint(prev)
+		}
+		if let image = previewView.image, image.size.width > 0 {
+			let ratio = image.size.height / image.size.width
+			previewAspectConstraint = previewView.heightAnchor.constraint(
+				equalTo: previewView.widthAnchor,
+				multiplier: ratio
+			)
+			previewAspectConstraint?.isActive = true
+		}
+
 		NSLayoutConstraint.activate([
+			previewView.topAnchor.constraint(equalTo: contentView.topAnchor),
+			previewView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			previewView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+			previewView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+
 			blurView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
 			blurView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 			blurView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
-			iconView.bottomAnchor.constraint(
-				equalTo: contentView.bottomAnchor,
-				constant: -12
-			),
-			iconView.leadingAnchor.constraint(
-				equalTo: contentView.leadingAnchor,
-				constant: 12
-			),
+			iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+			iconView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
 			iconView.topAnchor.constraint(equalTo: blurView.topAnchor, constant: 12),
 
-			fullNameView.topAnchor.constraint(
-				equalTo: iconView.topAnchor,
-				constant: 2
-			),
-			fullNameView.leadingAnchor.constraint(
-				equalTo: iconView.trailingAnchor,
-				constant: 12
-			),
-			fullNameView.trailingAnchor.constraint(
-				equalTo: contentView.trailingAnchor,
-				constant: -12
-			),
+			fullNameView.topAnchor.constraint(equalTo: iconView.topAnchor, constant: 2),
+			fullNameView.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12),
+			fullNameView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
 
-			descriptionView.topAnchor.constraint(
-				equalTo: fullNameView.bottomAnchor,
-				constant: 4
-			),
-			descriptionView.leadingAnchor.constraint(
-				equalTo: fullNameView.leadingAnchor
-			),
-			descriptionView.trailingAnchor.constraint(
-				equalTo: contentView.trailingAnchor,
-				constant: -12
-			),
-			descriptionView.bottomAnchor.constraint(
-				equalTo: contentView.bottomAnchor,
-				constant: -12
-			),
+			descriptionView.topAnchor.constraint(equalTo: fullNameView.bottomAnchor, constant: 4),
+			descriptionView.leadingAnchor.constraint(equalTo: fullNameView.leadingAnchor),
+			descriptionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+			descriptionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
 		])
 	}
 

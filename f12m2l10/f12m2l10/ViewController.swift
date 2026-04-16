@@ -82,10 +82,10 @@ class ViewController: UIViewController {
 	}
 	
 	private func initEssentialSection() -> NSCollectionLayoutSection {
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(86))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(216))
-		let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 1)
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(86))
+		let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
 		group.contentInsets = .init(top: 0, leading: 32, bottom: 0, trailing: 32)
 		let section = NSCollectionLayoutSection(group: group)
 		section.interGroupSpacing = 16

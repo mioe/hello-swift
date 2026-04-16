@@ -33,11 +33,12 @@ struct AppStoreCollection: Identifiable {
 			]),
 			AppStoreCollection(items: [
 				AppStoreModel(
-					icon: "claude",
-					shortName: "Claude",
-					fullName: "Claude: AI Assistant",
+					icon: "gemini",
+					shortName: "Gemini",
+					fullName: "Gemini: AI by Google",
 					description:
-						"An AI assistant by Anthropic designed to be helpful, harmless, and honest. Chat, write, and explore ideas."
+						"Google's AI assistant powered by Gemini models. Get help with writing, planning, learning, and more.",
+					preview: "preview-gemini"
 				),
 				AppStoreModel(
 					icon: "ollama",
@@ -82,20 +83,12 @@ struct AppStoreCollection: Identifiable {
 			]),
 			AppStoreCollection(items: [
 				AppStoreModel(
-					icon: "gemini",
-					shortName: "Gemini",
-					fullName: "Gemini: AI by Google",
+					icon: "claude",
+					shortName: "Claude",
+					fullName: "Claude: AI Assistant",
 					description:
-						"Google's AI assistant powered by Gemini models. Get help with writing, planning, learning, and more.",
-					preview: "preview-gemini"
-				),
-				AppStoreModel(
-					icon: "twitch",
-					shortName: "Twitch",
-					fullName: "Twitch: Live Streaming",
-					description:
-						"Watch live streams of your favorite games, esports events, and creative content from millions of streamers.",
-					preview: "preview-twitch"
+						"An AI assistant by Anthropic designed to be helpful, harmless, and honest. Chat, write, and explore ideas.",
+					preview: "preview-claude"
 				),
 				AppStoreModel(
 					icon: "meta-ai",
@@ -104,6 +97,14 @@ struct AppStoreCollection: Identifiable {
 					description:
 						"An AI assistant from Meta. Have conversations, generate images, and get help with everyday tasks.",
 					preview: "preview-meta-ai"
+				),
+				AppStoreModel(
+					icon: "twitch",
+					shortName: "Twitch",
+					fullName: "Twitch: Live Streaming",
+					description:
+						"Watch live streams of your favorite games, esports events, and creative content from millions of streamers.",
+					preview: "preview-twitch"
 				),
 				AppStoreModel(
 					icon: "peacock",
