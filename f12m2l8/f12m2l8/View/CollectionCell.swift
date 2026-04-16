@@ -6,6 +6,8 @@ class CollectionCell: UICollectionViewCell {
 
 	static let cellId = "CollectionCell"
 
+	var onMoreTapped: (() -> Void)?
+
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 
@@ -24,7 +26,7 @@ class CollectionCell: UICollectionViewCell {
 			visualType: .collection
 		)
 		
-		lazy var previewImageView: UIImageView = {
+		let previewImageView: UIImageView = {
 			$0.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height) // bounds контейнер UICollection
 			$0.contentMode = .scaleAspectFill
 			$0.clipsToBounds = true
@@ -33,7 +35,19 @@ class CollectionCell: UICollectionViewCell {
 		}(UIImageView())
 		previewImageView.image = UIImage(named: tweet.media.first?.precomposedStringWithCompatibilityMapping ?? "")
 		
-		lazy var tweetBodyView: UIView = {
+		let btnMore: UIButton = {
+			$0.translatesAutoresizingMaskIntoConstraints = false
+			$0.setTitle("Подробнее", for: .normal)
+			$0.setTitleColor(.white, for: .normal)
+			$0.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
+			$0.backgroundColor = .systemBlue
+			$0.heightAnchor.constraint(equalToConstant: 24).isActive = true
+			$0.layer.cornerRadius = 12
+			$0.addAction(UIAction { [weak self] _ in self?.onMoreTapped?() }, for: .touchUpInside)
+			return $0
+		}(UIButton())
+		
+		let tweetBodyView: UIView = {
 			let hBody: CGFloat = 100
 			$0.frame = CGRect(x: 0, y: bounds.height - hBody, width: bounds.width, height: hBody)
 			$0.layer.cornerRadius = 28
@@ -46,22 +60,6 @@ class CollectionCell: UICollectionViewCell {
 				return $0
 			}(UILabel())
 			textView.text = tweet.text
-			
-			lazy var btnMore: UIButton = {
-				$0.translatesAutoresizingMaskIntoConstraints = false
-				$0.setTitle("Подробнее", for: .normal)
-				$0.setTitleColor(.white, for: .normal)
-				$0.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
-				$0.backgroundColor = .systemBlue
-				$0.heightAnchor.constraint(equalToConstant: 24).isActive = true
-				$0.layer.cornerRadius = 12
-				return $0
-			}(UIButton(primaryAction: UIAction { [weak self] _ in
-				self?.navigationController?.pushViewController(
-					ArticleViewController(tweet: tweet),
-					animated: true
-				)
-			}))
 			
 			$0.addSubview(textView)
 			$0.addSubview(btnMore)

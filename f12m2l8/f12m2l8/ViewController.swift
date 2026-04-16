@@ -5,6 +5,7 @@ import UIKit
 class ViewController: UIViewController {
 	
 	private let tweets = TweetModel.mock()
+	
 
 	lazy var layout: UICollectionViewFlowLayout = {
 		let spacing: CGFloat = 8 // minimal by tailwind
@@ -48,7 +49,11 @@ extension ViewController: UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCell.cellId, for: indexPath) as? CollectionCell {
-			cell.setup(tweet: tweets[indexPath.row])
+			let tweet = tweets[indexPath.row]
+			cell.setup(tweet: tweet)
+			cell.onMoreTapped = { [weak self] in
+				self?.navigationController?.pushViewController(ArticleViewController(tweet: tweet), animated: true)
+			}
 			return cell
 		}
 		return UICollectionViewCell()
