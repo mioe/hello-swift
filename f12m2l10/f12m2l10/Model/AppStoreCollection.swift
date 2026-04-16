@@ -30,6 +30,27 @@ struct AppStoreCollection: Identifiable {
 					description:
 						"Share moments with friends through snaps, stories, and discover content from publishers and creators."
 				),
+				AppStoreModel(
+					icon: "dora",
+					shortName: "Dora",
+					fullName: "Dora: Explore and Play",
+					description:
+						"Explore new worlds and play fun games with Dora. An interactive adventure for kids and families."
+				),
+				AppStoreModel(
+					icon: "duolingo",
+					shortName: "Duolingo",
+					fullName: "Duolingo: Language Lessons",
+					description:
+						"Learn a new language for free with fun, bite-sized lessons. Practice speaking, reading, and writing."
+				),
+				AppStoreModel(
+					icon: "tinder",
+					shortName: "Tinder",
+					fullName: "Tinder: Dating & New Friends",
+					description:
+						"Match, chat, and meet new people. Swipe right to like someone, and if they like you back, it's a match."
+				),
 			]),
 			AppStoreCollection(items: [
 				AppStoreModel(
