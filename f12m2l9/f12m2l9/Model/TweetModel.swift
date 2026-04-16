@@ -13,7 +13,12 @@ struct TweetModel {
 	let views: Int
 	let bookmarks: Int
 	
-	static func mock() -> [TweetModel] {
+	static func mock(_ count: Int = 1) -> [TweetModel] {
+		let base = mockBase()
+		return (0..<count).flatMap { _ in base }
+	}
+
+	private static func mockBase() -> [TweetModel] {
 		[
 			TweetModel(
 				text:

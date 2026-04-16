@@ -59,16 +59,15 @@ class TweetBodyView: UIView {
 					return $0
 				}(UIImageView())
 				imageView.image = UIImage(named: $0)
-				
+
 				if let image = imageView.image {
 					let aspectRatio = image.size.height / image.size.width
-					let c = imageView.heightAnchor.constraint(
+					imageView.heightAnchor.constraint(
 						equalTo: imageView.widthAnchor,
 						multiplier: aspectRatio
-					)
-					c.isActive = true
+					).isActive = true
 				}
-				
+
 				stackMediaView.addArrangedSubview(imageView)
 			}
 
@@ -76,9 +75,10 @@ class TweetBodyView: UIView {
 		}
 
 		NSLayoutConstraint.activate([
-			stackWrapperView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-			stackWrapperView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-			stackWrapperView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
+			stackWrapperView.topAnchor.constraint(equalTo: self.topAnchor),
+			stackWrapperView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+			stackWrapperView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+			stackWrapperView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 		])
 	}
 

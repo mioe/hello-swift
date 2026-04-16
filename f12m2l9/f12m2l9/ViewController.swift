@@ -4,7 +4,7 @@ import UIKit
 
 class ViewController: UIViewController {
 	
-	private let tweets = TweetModel.mock()
+	private let tweets = TweetModel.mock(10)
 	
 	lazy var layout: UICollectionViewFlowLayout = {
 		$0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize // динамические размеры
@@ -35,7 +35,7 @@ extension ViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCell.cellId, for: indexPath) as? CollectionCell {
 			let tweet = tweets[indexPath.row]
-			cell.setup(tweet: tweet)
+			cell.setup(tweet: tweet, collectionWidth: collectionView.bounds.width)
 			return cell
 		}
 		return UICollectionViewCell()
