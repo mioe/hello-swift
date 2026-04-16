@@ -60,21 +60,24 @@ struct AppStoreCollection: Identifiable {
 					shortName: "Twitch",
 					fullName: "Twitch: Live Streaming",
 					description:
-						"Watch live streams of your favorite games, esports events, and creative content from millions of streamers."
+						"Watch live streams of your favorite games, esports events, and creative content from millions of streamers.",
+					preview: "preview-twitch"
 				),
 				AppStoreModel(
 					icon: "linkedin",
 					shortName: "LinkedIn",
 					fullName: "LinkedIn: Network & Jobs",
 					description:
-						"Build your professional network and stay connected with colleagues. Discover job opportunities and industry news."
+						"Build your professional network and stay connected with colleagues. Discover job opportunities and industry news.",
+					preview: "preview-linkedin"
 				),
 				AppStoreModel(
 					icon: "dropbox",
 					shortName: "Dropbox",
 					fullName: "Dropbox: Cloud Storage",
 					description:
-						"Keep all your files safe and accessible from any device. Share folders and collaborate with your team seamlessly."
+						"Keep all your files safe and accessible from any device. Share folders and collaborate with your team seamlessly.",
+					preview: "preview-dropbox"
 				),
 			]),
 			AppStoreCollection(items: [

@@ -10,6 +10,8 @@ class ViewController: UIViewController {
 		$0.dataSource = self
 		$0.register(DiscoverCell.self, forCellWithReuseIdentifier: DiscoverCell.cellId)
 		$0.register(BestCell.self, forCellWithReuseIdentifier: BestCell.cellId)
+		$0.register(TryCell.self, forCellWithReuseIdentifier: TryCell.cellId)
+		$0.register(EssentialCell.self, forCellWithReuseIdentifier: EssentialCell.cellId)
 		return $0
 	}(UICollectionView(frame: view.frame, collectionViewLayout: initLayout()))
 
@@ -25,8 +27,12 @@ class ViewController: UIViewController {
 			switch section {
 			case 0:
 				return self.initDiscoverSection()
+			case 1:
+				return self.initBestSection()
+			case 2:
+				return self.initTrySection()
 			default:
-				return self.initBestAppSection()
+				return self.initEssentialSection()
 			}
 		}
 	}
@@ -50,7 +56,7 @@ class ViewController: UIViewController {
 		return section
 	}
 	
-	private func initBestAppSection() -> NSCollectionLayoutSection {
+	private func initBestSection() -> NSCollectionLayoutSection {
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 		item.contentInsets = .init(top: 0, leading: 0, bottom: 16, trailing: 0)
@@ -59,7 +65,31 @@ class ViewController: UIViewController {
 		group.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 16)
 		let section = NSCollectionLayoutSection(group: group)
 		section.orthogonalScrollingBehavior = .groupPaging
+		section.contentInsets = .init(top: 0, leading: 32, bottom: 16, trailing: 32)
+		return section
+	}
+	
+	private func initTrySection() -> NSCollectionLayoutSection {
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .absolute(216))
+		let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 1)
+		group.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 16)
+		let section = NSCollectionLayoutSection(group: group)
+		section.orthogonalScrollingBehavior = .groupPagingCentered
 		section.contentInsets = .init(top: 0, leading: 32, bottom: 32, trailing: 32)
+		return section
+	}
+	
+	private func initEssentialSection() -> NSCollectionLayoutSection {
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(216))
+		let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
+		group.contentInsets = .init(top: 0, leading: 32, bottom: 0, trailing: 32)
+		let section = NSCollectionLayoutSection(group: group)
+		section.orthogonalScrollingBehavior = .continuous
+		section.contentInsets = .init(top: 0, leading: 0, bottom: 32, trailing: 0)
 		return section
 	}
 }
@@ -82,8 +112,16 @@ extension ViewController: UICollectionViewDataSource {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoverCell.cellId, for: indexPath) as! DiscoverCell
 			cell.setup(entity: item)
 			return cell
-		default:
+		case 1:
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BestCell.cellId, for: indexPath) as! BestCell
+			cell.setup(entity: item)
+			return cell
+		case 2:
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TryCell.cellId, for: indexPath) as! TryCell
+			cell.setup(entity: item)
+			return cell
+		default:
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EssentialCell.cellId, for: indexPath) as! EssentialCell
 			cell.setup(entity: item)
 			return cell
 		}

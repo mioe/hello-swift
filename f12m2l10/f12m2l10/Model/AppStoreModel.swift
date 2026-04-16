@@ -8,4 +8,5 @@ struct AppStoreModel: Identifiable {
 	let shortName: String
 	let fullName: String
 	let description: String
+	var preview: String? = nil
 }
