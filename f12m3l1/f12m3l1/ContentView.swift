@@ -4,13 +4,15 @@ import SwiftUI
 
 struct ContentView: View {
 	private let headerHeight: CGFloat = 48
+	private let topLocationsButtonHeight: CGFloat = 56
 
 	var body: some View {
 		VStack(alignment: .leading, spacing: 32) {
 			HeaderView()
 			WelcomeView()
+			TopLocationsView()
 		}
-		.padding()
+		.padding(.horizontal, 32)
 	}
 
 	@ViewBuilder
@@ -85,12 +87,9 @@ struct ContentView: View {
 			}
 		}
 	}
-	
+
 	@ViewBuilder
-	private func WelcomeButtonView(
-		_ icon: String,
-		_ label: String,
-	) -> some View {
+	private func WelcomeButtonView(_ icon: String, _ label: String) -> some View {
 		Button {
 			print("onTap: \(label)")
 		} label: {
@@ -110,6 +109,63 @@ struct ContentView: View {
 				RoundedRectangle(cornerRadius: 12)
 					.strokeBorder(.sGreySoft2, lineWidth: 1)
 			}
+		}
+		.buttonStyle(.plain)
+	}
+	
+	@ViewBuilder
+	private func TitleForSectionView(_ title: String) -> some View {
+		Text(title)
+			.font(.system(size: 18, weight: .medium))
+	}
+	
+	@ViewBuilder
+	private func TopLocationsView() -> some View {
+		VStack(alignment: .leading, spacing: 16) {
+			HStack {
+				TitleForSectionView("Top Locations")
+				Spacer()
+				Button {
+					print("onTap: explore")
+				} label: {
+					Text("explore")
+						.font(.system(size: 10, weight: .medium))
+				}.buttonStyle(.plain)
+			}
+			ScrollView([.horizontal]) {
+				HStack(spacing: 12) {
+					TopLocationsButtonView("img-1", "Bali")
+					TopLocationsButtonView("img-2", "Jakarta")
+					TopLocationsButtonView("img-3", "Yogyakarta")
+					TopLocationsButtonView("img-4", "Semarang")
+				}
+			}
+			.scrollClipDisabled()
+			.scrollIndicators(.hidden)
+		}
+	}
+	
+	@ViewBuilder
+	private func TopLocationsButtonView(_ image: String, _ label: String) -> some View {
+		Button {
+			print("onTap: \(label)")
+		} label: {
+			HStack(spacing: 8) {
+				Image(image)
+					.resizable()
+					.scaledToFill()
+					.frame(width: 40, height: 40)
+					.font(.system(size: 14))
+					.clipShape(Circle())
+				Text(label)
+					.font(.system(size: 10, weight: .medium))
+					.foregroundStyle(.sGreyDark)
+			}
+			.frame(height: topLocationsButtonHeight)
+			.padding(.leading, 8)
+			.padding(.trailing, 16)
+			.background(.sGreySoft1)
+			.clipShape(Capsule())
 		}
 		.buttonStyle(.plain)
 	}
