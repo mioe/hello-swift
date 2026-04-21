@@ -4,16 +4,28 @@ import SwiftUI
 
 struct ContentView: View {
 	var body: some View {
-		VStack {
-			Image(systemName: "globe")
-				.imageScale(.large)
-				.foregroundStyle(.tint)
-			Text("Hello, world!")
+		ScrollView {
+			VStack(alignment: .leading) {
+				
+			}
 		}
-		.padding()
+		.scrollClipDisabled()
+		.scrollIndicators(.hidden)
+		.padding(.top, 32)
+		.padding(.horizontal, 32)
+		.onAppear {
+			// вывод списка доступных шрифтов
+			for f in UIFont.familyNames.filter({ $0.hasPrefix("iA") || $0.hasPrefix("Lora") }) {
+				let v = UIFont.fontNames(forFamilyName: f)
+				print("\(f): \(v)")
+			}
+		}
 	}
-}
-
-#Preview {
-	ContentView()
+	
+	@ViewBuilder
+	private func HeaderView() -> some View {
+		HStack {
+			
+		}
+	}
 }
