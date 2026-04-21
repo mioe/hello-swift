@@ -11,7 +11,7 @@ enum fontLora: String {
 }
 
 extension Text {
-	func iAWritterQuattroS(_ font: fontLora, _ size: CGFloat) -> some View {
+	func iAWritterQuattroS(_ font: fontIAWriterQuattroS, _ size: CGFloat) -> some View {
 		self
 			.font(.custom(font.rawValue, size: size))
 	}

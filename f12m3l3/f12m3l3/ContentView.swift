@@ -6,7 +6,7 @@ struct ContentView: View {
 	var body: some View {
 		ScrollView {
 			VStack(alignment: .leading) {
-				
+				HeaderView()
 			}
 		}
 		.scrollClipDisabled()
@@ -25,7 +25,30 @@ struct ContentView: View {
 	@ViewBuilder
 	private func HeaderView() -> some View {
 		HStack {
+			VStack(alignment: .leading) {
+				Text("Welcome Back 👋🏻")
+					.iAWritterQuattroS(.regular, 12)
+					.foregroundStyle(.sSecondary)
+				Text("Willy Draw")
+					.lora(.medium, 24)
+					.foregroundStyle(.sAccent)
+			}
 			
+			Spacer()
+			
+			Button {
+				print("onTap: bell")
+			} label: {
+				VStack {
+					Image(systemName: "bell.fill")
+						.font(.system(size: 18))
+						.foregroundStyle(.white)
+				}
+				.frame(width: 48, height: 48)
+				.background(.black)
+				.clipShape(RoundedRectangle(cornerRadius: 16))
+			}
+			.buttonStyle(.plain)
 		}
 	}
 }
