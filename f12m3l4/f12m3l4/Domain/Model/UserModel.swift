@@ -6,5 +6,5 @@ struct UserModel {
 	let id: String = UUID().uuidString
 	let username: String
 	let nickname: String
-	let avatar: String
+	let avatar: String?
 }
