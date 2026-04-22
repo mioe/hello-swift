@@ -13,6 +13,12 @@ struct UserAvatarView: View {
 					.resizable()
 					.scaledToFill()
 					.clipShape(Circle())
+			} else {
+				Circle()
+					.fill(.blue.opacity(0.8))
+					.overlay {
+						Text("🐥")
+					}
 			}
 		}
 		.frame(width: 48, height: 48)

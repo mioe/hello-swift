@@ -39,7 +39,7 @@ struct MainView: View {
 								MainViewProgressView(label: $viewModel.actionLabel)
 							}
 							VStack(spacing: 16) {
-								ForEach(viewModel.tweets, id: \.id) { tw in
+								ForEach(viewModel.tweets.reversed(), id: \.id) { tw in
 									TweetCardView(
 										avatar: tw.user.avatar,
 										username: tw.user.username,

@@ -28,7 +28,7 @@ class MainViewModel: ObservableObject { // обычный store аля pinia
 		
 		Task { @MainActor in
 			try? await Task.sleep(for: .seconds(Int.random(in: 1...2)))
-//			self.tweets.append(networkClient.getTweetsApi(count: tweets.count, chunk: 1))
+			self.tweets.append(contentsOf: networkClient.getTweetsApi(count: tweets.count, chunk: 1))
 			self.idle = true
 		}
 	}
@@ -39,7 +39,9 @@ class MainViewModel: ObservableObject { // обычный store аля pinia
 		
 		Task { @MainActor in
 			try? await Task.sleep(for: .seconds(Int.random(in: 1...2)))
-			self.tweets.removeFirst()
+			if tweets.count > 0 {
+				self.tweets.removeLast()
+			}
 			self.idle = true
 		}
 	}

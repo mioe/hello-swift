@@ -23,20 +23,19 @@ struct TweetModel {
 	private static func mockBase() -> [TweetModel] {
 		[
 			TweetModel(
-				text:
-					"ちょうど船のハンドル売ってて、キッチンカーの運転席にいいじゃんって思って置いたら、さっそくシャワーズが運転してくれててうれしかった(見えにくいけどw)",
-				createdAt: Date(timeIntervalSince1970: 1_776_816_000),
+				text: "Today we're unlocking THE DREAMER 🧡",
+				createdAt: Date(timeIntervalSince1970: 1_770_076_800),
 				user: UserModel(
-					username: "もかぽけ@ぽこあポケモン",
-					nickname: "pokopokemokapo",
-					avatar: "pokopokemokapo",
+					username: "mymind",
+					nickname: "mymind",
+					avatar: "mymind"
 				),
-				media: ["img1"],
-				likes: 5294,
-				comments: 1,
-				retweets: 248,
-				views: 43256,
-				bookmarks: 1436
+				media: ["img3", "img4"],
+				likes: 476,
+				comments: 9,
+				retweets: 19,
+				views: 20353,
+				bookmarks: 0
 			),
 			TweetModel(
 				text: "🌧️ Habitat for Tinkmaster 🌧️",
@@ -54,19 +53,20 @@ struct TweetModel {
 				bookmarks: 2
 			),
 			TweetModel(
-				text: "Today we're unlocking THE DREAMER 🧡",
-				createdAt: Date(timeIntervalSince1970: 1_770_076_800),
+				text:
+					"ちょうど船のハンドル売ってて、キッチンカーの運転席にいいじゃんって思って置いたら、さっそくシャワーズが運転してくれててうれしかった(見えにくいけどw)",
+				createdAt: Date(timeIntervalSince1970: 1_776_816_000),
 				user: UserModel(
-					username: "mymind",
-					nickname: "mymind",
-					avatar: "mymind"
+					username: "もかぽけ@ぽこあポケモン",
+					nickname: "pokopokemokapo",
+					avatar: "pokopokemokapo",
 				),
-				media: ["img3", "img4"],
-				likes: 476,
-				comments: 9,
-				retweets: 19,
-				views: 20353,
-				bookmarks: 0
+				media: ["img1"],
+				likes: 5294,
+				comments: 1,
+				retweets: 248,
+				views: 43256,
+				bookmarks: 1436
 			),
 		]
 	}
