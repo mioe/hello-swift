@@ -3,6 +3,8 @@
 import SwiftUI
 
 struct MainView: View {
+	@StateObject var viewModel = MainViewModel() // тика let store = useStore() в pinia
+	
 	var body: some View {
 		GeometryReader {
 			let safeAreaInsets = $0.safeAreaInsets
@@ -28,9 +30,11 @@ struct MainView: View {
 						Spacer()
 					}
 					.padding(.horizontal, 32)
-					.background(.red)
 				}
 				.navigationBarTitleDisplayMode(.inline)
+			}
+			.onAppear {
+				viewModel.setup()
 			}
 		}
 	}
