@@ -114,31 +114,33 @@ struct MainView: View {
 	) -> some View {
 		let type: TweetVisualType = .card
 
-		VStack(spacing: 8) {
-			HStack(alignment: .top, spacing: 8) {
-				UserAvatarView(avatar: avatar)
-				VStack(alignment: .leading, spacing: 8) {
-					TweetHeaderView(
-						username: username,
-						nickname: nickname,
-						createdAt: createdAt,
-						visualType: type
-					)
-					TweetBodyView(text: text, media: media, visualType: type)
-					TweetFooterView(
-						comments: comments,
-						retweets: retweets,
-						likes: likes,
-						views: views,
-						bookmarks: bookmarks,
-						visualType: type
-					)
+		VStack(spacing: 16) {
+			VStack(spacing: 8) {
+				HStack(alignment: .top, spacing: 8) {
+					UserAvatarView(avatar: avatar)
+					VStack(alignment: .leading, spacing: 8) {
+						TweetHeaderView(
+							username: username,
+							nickname: nickname,
+							createdAt: createdAt,
+							visualType: type
+						)
+						TweetBodyView(text: text, media: media, visualType: type)
+						TweetFooterView(
+							comments: comments,
+							retweets: retweets,
+							likes: likes,
+							views: views,
+							bookmarks: bookmarks,
+							visualType: type
+						)
+					}
+					.frame(maxWidth: .infinity)
 				}
-				.frame(maxWidth: .infinity)
 			}
+			.padding(.horizontal, 16)
+			
+			Divider()
 		}
-		.padding(.horizontal, 16)
-		
-		Divider()
 	}
 }
