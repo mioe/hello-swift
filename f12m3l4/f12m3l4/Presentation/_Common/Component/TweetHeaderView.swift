@@ -9,19 +9,28 @@ struct TweetHeaderView: View {
 	let createdAt: Date
 	let visualType: TweetVisualType
 
+	private var tintColorPrimary: Color {
+		visualType == .card ? .primary : .white
+	}
+
+	private var tintColorSecondary: Color {
+		visualType == .card ? .secondary : .white
+	}
+
 	var body: some View {
 		HStack(spacing: 0) {
 			HStack(spacing: 8) {
 				Text(username)
 					.font(.system(size: 12, weight: .medium))
+					.foregroundStyle(tintColorPrimary)
 				HStack(spacing: 8) {
 					Text("@\(nickname)")
 					Text(Self.relativeDate(from: createdAt))
 				}
 				.font(.system(size: 10))
-				.foregroundStyle(.secondary)
+				.foregroundStyle(tintColorSecondary)
 			}
-			Spacer(minLength: 0) // ура, понадобился обнуления так как выше spacing: 8
+			Spacer(minLength: 0)  // ура, понадобился обнуления так как выше spacing: 8
 		}
 	}
 

@@ -4,13 +4,14 @@ import SwiftUI
 
 struct MainView: View {
 	@StateObject var viewModel = MainViewModel()  // тика let store = useStore() в pinia
+	@State private var navigationPath = NavigationPath()
 
 	var body: some View {
 		GeometryReader {
 			let safeAreaInsets = $0.safeAreaInsets
-			
+
 			ZStack(alignment: .bottom) {
-				NavigationStack {
+				NavigationStack(path: $navigationPath) {
 					PullEffectScrollView(
 						dragDistance: 130,
 						actionTopPadding: safeAreaInsets.top + 32,
@@ -33,26 +34,29 @@ struct MainView: View {
 							}
 						)
 					) {
-						
+
 						VStack(spacing: 0) {
 							if !viewModel.idle {
 								MainViewProgressView(label: $viewModel.actionLabel)
 							}
 							VStack(spacing: 16) {
 								ForEach(viewModel.tweets.reversed(), id: \.id) { tw in
-									TweetCardView(
-										avatar: tw.user.avatar,
-										username: tw.user.username,
-										nickname: tw.user.nickname,
-										createdAt: tw.createdAt,
-										text: tw.text,
-										media: tw.media,
-										comments: tw.comments,
-										retweets: tw.retweets,
-										likes: tw.likes,
-										views: tw.views,
-										bookmarks: tw.bookmarks,
-									)
+									NavigationLink(value: tw) {
+										TweetCardView(
+											avatar: tw.user.avatar,
+											username: tw.user.username,
+											nickname: tw.user.nickname,
+											createdAt: tw.createdAt,
+											text: tw.text,
+											media: tw.media,
+											comments: tw.comments,
+											retweets: tw.retweets,
+											likes: tw.likes,
+											views: tw.views,
+											bookmarks: tw.bookmarks,
+										)
+									}
+									.buttonStyle(.plain)
 								}
 								if viewModel.tweets.isEmpty && viewModel.idle {
 									HStack {
@@ -68,12 +72,15 @@ struct MainView: View {
 						.padding(.horizontal, 16)
 					}
 					.navigationBarTitleDisplayMode(.inline)
+					.navigationDestination(for: TweetModel.self) { tweet in
+						ArticleView(tweet: tweet)
+					}
 				}
 				.scrollIndicators(.hidden)
 				.onAppear {
 					viewModel.setup()
 				}
-				
+
 				VStack(spacing: 16) {
 					Divider()
 					HStack {
@@ -85,6 +92,8 @@ struct MainView: View {
 				}
 				.frame(maxWidth: .infinity)
 				.background(.background)
+				.offset(y: navigationPath.isEmpty ? 0 : 100)
+				.animation(.easeInOut, value: navigationPath.isEmpty)
 			}
 		}
 	}

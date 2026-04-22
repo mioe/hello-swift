@@ -7,10 +7,15 @@ struct TweetBodyView: View {
 	let media: [String]
 	let visualType: TweetVisualType
 
+	private var tintColor: Color {
+		visualType == .card ? .primary : .white
+	}
+
 	var body: some View {
 		VStack(alignment: .leading, spacing: 8) {
 			Text(text)
 				.font(.system(size: 14))
+				.foregroundStyle(tintColor)
 
 			if !media.isEmpty {
 				mediaStack
@@ -34,6 +39,7 @@ struct TweetBodyView: View {
 					.aspectRatio(contentMode: .fit)
 			}
 		}
+		.frame(maxWidth: .infinity)
 	}
 }
 

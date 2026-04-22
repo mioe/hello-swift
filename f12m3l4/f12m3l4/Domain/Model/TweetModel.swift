@@ -3,7 +3,7 @@
 
 import Foundation
 
-struct TweetModel {
+struct TweetModel: Hashable {
 	let id: String = UUID().uuidString
 	let text: String
 	let createdAt: Date

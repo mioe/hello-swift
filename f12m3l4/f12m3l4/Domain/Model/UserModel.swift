@@ -3,7 +3,7 @@
 
 import Foundation
 
-struct UserModel {
+struct UserModel: Hashable {
 	let id: String = UUID().uuidString
 	let username: String
 	let nickname: String
