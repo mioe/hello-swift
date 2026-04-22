@@ -8,62 +8,83 @@ struct MainView: View {
 	var body: some View {
 		GeometryReader {
 			let safeAreaInsets = $0.safeAreaInsets
-
-			NavigationStack {
-				PullEffectScrollView(
-					dragDistance: 130,
-					actionTopPadding: safeAreaInsets.top + 32,
-					leadingAction: .init(
-						symbol: "arrow.clockwise",
-						action: {
-							viewModel.reset()
-						}
-					),
-					centerAction: .init(
-						symbol: "plus",
-						action: {
-							print("Refresh")
-						}
-					),
-					trailingAction: .init(
-						symbol: "minus",
-						action: {
-							print("Close Tab")
-						}
-					)
-				) {
-
-					VStack(spacing: 0) {
-						if !viewModel.idle {
-							MainViewProgressView(label: $viewModel.actionLabel)
-						}
-						VStack(spacing: 16) {
-							ForEach(viewModel.tweets, id: \.id) { tw in
-								TweetCardView(
-									avatar: tw.user.avatar,
-									username: tw.user.username,
-									nickname: tw.user.nickname,
-									createdAt: tw.createdAt,
-									text: tw.text,
-									media: tw.media,
-									comments: tw.comments,
-									retweets: tw.retweets,
-									likes: tw.likes,
-									views: tw.views,
-									bookmarks: tw.bookmarks,
-								)
+			
+			ZStack(alignment: .bottom) {
+				NavigationStack {
+					PullEffectScrollView(
+						dragDistance: 130,
+						actionTopPadding: safeAreaInsets.top + 32,
+						leadingAction: .init(
+							symbol: "arrow.clockwise",
+							action: {
+								viewModel.reset()
 							}
+						),
+						centerAction: .init(
+							symbol: "plus",
+							action: {
+								viewModel.add()
+							}
+						),
+						trailingAction: .init(
+							symbol: "minus",
+							action: {
+								viewModel.remove()
+							}
+						)
+					) {
+						
+						VStack(spacing: 0) {
+							if !viewModel.idle {
+								MainViewProgressView(label: $viewModel.actionLabel)
+							}
+							VStack(spacing: 16) {
+								ForEach(viewModel.tweets, id: \.id) { tw in
+									TweetCardView(
+										avatar: tw.user.avatar,
+										username: tw.user.username,
+										nickname: tw.user.nickname,
+										createdAt: tw.createdAt,
+										text: tw.text,
+										media: tw.media,
+										comments: tw.comments,
+										retweets: tw.retweets,
+										likes: tw.likes,
+										views: tw.views,
+										bookmarks: tw.bookmarks,
+									)
+								}
+								if viewModel.tweets.isEmpty && viewModel.idle {
+									HStack {
+										Image(systemName: "signpost.right.and.left")
+										Text("Пусто...")
+									}
+									.frame(maxWidth: .infinity)
+								}
+							}
+							.padding(.vertical, 32)
 						}
-						.padding(.vertical, 32)
+						.animation(.default, value: viewModel.idle)
+						.padding(.horizontal, 16)
 					}
-					.animation(.default, value: viewModel.idle)
-					.padding(.horizontal, 16)
+					.navigationBarTitleDisplayMode(.inline)
 				}
-				.navigationBarTitleDisplayMode(.inline)
-			}
-			.scrollIndicators(.hidden)
-			.onAppear {
-				viewModel.setup()
+				.scrollIndicators(.hidden)
+				.onAppear {
+					viewModel.setup()
+				}
+				
+				VStack(spacing: 16) {
+					Divider()
+					HStack {
+						Image(systemName: "info.circle")
+						Text("Потяни вниз, чтобы изменить состояния (Pull-to-Refresh)")
+							.font(.system(size: 10))
+					}
+					.padding(.horizontal, 32)
+				}
+				.frame(maxWidth: .infinity)
+				.background(.background)
 			}
 		}
 	}

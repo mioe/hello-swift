@@ -8,6 +8,7 @@ struct MainViewProgressView: View {
 	var body: some View {
 		VStack {
 			Text(label)
+				.font(.system(size: 14))
 			ProgressView()
 		}
 		.foregroundStyle(.secondary)
