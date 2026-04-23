@@ -15,15 +15,15 @@ struct ContentView: View {
 			CustomTabBar(currentTab: $router.currentTab)
 		}
 		.environment(router)
-		.onAppear {
-			// вывод списка доступных шрифтов
-			for f in UIFont.familyNames.filter({
-				$0.hasPrefix("iA") || $0.hasPrefix("Lora")
-			}) {
-				let v = UIFont.fontNames(forFamilyName: f)
-				print("\(f): \(v)")
-			}
-		}
+		//		.onAppear {
+		//			// вывод списка доступных шрифтов
+		//			for f in UIFont.familyNames.filter({
+		//				$0.hasPrefix("iA") || $0.hasPrefix("Lora")
+		//			}) {
+		//				let v = UIFont.fontNames(forFamilyName: f)
+		//				print("\(f): \(v)")
+		//			}
+		//		}
 	}
 
 	@ViewBuilder
@@ -65,7 +65,7 @@ private struct CustomTabBar: View {
 		}
 		.padding(.horizontal, 12)
 		.frame(width: 200, height: 40)
-		.background(.red)
+		.background(.sAccent)
 		.clipShape(Capsule())
 		.shadow(color: .black.opacity(0.08), radius: 16, x: 0, y: 4)
 	}
@@ -85,11 +85,11 @@ private struct TabItem: View {
 			VStack(spacing: 0) {
 				Image(systemName: tab.iconName)
 					.font(.system(size: 18))
-					.foregroundStyle(isActive ? .primary : .secondary)
+					.foregroundStyle(isActive ? .white : .white.opacity(0.75))
 					.offset(y: 2)
 
 				Circle()
-					.fill(isActive ? Color.primary : Color.clear)
+					.fill(isActive ? .white : .clear)
 					.frame(width: 5, height: 5)
 					.offset(y: 8)
 					.matchedGeometryEffect(
