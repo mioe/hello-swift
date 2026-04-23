@@ -45,7 +45,7 @@ enum AppSchemaV1: VersionedSchema {
 		var iconName: String  // SF Symbol: "cup.and.saucer.fill"
 		var sortOrder: Int  // Для порядка отображения категорий
 
-		@Relationship(deleteRule: .nullify, inverse: \Yummy.category)
+		@Relationship(deleteRule: .cascade, inverse: \Yummy.category)
 		var yummies: [Yummy] = []
 
 		@Transient
