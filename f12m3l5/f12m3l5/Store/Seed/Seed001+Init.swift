@@ -3,7 +3,7 @@
 import Foundation
 import SwiftData
 
-enum Seed001Init: SeedMigration {
+enum Seed001Init: Seedable {
 	static let id = "001-init"
 
 	// MARK: - Up

@@ -36,6 +36,7 @@ class ModelContainerProvider {
 
 	private static func setModelContainerSchema() -> Schema {
 		return Schema([
+			SeedMigration.self,
 			Category.self,
 			Yummy.self,
 			Ticket.self,

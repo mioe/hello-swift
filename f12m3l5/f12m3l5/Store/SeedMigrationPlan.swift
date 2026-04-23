@@ -3,26 +3,20 @@
 import Foundation
 import SwiftData
 
-protocol SeedMigration {
-	static var id: String { get }  // 001-init
-	static func up(context: ModelContext) throws
-	static func down(context: ModelContext) throws
-}
-
+// MARK: - SeedMigrationPlan
 enum SeedMigrationPlan {
-	// MARK: - Registry - добавляй новые сиды сюда по порядку
-	static let migrations: [any SeedMigration.Type] = [
-		Seed001Init.self
+	static let migrations: [any Seedable.Type] = [
+		Seed001Init.self,
 	]
 
 	// MARK: - Run
 	static func run(context: ModelContext) {
 		for migration in migrations {
-			guard !isApplied(migration.id) else { continue }
+			guard !isApplied(migration.id, context: context) else { continue }
 			do {
 				try migration.up(context: context)
+				context.insert(SeedMigration(seedId: migration.id))
 				try context.save()
-				markApplied(migration.id)
 				print("[Seed] applied: \(migration.id)")
 			} catch {
 				print("[Seed] failed: \(migration.id) — \(error)")
@@ -38,33 +32,24 @@ enum SeedMigrationPlan {
 		}
 		do {
 			try migration.down(context: context)
+			try deleteSeedRecord(id, context: context)
 			try context.save()
-			markUnapplied(id)
 			print("[Seed] rolled back: \(id)")
 		} catch {
 			print("[Seed] rollback failed: \(id) — \(error)")
 		}
 	}
 
-	// MARK: - State (UserDefaults)
-	private static let defaultsKey = "appliedSeedMigrations"
-
-	static func isApplied(_ id: String) -> Bool {
-		applied.contains(id)
+	// MARK: - State (SwiftData)
+	static func isApplied(_ id: String, context: ModelContext) -> Bool {
+		let predicate = #Predicate<SeedMigration> { $0.seedId == id }
+		let count = try? context.fetchCount(FetchDescriptor(predicate: predicate))
+		return (count ?? 0) > 0
 	}
 
-	private static var applied: [String] {
-		UserDefaults.standard.stringArray(forKey: defaultsKey) ?? []
-	}
-
-	private static func markApplied(_ id: String) {
-		var list = applied
-		list.append(id)
-		UserDefaults.standard.set(list, forKey: defaultsKey)
-	}
-
-	private static func markUnapplied(_ id: String) {
-		let list = applied.filter { $0 != id }
-		UserDefaults.standard.set(list, forKey: defaultsKey)
+	private static func deleteSeedRecord(_ id: String, context: ModelContext) throws {
+		let predicate = #Predicate<SeedMigration> { $0.seedId == id }
+		let records = try context.fetch(FetchDescriptor(predicate: predicate))
+		records.forEach { context.delete($0) }
 	}
 }

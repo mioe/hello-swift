@@ -7,7 +7,7 @@ enum AppSchemaV1: VersionedSchema {
 	static var versionIdentifier = Schema.Version(1, 0, 0)
 
 	static var models: [any PersistentModel.Type] {
-		[Category.self, Yummy.self, Ticket.self, History.self]
+		[SeedMigration.self, Category.self, Yummy.self, Ticket.self, History.self]
 	}
 
 	// MARK: - Size (размер порции)
