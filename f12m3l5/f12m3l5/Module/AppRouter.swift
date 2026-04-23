@@ -4,11 +4,20 @@ import SwiftData
 import SwiftUI
 
 // MARK: - AppTab
-enum AppTab: Hashable {
+enum AppTab: Hashable, CaseIterable {
 	case home
 	case cart
 	case history
 	case settings
+
+	var iconName: String {
+		switch self {
+		case .home: "house"
+		case .cart: "bag"
+		case .history: "receipt"
+		case .settings: "gearshape"
+		}
+	}
 }
 
 // MARK: - AppRoute
