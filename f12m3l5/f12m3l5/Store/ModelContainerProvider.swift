@@ -10,6 +10,7 @@ typealias Ticket = AppSchemaV1.Ticket
 typealias History = AppSchemaV1.History
 
 // MARK: - init db
+// > https://youtu.be/CrWqfCDmPVI?si=iMI8c60upB4ZwJJv
 class ModelContainerProvider {
 	static func createModelContainer() -> ModelContainer {
 		let schema = setModelContainerSchema()
@@ -25,6 +26,8 @@ class ModelContainerProvider {
 				migrationPlan: ModelMigrationPlan.self,
 				configurations: [modelConfiguration]
 			)
+			SeedMigrationPlan.run(context: ModelContext(container))
+
 			return container
 		} catch {
 			fatalError("Could not create the Model Container: \(error)")
@@ -39,4 +42,5 @@ class ModelContainerProvider {
 			History.self,
 		])
 	}
+
 }
