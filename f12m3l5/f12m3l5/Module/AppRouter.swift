@@ -21,35 +21,19 @@ enum AppRoute: Hashable {
 @MainActor
 class AppRouter {
 	var currentTab: AppTab = .home
+	var homePath = NavigationPath()  // только home имеет дочерние страницы
 
-	var homePath = NavigationPath()
-	var cartPath = NavigationPath()
-	var historyPath = NavigationPath()
-
-	func push(_ route: AppRoute) {
-		switch currentTab {
-		case .home: homePath.append(route)
-		case .cart: cartPath.append(route)
-		case .history: historyPath.append(route)
-		case .settings: break
-		}
+	// /yummy/{uuid} — всегда открывается на home табе
+	func openYummyDetail(_ id: UUID) {
+		currentTab = .home
+		homePath.append(AppRoute.yummyDetail(id))
 	}
 
 	func pop() {
-		switch currentTab {
-		case .home: if !homePath.isEmpty { homePath.removeLast() }
-		case .cart: if !cartPath.isEmpty { cartPath.removeLast() }
-		case .history: if !historyPath.isEmpty { historyPath.removeLast() }
-		case .settings: break
-		}
+		if !homePath.isEmpty { homePath.removeLast() }
 	}
 
 	func popToRoot() {
-		switch currentTab {
-		case .home: homePath = NavigationPath()
-		case .cart: cartPath = NavigationPath()
-		case .history: historyPath = NavigationPath()
-		case .settings: break
-		}
+		homePath = NavigationPath()
 	}
 }

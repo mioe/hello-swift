@@ -35,9 +35,9 @@ private struct YummyDetailDestination: View {
 
 	var body: some View {
 		if let yummy = results.first {
-			Text(yummy.name)  // TODO: YummyDetailView(yummy: yummy)
+			YummyDetailView(yummy: yummy)
 		} else {
-			ContentUnavailableView("Not found", systemImage: "exclamationmark.circle")
+			ContentUnavailableView("404, вкусняшка не найдена", systemImage: "exclamationmark.triangle")
 		}
 	}
 }
