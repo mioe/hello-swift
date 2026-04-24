@@ -5,7 +5,6 @@ import SwiftUI
 struct PromotionCardView: View {
 
 	let yummy: Yummy
-	let isActive: Bool
 
 	var body: some View {
 
@@ -24,15 +23,10 @@ struct PromotionCardView: View {
 				}
 			}
 		}
-		.frame(maxWidth: .infinity)
-		.background(
-			isActive
-				? .sAccent
-				: .sAccentForeground
-		)
+		.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+		.padding(16)
+		.background(.sAccent)
 		.clipShape(.rect(cornerRadius: 20))
-		.scaleEffect(isActive ? 1.0 : 0.85)
-		.animation(.spring(response: 0.3, dampingFraction: 0.8), value: isActive)
 	}
 
 	@ViewBuilder

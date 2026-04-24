@@ -10,7 +10,7 @@ enum Seed002Promotions: Seedable {
 	static func up(context: ModelContext) throws {
 		let desserts = Category(
 			name: "Desserts",
-			iconName: "birthday.cake.fill",
+			iconName: "birthday.cake",
 			sortOrder: 2
 		)
 		context.insert(desserts)

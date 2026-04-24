@@ -7,14 +7,17 @@ struct HomeView: View {
 
 	@Query(filter: #Predicate<Yummy> { $0.isPromoted })
 	private var promotions: [Yummy]
-
 	@State private var activePromotionID: UUID?
+
+	@Query(sort: \Category.sortOrder, order: .reverse)
+	private var categories: [Category]
 
 	var body: some View {
 		ScrollView {
 			VStack(alignment: .leading, spacing: 32) {
 				HeaderView()
 				PromotionView()
+				CategoryView()
 			}
 		}
 		.scrollClipDisabled()
@@ -22,7 +25,7 @@ struct HomeView: View {
 		.padding(.top, 32)
 		.padding(.horizontal, 32)
 	}
-	
+
 	@ViewBuilder
 	private func HeaderView() -> some View {
 		HStack {
@@ -44,7 +47,7 @@ struct HomeView: View {
 						.scaledToFill()
 						.frame(width: 48, height: 48)
 						.clipShape(Circle())
-					
+
 					Circle()
 						.fill(.white)
 						.frame(width: 18, height: 18)
@@ -58,7 +61,7 @@ struct HomeView: View {
 			.buttonStyle(.plain)
 		}
 	}
-	
+
 	@ViewBuilder
 	private func PromotionView() -> some View {
 		VStack(alignment: .leading, spacing: 16) {
@@ -69,25 +72,40 @@ struct HomeView: View {
 			}
 
 			ScrollView(.horizontal) {
-				HStack(spacing: 4) {
+				HStack(spacing: 0) {
 					ForEach(promotions, id: \.id) { yummy in
 						PromotionCardView(
 							yummy: yummy,
-							isActive: activePromotionID == yummy.id
 						)
+						.frame(width: 300, height: 180)
+						.scrollTransition { content, phase in
+							content
+								.scaleEffect(phase.isIdentity ? 1.0 : 0.85)
+								.brightness(phase.isIdentity ? 0 : 0.15)
+						}
 					}
 				}
-				.scrollTargetLayout()
 			}
-			.scrollTargetBehavior(.viewAligned)
 			.scrollClipDisabled()
 			.scrollIndicators(.hidden)
-			.scrollPosition(id: $activePromotionID)
-			.onAppear {
-				if activePromotionID == nil {
-					activePromotionID = promotions.first?.id
+		}
+	}
+
+	@ViewBuilder
+	private func CategoryView() -> some View {
+		VStack(alignment: .leading, spacing: 16) {
+			SectionTitleView(title: "Categories")
+
+			ScrollView(.horizontal) {
+				HStack(spacing: 16) {
+					ForEach(categories, id: \.id) { category in
+						CategoryCardView(category: category)
+							.containerRelativeFrame(.horizontal, count: 2, spacing: 16)
+					}
 				}
 			}
+			.scrollClipDisabled()
+			.scrollIndicators(.hidden)
 		}
 	}
 }

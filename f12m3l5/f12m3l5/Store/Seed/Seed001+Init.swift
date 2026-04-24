@@ -10,12 +10,12 @@ enum Seed001Init: Seedable {
 	static func up(context: ModelContext) throws {
 		let beverages = Category(
 			name: "Beverages",
-			iconName: "cup.and.saucer.fill",
+			iconName: "cup.and.saucer",
 			sortOrder: 0
 		)
 		let foods = Category(
 			name: "Foods",
-			iconName: "fork.knife.circle.fill",
+			iconName: "fork.knife",
 			sortOrder: 1
 		)
 
