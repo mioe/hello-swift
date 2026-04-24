@@ -28,7 +28,7 @@ struct PromotionCardView: View {
 		.background(
 			isActive
 				? .sAccent
-				: .sSecondary
+				: .sAccentForeground
 		)
 		.clipShape(.rect(cornerRadius: 20))
 		.scaleEffect(isActive ? 1.0 : 0.85)
