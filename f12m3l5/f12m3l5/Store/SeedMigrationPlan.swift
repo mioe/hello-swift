@@ -7,6 +7,7 @@ import SwiftData
 enum SeedMigrationPlan {
 	static let migrations: [any Seedable.Type] = [
 		Seed001Init.self,
+		Seed002Promotions.self,
 	]
 
 	// MARK: - Run
