@@ -7,7 +7,7 @@ struct HomeView: View {
 
 	@Query(filter: #Predicate<Yummy> { $0.isPromoted })
 	private var promotions: [Yummy]
-	@State private var activePromotionID: UUID?
+	@State private var activePromotionID: UUID?  // костыль чтобы передать цвет внутрь компонента
 
 	@Query(sort: \Category.sortOrder, order: .reverse)
 	private var categories: [Category]
@@ -76,18 +76,26 @@ struct HomeView: View {
 					ForEach(promotions, id: \.id) { yummy in
 						PromotionCardView(
 							yummy: yummy,
+							color: activePromotionID == yummy.id
+								? .sAccent : .sAccentForeground
 						)
-						.frame(width: 300, height: 180)
 						.scrollTransition { content, phase in
 							content
 								.scaleEffect(phase.isIdentity ? 1.0 : 0.85)
-								.brightness(phase.isIdentity ? 0 : 0.15)
 						}
 					}
 				}
+				.scrollTargetLayout()
 			}
 			.scrollClipDisabled()
 			.scrollIndicators(.hidden)
+			.scrollTargetBehavior(.viewAligned)
+			.scrollPosition(id: $activePromotionID)
+			.onAppear {
+				if activePromotionID == nil {
+					activePromotionID = promotions.first?.id
+				}
+			}
 		}
 	}
 

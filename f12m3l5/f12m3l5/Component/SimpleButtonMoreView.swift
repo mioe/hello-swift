@@ -12,7 +12,7 @@ struct SimpleButtonMoreView: View {
 		} label: {
 			Text("More")
 				.iAWritterQuattroS(14)
-				.foregroundStyle(.sAccent)
+				.foregroundStyle(.sAccentForeground)
 		}
 		.buttonStyle(.plain)
 	}

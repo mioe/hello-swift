@@ -5,28 +5,38 @@ import SwiftUI
 struct PromotionCardView: View {
 
 	let yummy: Yummy
+	var color: Color = .sAccent
 
 	var body: some View {
+		ZStack(alignment: .bottomTrailing) {
+			VStack(alignment: .leading, spacing: 16) {
+				Text(yummy.name)
+					.lora(18)
+					.foregroundStyle(.white)
+					.multilineTextAlignment(.leading)
+					.frame(maxWidth: 160, alignment: .leading)
 
-		VStack(alignment: .leading, spacing: 8) {
-			Text(yummy.name)
-				.lora(18)
-				.foregroundStyle(.white)
-				.frame(maxWidth: 160)
-				.multilineTextAlignment(.leading)
+				HStack(spacing: 16) {
+					PriceView(yummy.basePrice, false)
 
-			HStack(spacing: 12) {
-				PriceView(yummy.basePrice, false)
-
-				if let originalPrice = yummy.originalPrice {
-					PriceView(originalPrice, true)
+					if let originalPrice = yummy.originalPrice {
+						PriceView(originalPrice, true)
+					}
 				}
 			}
+			.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+
+			Image(systemName: "gear")
+				.font(.system(size: 20))
+				.foregroundStyle(.sSecondary)
+				.offset(x: 16, y: -16)
 		}
-		.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-		.padding(16)
-		.background(.sAccent)
+		.padding(.horizontal, 32)
+		.containerRelativeFrame(.horizontal)
+		.frame(height: 160)
+		.background(color)
 		.clipShape(.rect(cornerRadius: 20))
+		.animation(.spring(response: 0.3, dampingFraction: 0.8), value: color)
 	}
 
 	@ViewBuilder
