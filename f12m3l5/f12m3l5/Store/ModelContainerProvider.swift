@@ -5,6 +5,7 @@ import SwiftData
 
 // MARK: - aliases for models
 typealias Category = AppSchemaV1.Category
+typealias Attachment = AppSchemaV1.Attachment
 typealias Yummy = AppSchemaV1.Yummy
 typealias Ticket = AppSchemaV1.Ticket
 typealias History = AppSchemaV1.History
@@ -38,6 +39,7 @@ class ModelContainerProvider {
 		return Schema([
 			SeedMigration.self,
 			Category.self,
+			Attachment.self,
 			Yummy.self,
 			Ticket.self,
 			History.self,

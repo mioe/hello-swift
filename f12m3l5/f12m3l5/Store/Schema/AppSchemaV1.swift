@@ -7,7 +7,10 @@ enum AppSchemaV1: VersionedSchema {
 	static var versionIdentifier = Schema.Version(1, 0, 0)
 
 	static var models: [any PersistentModel.Type] {
-		[SeedMigration.self, Category.self, Yummy.self, Ticket.self, History.self]
+		[
+			SeedMigration.self, Category.self, Attachment.self, Yummy.self,
+			Ticket.self, History.self,
+		]
 	}
 
 	// MARK: - Size (размер порции)
@@ -42,7 +45,6 @@ enum AppSchemaV1: VersionedSchema {
 	final class Category {
 		@Attribute(.unique) var id = UUID()
 		var name: String  // "Beverages"
-		var iconName: String  // SF Symbol: "cup.and.saucer.fill"
 		var sortOrder: Int  // Для порядка отображения категорий
 
 		@Relationship(deleteRule: .cascade, inverse: \Yummy.category)
@@ -53,25 +55,57 @@ enum AppSchemaV1: VersionedSchema {
 
 		init(
 			name: String,
-			iconName: String,
 			sortOrder: Int = 0
 		) {
 			self.name = name
-			self.iconName = iconName
 			self.sortOrder = sortOrder
+		}
+	}
+
+	// MARK: - Attachment
+	@Model
+	final class Attachment {
+		@Attribute(.unique) var id = UUID()
+		var name: String
+		var mimeType: String?
+		var fileSize: Int64?
+		var createdAt = Date()
+
+		@Attribute(.externalStorage)
+		var data: Data?
+
+		init(
+			id: UUID = UUID(),
+			name: String,
+			mimeType: String? = nil,
+			fileSize: Int64? = nil,
+			data: Data? = nil,
+			createdAt: Date = .now
+		) {
+			self.id = id
+			self.name = name
+			self.mimeType = mimeType
+			self.fileSize = fileSize
+			self.data = data
+			self.createdAt = createdAt
 		}
 	}
 
 	// MARK: - Yummy (товар-вкусняшка)
 	@Model
 	final class Yummy {
+		// required
 		@Attribute(.unique) var id = UUID()
 		var name: String  // "Hot Sweet Indonesian Tea"
 		var info: String  // !description конфликтует с CustomStringConvertible
-		var image: String  // "{name}-img"
 		var category: Category
-
 		var basePrice: Decimal  // цена за Sm
+		var createdAt = Date()
+
+		/// optional
+		@Relationship(deleteRule: .cascade)
+		var image: Attachment?
+
 		var originalPrice: Decimal?  // зачёркнутая ($9.5)
 		var availableSizes: [Size]
 
@@ -83,26 +117,23 @@ enum AppSchemaV1: VersionedSchema {
 		init(
 			name: String,
 			info: String,
-			image: String,
 			category: Category,
 			basePrice: Decimal,
 			originalPrice: Decimal? = nil,
 			availableSizes: [Size] = [],
 			rating: Double = 0,
 			isFeatured: Bool = false,
-			isPromoted: Bool = false,
+			isPromoted: Bool = false
 		) {
 			self.name = name
 			self.info = info
-			self.image = image
-			self.basePrice = basePrice
 			self.category = category
+			self.basePrice = basePrice
 			self.originalPrice = originalPrice
 			self.availableSizes = availableSizes
 			self.rating = rating
 			self.isFeatured = isFeatured
 			self.isPromoted = isPromoted
-			self.category = category
 		}
 
 		func price(for size: Size) -> Decimal {
@@ -122,6 +153,7 @@ enum AppSchemaV1: VersionedSchema {
 		@Attribute(.unique) var id = UUID()
 		var quantity: Int
 		var size: Size
+		var createdAt = Date()
 
 		// snapshot'ы: товар могут удалить, а в истории цифры остаются
 		var nameSnapshot: String
@@ -152,6 +184,7 @@ enum AppSchemaV1: VersionedSchema {
 		var orderedAt: Date
 		var totalPrice: Decimal
 		var status: OrderStatus
+		var createdAt = Date()
 
 		// cascade - удалили заказ, удалились все тикеты !
 		@Relationship(deleteRule: .cascade, inverse: \Ticket.history)

@@ -7,6 +7,15 @@ struct PromotionCardView: View {
 	let yummy: Yummy
 	var color: Color = .sAccent
 
+	private var iconName: String {
+		switch yummy.category.name {
+		case "Beverages": "cup.and.heat.waves"
+		case "Foods": "fork.knife"
+		case "Desserts": "birthday.cake"
+		default: "sparkles"
+		}
+	}
+
 	var body: some View {
 		ZStack(alignment: .bottomTrailing) {
 			VStack(alignment: .leading, spacing: 16) {
@@ -26,10 +35,10 @@ struct PromotionCardView: View {
 			}
 			.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
-			Image(systemName: "gear")
+			Image(systemName: iconName)
 				.font(.system(size: 20))
 				.foregroundStyle(.sSecondary)
-				.offset(x: 16, y: -16)
+				.offset(x: 8, y: -24)
 		}
 		.padding(.horizontal, 32)
 		.containerRelativeFrame(.horizontal)

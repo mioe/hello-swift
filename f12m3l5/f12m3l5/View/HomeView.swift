@@ -18,12 +18,12 @@ struct HomeView: View {
 				HeaderView()
 				PromotionView()
 				CategoryView()
+				FavoriteView()
 			}
 		}
 		.scrollClipDisabled()
 		.scrollIndicators(.hidden)
-		.padding(.top, 32)
-		.padding(.horizontal, 32)
+		.padding(32)
 	}
 
 	@ViewBuilder
@@ -66,7 +66,7 @@ struct HomeView: View {
 	private func PromotionView() -> some View {
 		VStack(alignment: .leading, spacing: 16) {
 			HStack {
-				SectionTitleView(title: "✨ Promotion")
+				SectionTitleView(title: "🐥🐥🐣 Promotion")
 				Spacer()
 				SimpleButtonMoreView(onTap: { print("onTap: more") })
 			}
@@ -114,6 +114,19 @@ struct HomeView: View {
 			}
 			.scrollClipDisabled()
 			.scrollIndicators(.hidden)
+		}
+	}
+
+	@ViewBuilder
+	private func FavoriteView() -> some View {
+		VStack(alignment: .leading, spacing: 16) {
+			HStack {
+				SectionTitleView(title: "Featured")
+				Spacer()
+				SimpleButtonMoreView(onTap: { print("onTap: more") })
+			}
+			
+			
 		}
 	}
 }
