@@ -40,7 +40,7 @@ struct HomeView: View {
 					.foregroundStyle(.sPrimary)
 				Text("Misha Gezha")
 					.lora(24)
-					.foregroundStyle(.sAccent)
+					.foregroundStyle(.sPrimary)
 			}
 			Spacer()
 			Button {
@@ -73,7 +73,7 @@ struct HomeView: View {
 			HStack {
 				SectionTitleView(title: "🐥🐥🐣 Promotion")
 				Spacer()
-				SimpleButtonMoreView(onTap: { print("onTap: more") })
+				SimpleButtonMoreView(onTap: {})
 			}
 
 			ScrollView(.horizontal) {
@@ -81,6 +81,7 @@ struct HomeView: View {
 					ForEach(promotions, id: \.id) { yummy in
 						PromotionCardView(
 							yummy: yummy,
+							onTap: handleOpenYummyDetail,
 							color: activePromotionID == yummy.id
 								? .sAccent : .sAccentForeground
 						)
@@ -112,8 +113,11 @@ struct HomeView: View {
 			ScrollView(.horizontal) {
 				HStack(spacing: 16) {
 					ForEach(categories, id: \.id) { category in
-						CategoryCardView(category: category)
-							.containerRelativeFrame(.horizontal, count: 2, spacing: 16)
+						CategoryCardView(
+							category: category,
+							onTap: { print("onTap: category") }
+						)
+						.containerRelativeFrame(.horizontal, count: 2, spacing: 16)
 					}
 				}
 			}
@@ -134,13 +138,21 @@ struct HomeView: View {
 			ScrollView(.horizontal) {
 				HStack(alignment: .top, spacing: 16) {
 					ForEach(featured, id: \.id) { yummy in
-						YummyCardView(yummy: yummy)
-							.containerRelativeFrame(.horizontal, count: 2, spacing: 16)
+						YummyCardView(
+							yummy: yummy,
+							onTap: handleOpenYummyDetail,
+							onTapCart: { print("onTap: cart") }
+						)
+						.containerRelativeFrame(.horizontal, count: 2, spacing: 16)
 					}
 				}
 			}
 			.scrollClipDisabled()
 			.scrollIndicators(.hidden)
 		}
+	}
+
+	private func handleOpenYummyDetail() {
+		print("handleOpenYummyDetail")
 	}
 }

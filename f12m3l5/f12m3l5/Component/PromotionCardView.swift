@@ -5,6 +5,7 @@ import SwiftUI
 struct PromotionCardView: View {
 
 	let yummy: Yummy
+	let onTap: () -> Void
 	var color: Color = .sAccent
 
 	private var iconName: String {
@@ -17,35 +18,40 @@ struct PromotionCardView: View {
 	}
 
 	var body: some View {
-		ZStack(alignment: .bottomTrailing) {
-			VStack(alignment: .leading, spacing: 16) {
-				Text(yummy.name)
-					.lora(18)
-					.foregroundStyle(.white)
-					.multilineTextAlignment(.leading)
-					.frame(maxWidth: 160, alignment: .leading)
-
-				HStack(spacing: 16) {
-					PriceView(yummy.basePrice, false)
-
-					if let originalPrice = yummy.originalPrice {
-						PriceView(originalPrice, true)
+		Button {
+			onTap()
+		} label: {
+			ZStack(alignment: .bottomTrailing) {
+				VStack(alignment: .leading, spacing: 16) {
+					Text(yummy.name)
+						.lora(20)
+						.foregroundStyle(.white)
+						.multilineTextAlignment(.leading)
+						.frame(maxWidth: 140, alignment: .leading)
+					
+					HStack(spacing: 16) {
+						PriceView(yummy.basePrice, false)
+						
+						if let originalPrice = yummy.originalPrice {
+							PriceView(originalPrice, true)
+						}
 					}
 				}
+				.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+				
+				Image(systemName: iconName)
+					.font(.system(size: 20))
+					.foregroundStyle(.sSecondary)
+					.offset(x: 8, y: -24)
 			}
-			.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-
-			Image(systemName: iconName)
-				.font(.system(size: 20))
-				.foregroundStyle(.sSecondary)
-				.offset(x: 8, y: -24)
+			.padding(.horizontal, 32)
+			.containerRelativeFrame(.horizontal)
+			.frame(height: 140)
+			.background(color)
+			.clipShape(.rect(cornerRadius: 20))
+			.animation(.spring(response: 0.3, dampingFraction: 0.8), value: color)
 		}
-		.padding(.horizontal, 32)
-		.containerRelativeFrame(.horizontal)
-		.frame(height: 160)
-		.background(color)
-		.clipShape(.rect(cornerRadius: 20))
-		.animation(.spring(response: 0.3, dampingFraction: 0.8), value: color)
+		.buttonStyle(.plain)
 	}
 
 	@ViewBuilder

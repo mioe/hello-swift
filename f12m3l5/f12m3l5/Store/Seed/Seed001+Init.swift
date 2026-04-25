@@ -23,6 +23,7 @@ enum Seed001Init: Seedable {
 						"Нежный фисташковый сырок с бархатистой кремовой текстурой и тонким ореховым послевкусием. Тает во рту, оставляя лёгкую сладость и аромат свежей фисташки.",
 					category: desserts,
 					basePrice: 3.5,
+					originalPrice: 3.0,
 					availableSizes: [.md],
 					rating: 4.9,
 					isFeatured: true
@@ -35,6 +36,7 @@ enum Seed001Init: Seedable {
 						"Классическая «Картошка» в изысканном фисташковом исполнении — с шелковистым кремом и тонкой белой глазурью. Орехово-сладкий аромат фисташки раскрывается с каждым кусочком, даря ощущение уютного домашнего десерта.",
 					category: desserts,
 					basePrice: 4.2,
+					originalPrice: 4.0,
 					availableSizes: [.sm, .md],
 					rating: 4.7,
 					isFeatured: true
@@ -59,6 +61,7 @@ enum Seed001Init: Seedable {
 						"Пасхальный кулич с пышным миндально-ореховым кремом, закрученным в аппетитную спираль. Нежное тесто и насыщенная ореховая начинка создают тот самый праздничный вкус, который хочется помнить весь год.",
 					category: desserts,
 					basePrice: 5.8,
+					originalPrice: 5.0,
 					availableSizes: [.sm, .md, .lr, .xl],
 					rating: 5.0,
 					isFeatured: true,
@@ -85,6 +88,7 @@ enum Seed001Init: Seedable {
 						"Классический капучино с бархатистой молочной пенкой и фирменным латте-арт сердцем. Насыщенный кофейный аромат и нежная сливочность — простое удовольствие в каждом глотке.",
 					category: beverages,
 					basePrice: 4.5,
+					originalPrice: 4.0,
 					availableSizes: [.md],
 					rating: 4.8,
 					isPromoted: true
@@ -108,6 +112,7 @@ enum Seed001Init: Seedable {
 						"Освежающий айс матча латте с насыщенным травянистым вкусом японского чая и нежным молочным основанием. Бодрит мягче кофе, а цвет поднимает настроение с первого взгляда.",
 					category: beverages,
 					basePrice: 5.5,
+					originalPrice: 4.5,
 					availableSizes: [.sm, .md, .lr],
 					rating: 4.7
 				), "12-14-2025-img-3"
@@ -152,6 +157,7 @@ enum Seed001Init: Seedable {
 						"Кремовая каша с хрустящей гранолой, спелой клубникой, черникой и бананом — питательный заряд на весь день. Свежо, сытно и красиво — как завтрак в любимом кафе.",
 					category: foods,
 					basePrice: 6.9,
+					originalPrice: 5.9,
 					availableSizes: [.md],
 					rating: 4.9,
 					isPromoted: true
