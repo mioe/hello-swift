@@ -29,7 +29,7 @@ struct HomeView: View {
 		.scrollClipDisabled()
 		.scrollIndicators(.hidden)
 		.padding(.horizontal, 32)
-		.padding(.top, 32)
+		.padding(.top, 24)
 		.padding(.bottom, 64)
 	}
 

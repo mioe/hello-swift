@@ -65,6 +65,7 @@ struct YummyDetailView: View {
 
 	@ViewBuilder
 	private func HeaderOverlay() -> some View {
+		// #TODO - переместить в CustomNavigationView
 		HStack {
 			Button {
 				router.pop()
