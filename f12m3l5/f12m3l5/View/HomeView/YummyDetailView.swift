@@ -198,6 +198,7 @@ struct YummyDetailView: View {
 					.font(.system(size: 14, weight: .semibold))
 					.foregroundStyle(.sPrimary)
 					.frame(width: 24, height: 24)
+					.contentShape(Circle())
 			}
 			.buttonStyle(.plain)
 			.disabled(qty <= 1)
@@ -214,6 +215,7 @@ struct YummyDetailView: View {
 					.font(.system(size: 14, weight: .semibold))
 					.foregroundStyle(.sPrimary)
 					.frame(width: 24, height: 24)
+					.contentShape(Circle())
 			}
 			.buttonStyle(.plain)
 		}
