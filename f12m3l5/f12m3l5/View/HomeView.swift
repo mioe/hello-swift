@@ -12,6 +12,9 @@ struct HomeView: View {
 	@Query(sort: \Category.sortOrder, order: .reverse)
 	private var categories: [Category]
 
+	@Query(filter: #Predicate<Yummy> { $0.isFeatured })
+	private var featured: [Yummy]
+
 	var body: some View {
 		ScrollView {
 			VStack(alignment: .leading, spacing: 32) {
@@ -23,7 +26,9 @@ struct HomeView: View {
 		}
 		.scrollClipDisabled()
 		.scrollIndicators(.hidden)
-		.padding(32)
+		.padding(.horizontal, 32)
+		.padding(.top, 32)
+		.padding(.bottom, 64)
 	}
 
 	@ViewBuilder
@@ -125,8 +130,17 @@ struct HomeView: View {
 				Spacer()
 				SimpleButtonMoreView(onTap: { print("onTap: more") })
 			}
-			
-			
+
+			ScrollView(.horizontal) {
+				HStack(alignment: .top, spacing: 16) {
+					ForEach(featured, id: \.id) { yummy in
+						YummyCardView(yummy: yummy)
+							.containerRelativeFrame(.horizontal, count: 2, spacing: 16)
+					}
+				}
+			}
+			.scrollClipDisabled()
+			.scrollIndicators(.hidden)
 		}
 	}
 }
