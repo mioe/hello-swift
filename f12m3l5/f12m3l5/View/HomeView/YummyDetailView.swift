@@ -9,8 +9,12 @@ struct YummyDetailView: View {
 	var yummy: Yummy
 
 	@State private var selectedSize: YummySize = .md
-	@State private var quantity: Int = 1
-	@State private var isBookmarked = false
+	@State private var qty: Int = 1
+	@State private var heroImage: Image?  // при смене размера body пересчитывается, но Image уже готовый, без перекодирования JPEG → мерцания нет
+
+	private var withoutImage: Bool {
+		yummy.image == nil
+	}
 
 	private var availableSizes: [YummySize] {
 		yummy.availableSizes.isEmpty ? YummySize.allCases : yummy.availableSizes
@@ -20,8 +24,8 @@ struct YummyDetailView: View {
 		yummy.price(for: selectedSize)
 	}
 
-	private var total: Decimal {
-		unitPrice * Decimal(quantity)
+	private var totalPrice: Decimal {
+		unitPrice * Decimal(qty)
 	}
 
 	var body: some View {
@@ -35,6 +39,9 @@ struct YummyDetailView: View {
 			if !availableSizes.contains(selectedSize) {
 				selectedSize = availableSizes.first ?? .md
 			}
+			if heroImage == nil, let data = yummy.image?.data {
+				heroImage = Image(data: data)
+			}
 		}
 	}
 
@@ -42,24 +49,14 @@ struct YummyDetailView: View {
 	private func HeroView() -> some View {
 		ZStack(alignment: .top) {
 			Group {
-				if let data = yummy.image?.data,
-					let image = Image(data: data)
-				{
-					image
+				if let heroImage {
+					heroImage
 						.resizable()
 						.scaledToFill()
-				} else {
-					Rectangle()
-						.fill(.sAccent.opacity(0.06))
-						.overlay {
-							Image(systemName: "photo")
-								.font(.system(size: 56))
-								.foregroundStyle(.sAccent.opacity(0.2))
-						}
 				}
 			}
 			.frame(maxWidth: .infinity)
-			.frame(height: 320)
+			.frame(minHeight: 96, maxHeight: withoutImage ? 96 : 320)
 			.clipped()
 
 			HeaderOverlay()
@@ -73,8 +70,7 @@ struct YummyDetailView: View {
 				router.pop()
 			} label: {
 				Image(systemName: "arrow.left")
-					.font(.system(size: 18, weight: .bold))
-					.foregroundStyle(.white)
+					.font(.system(size: 18, weight: .medium))
 					.frame(width: 40, height: 40)
 					.contentShape(Circle())  // дает кликабильную зону (если нет background-а)
 			}
@@ -84,7 +80,6 @@ struct YummyDetailView: View {
 
 			Text("Details")
 				.lora(18)
-				.foregroundStyle(.white)
 
 			Spacer()
 
@@ -92,8 +87,7 @@ struct YummyDetailView: View {
 				print("onTap: bookmark")
 			} label: {
 				Image(systemName: "bookmark")
-					.font(.system(size: 18, weight: .bold))
-					.foregroundStyle(.white)
+					.font(.system(size: 18, weight: .medium))
 					.frame(width: 40, height: 40)
 					.contentShape(Circle())
 			}
@@ -101,21 +95,24 @@ struct YummyDetailView: View {
 		}
 		.padding(.horizontal, 32)
 		.padding(.top, 56)
+		.foregroundStyle(withoutImage ? .sPrimary : .white)
 	}
 
 	@ViewBuilder
 	private func DetailsView() -> some View {
-		VStack(spacing: 24) {
+		VStack(spacing: 32) {
 			VStack(spacing: 16) {
 				Text(yummy.name)
 					.lora(20)
 					.foregroundStyle(.sPrimary)
 					.multilineTextAlignment(.center)
+					.fixedSize(horizontal: false, vertical: true)
 
 				Text("\(yummy.info)")
 					.iAWritterQuattroS(14)
 					.foregroundStyle(.sPrimary.opacity(0.8))
 					.multilineTextAlignment(.center)
+					.fixedSize(horizontal: false, vertical: true)
 			}
 
 			SizePickerView()
@@ -126,21 +123,25 @@ struct YummyDetailView: View {
 				QuantityStepperView()
 			}
 
-			Text(
-				"*) Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
-			)
-			.iAWritterQuattroS(11)
-			.foregroundStyle(.sPrimary.opacity(0.5))
-			.frame(maxWidth: .infinity, alignment: .leading)
+			if withoutImage {  // костыль но я хз как сделать одинаковое поведение
+				Spacer()
+			}
 
-			Spacer(minLength: 0)
+			VStack(spacing: 16) {
+				Text(
+					"*)Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
+				)
+				.iAWritterQuattroS(10)
+				.foregroundStyle(.sPrimary.opacity(0.8))
+				.frame(maxWidth: .infinity, alignment: .leading)
+				.fixedSize(horizontal: false, vertical: true)
 
-			PlaceOrderButton()
+				PlaceOrderButton()
+			}
 		}
 		.padding(.horizontal, 32)
 		.padding(.top, 32)
-		.padding(.bottom, 64)
-		.frame(maxHeight: .infinity)
+		.padding(.bottom, 72)
 	}
 
 	@ViewBuilder
@@ -160,7 +161,6 @@ struct YummyDetailView: View {
 							selectedSize == size ? .sSecondary : .sSecondary.opacity(0.5)
 						)
 						.clipShape(.rect(cornerRadius: 18))
-						
 				}
 				.buttonStyle(.plain)
 			}
@@ -175,7 +175,7 @@ struct YummyDetailView: View {
 				.foregroundStyle(.sPrimary)
 			HStack(spacing: 2) {
 				Text("$")
-					.iAWritterQuattroS(20)
+					.iAWritterQuattroS(22)
 				Text(
 					unitPrice,
 					format: .number.precision(.fractionLength(0...2)).locale(
@@ -192,7 +192,7 @@ struct YummyDetailView: View {
 	private func QuantityStepperView() -> some View {
 		HStack(spacing: 16) {
 			Button {
-				if quantity > 1 { quantity -= 1 }
+				if qty > 1 { qty -= 1 }
 			} label: {
 				Image(systemName: "minus")
 					.font(.system(size: 14, weight: .semibold))
@@ -200,15 +200,15 @@ struct YummyDetailView: View {
 					.frame(width: 24, height: 24)
 			}
 			.buttonStyle(.plain)
-			.disabled(quantity <= 1)
+			.disabled(qty <= 1)
 
-			Text("\(quantity)")
+			Text("\(qty)")
 				.iAWritterQuattroS(16)
 				.foregroundStyle(.sPrimary)
 				.frame(minWidth: 16)
 
 			Button {
-				quantity += 1
+				qty += 1
 			} label: {
 				Image(systemName: "plus")
 					.font(.system(size: 14, weight: .semibold))
@@ -228,17 +228,17 @@ struct YummyDetailView: View {
 	@ViewBuilder
 	private func PlaceOrderButton() -> some View {
 		Button {
-			print("onTap: place order \(quantity) × \(selectedSize.shortLabel)")
+			print("onTap: place order \(qty) × \(selectedSize.shortLabel)")
 		} label: {
-			HStack(spacing: 12) {
-				Text("PLACE ORDER")
-					.iAWritterQuattroS(14)
+			HStack(spacing: 16) {
+				Text("Place order")
+					.lora(14)
 					.foregroundStyle(.white)
 				HStack(spacing: 2) {
 					Text("$")
 						.iAWritterQuattroS(14)
 					Text(
-						total,
+						totalPrice,
 						format: .number.precision(.fractionLength(0...2)).locale(
 							Locale(identifier: "en_US")
 						)
@@ -248,7 +248,7 @@ struct YummyDetailView: View {
 				.foregroundStyle(.white.opacity(0.5))
 			}
 			.frame(maxWidth: .infinity)
-			.frame(height: 56)
+			.frame(height: 48)
 			.background(.sAccent)
 			.clipShape(Capsule())
 		}

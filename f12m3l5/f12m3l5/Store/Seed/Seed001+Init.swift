@@ -33,7 +33,7 @@ enum Seed001Init: Seedable {
 				Yummy(
 					name: "Фисташковое пирожное картошка",
 					info:
-						"Классическая «Картошка» в изысканном фисташковом исполнении — с шелковистым кремом и тонкой белой глазурью. Орехово-сладкий аромат фисташки раскрывается с каждым кусочком, даря ощущение уютного домашнего десерта.",
+						"Не классическая «Картошка» в изысканном фисташковом исполнении — с шелковистым кремом и тонкой белой глазурью. Орехово-сладкий аромат фисташки раскрывается с каждым кусочком, даря ощущение уютного домашнего десерта.",
 					category: desserts,
 					basePrice: 4.2,
 					originalPrice: 4.0,
@@ -79,7 +79,7 @@ enum Seed001Init: Seedable {
 					availableSizes: [.sm, .md, .lr, .xl],
 					rating: 4.5,
 					isPromoted: true
-				), "04-25-2026-img-4"
+				), nil
 			),
 			(
 				Yummy(
@@ -92,7 +92,7 @@ enum Seed001Init: Seedable {
 					availableSizes: [.md],
 					rating: 4.8,
 					isPromoted: true
-				), "12-14-2025-img-1"
+				), nil
 			),
 			(
 				Yummy(
@@ -103,7 +103,7 @@ enum Seed001Init: Seedable {
 					basePrice: 5.9,
 					availableSizes: [.md],
 					rating: 4.6
-				), "12-14-2025-img-2"
+				), nil
 			),
 			(
 				Yummy(
@@ -115,7 +115,7 @@ enum Seed001Init: Seedable {
 					originalPrice: 4.5,
 					availableSizes: [.sm, .md, .lr],
 					rating: 4.7
-				), "12-14-2025-img-3"
+				), nil
 			),
 			(
 				Yummy(
@@ -126,7 +126,7 @@ enum Seed001Init: Seedable {
 					basePrice: 3.8,
 					availableSizes: [.sm, .md, .lr],
 					rating: 4.3
-				), "12-14-2025-img-4"
+				), nil
 			),
 			(
 				Yummy(
@@ -137,7 +137,7 @@ enum Seed001Init: Seedable {
 					basePrice: 7.5,
 					availableSizes: [.sm, .md],
 					rating: 4.5
-				), "04-25-2026-img-2"
+				), nil
 			),
 			(
 				Yummy(
@@ -148,7 +148,7 @@ enum Seed001Init: Seedable {
 					basePrice: 8.5,
 					availableSizes: [.sm, .md],
 					rating: 4.2
-				), "04-25-2026-img-3"
+				), nil
 			),
 			(
 				Yummy(
@@ -161,7 +161,7 @@ enum Seed001Init: Seedable {
 					availableSizes: [.md],
 					rating: 4.9,
 					isPromoted: true
-				), "04-25-2026-img-1"
+				), nil
 			),
 		]
 
