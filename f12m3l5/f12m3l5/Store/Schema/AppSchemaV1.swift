@@ -13,14 +13,14 @@ enum AppSchemaV1: VersionedSchema {
 		]
 	}
 
-	// MARK: - Size (размер порции)
+	// MARK: - YummySize (размер порции)
 	/// protocol conformance synthesis - ближайший аналог в Rust это derive-макросы
 	/// js аналоги:
 	/// String == string union
 	/// Codable == JSON.stringify
 	/// CaseIterable == Object.values(E)
-	/// output -> Size[sm] = { priceMultiplier, shortLabel }
-	enum Size: String, Codable, CaseIterable {
+	/// output -> YummySize[sm] = { priceMultiplier, shortLabel }
+	enum YummySize: String, Codable, CaseIterable {
 		case sm, md, lr, xl
 
 		var priceMultiplier: Decimal {  // умножаем стоимость при выборе размера
@@ -107,7 +107,7 @@ enum AppSchemaV1: VersionedSchema {
 		var image: Attachment?
 
 		var originalPrice: Decimal?  // зачёркнутая ($9.5)
-		var availableSizes: [Size]
+		var availableSizes: [YummySize]
 
 		/// метаданные
 		var rating: Double
@@ -120,7 +120,7 @@ enum AppSchemaV1: VersionedSchema {
 			category: Category,
 			basePrice: Decimal,
 			originalPrice: Decimal? = nil,
-			availableSizes: [Size] = [],
+			availableSizes: [YummySize] = [],
 			rating: Double = 0,
 			isFeatured: Bool = false,
 			isPromoted: Bool = false
@@ -136,7 +136,7 @@ enum AppSchemaV1: VersionedSchema {
 			self.isPromoted = isPromoted
 		}
 
-		func price(for size: Size) -> Decimal {
+		func price(for size: YummySize) -> Decimal {
 			basePrice * size.priceMultiplier
 		}
 
@@ -152,7 +152,7 @@ enum AppSchemaV1: VersionedSchema {
 	final class Ticket {
 		@Attribute(.unique) var id = UUID()
 		var quantity: Int
-		var size: Size
+		var size: YummySize
 		var createdAt = Date()
 
 		// snapshot'ы: товар могут удалить, а в истории цифры остаются
@@ -165,7 +165,7 @@ enum AppSchemaV1: VersionedSchema {
 		// обратная связь на заказ
 		var history: History?
 
-		init(yummy: Yummy, quantity: Int, size: Size) {
+		init(yummy: Yummy, quantity: Int, size: YummySize) {
 			self.quantity = quantity
 			self.size = size
 			self.nameSnapshot = yummy.name

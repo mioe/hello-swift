@@ -5,6 +5,8 @@ import SwiftUI
 
 struct HomeView: View {
 
+	@Environment(AppRouter.self) private var router
+
 	@Query(filter: #Predicate<Yummy> { $0.isPromoted })
 	private var promotions: [Yummy]
 	@State private var activePromotionID: UUID?  // костыль чтобы передать цвет внутрь компонента
@@ -81,7 +83,7 @@ struct HomeView: View {
 					ForEach(promotions, id: \.id) { yummy in
 						PromotionCardView(
 							yummy: yummy,
-							onTap: handleOpenYummyDetail,
+							onTap: { handleOpenYummyDetail(yummy) },
 							color: activePromotionID == yummy.id
 								? .sAccent : .sAccentForeground
 						)
@@ -140,7 +142,7 @@ struct HomeView: View {
 					ForEach(featured, id: \.id) { yummy in
 						YummyCardView(
 							yummy: yummy,
-							onTap: handleOpenYummyDetail,
+							onTap: { handleOpenYummyDetail(yummy) },
 							onTapCart: { print("onTap: cart") }
 						)
 						.containerRelativeFrame(.horizontal, count: 2, spacing: 16)
@@ -152,7 +154,7 @@ struct HomeView: View {
 		}
 	}
 
-	private func handleOpenYummyDetail() {
-		print("handleOpenYummyDetail")
+	private func handleOpenYummyDetail(_ yummy: Yummy) {
+		router.openYummyDetail(yummy.id)
 	}
 }
