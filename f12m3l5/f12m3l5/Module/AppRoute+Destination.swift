@@ -10,6 +10,12 @@ struct AppRouteDestinations: ViewModifier {
 				switch route {
 				case .yummyDetail(let id):
 					YummyDetailDestination(id: id)  // /yummy/{uuid}
+				case .category(let id):
+					CategoryDestination(id: id)  // /category/{uuid}
+				case .favorited:
+					FavoritedView()  // /favorited
+				case .promotion:
+					PromotionView()  // /promotion
 				}
 			}
 	}
@@ -39,6 +45,28 @@ private struct YummyDetailDestination: View {
 		} else {
 			ContentUnavailableView(
 				"404, вкусняшка не найдена",
+				systemImage: "exclamationmark.triangle"
+			)
+		}
+	}
+}
+
+private struct CategoryDestination: View {
+	let id: UUID
+
+	@Query private var results: [Category]
+
+	init(id: UUID) {
+		self.id = id
+		_results = Query(filter: #Predicate<Category> { $0.id == id })
+	}
+
+	var body: some View {
+		if let category = results.first {
+			CategoryView(category: category)
+		} else {
+			ContentUnavailableView(
+				"404, категория не найдена",
 				systemImage: "exclamationmark.triangle"
 			)
 		}

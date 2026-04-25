@@ -46,7 +46,7 @@ struct HomeView: View {
 			}
 			Spacer()
 			Button {
-				print("onTap: avatar")
+				handleOpenSettingsView()
 			} label: {
 				ZStack(alignment: .topTrailing) {
 					Image(._1775640178368)
@@ -75,7 +75,7 @@ struct HomeView: View {
 			HStack {
 				SectionTitleView(title: "🐥🐥🐣 Promotion")
 				Spacer()
-				SimpleButtonMoreView(onTap: {})
+				SimpleButtonMoreView(onTap: { handleOpenPromotion() })
 			}
 
 			ScrollView(.horizontal) {
@@ -117,7 +117,7 @@ struct HomeView: View {
 					ForEach(categories, id: \.id) { category in
 						CategoryCardView(
 							category: category,
-							onTap: { print("onTap: category") }
+							onTap: { handleOpenCategory(category) }
 						)
 						.containerRelativeFrame(.horizontal, count: 2, spacing: 16)
 					}
@@ -134,7 +134,7 @@ struct HomeView: View {
 			HStack {
 				SectionTitleView(title: "Featured")
 				Spacer()
-				SimpleButtonMoreView(onTap: { print("onTap: more") })
+				SimpleButtonMoreView(onTap: { handleOpenFavorited() })
 			}
 
 			ScrollView(.horizontal) {
@@ -156,5 +156,21 @@ struct HomeView: View {
 
 	private func handleOpenYummyDetail(_ yummy: Yummy) {
 		router.openYummyDetail(yummy.id)
+	}
+
+	private func handleOpenCategory(_ category: Category) {
+		router.openCategory(category.id)
+	}
+
+	private func handleOpenPromotion() {
+		router.openPromotion()
+	}
+
+	private func handleOpenFavorited() {
+		router.openFavorited()
+	}
+
+	private func handleOpenSettingsView() {
+		router.currentTab = .settings
 	}
 }

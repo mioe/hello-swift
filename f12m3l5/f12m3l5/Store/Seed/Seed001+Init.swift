@@ -24,7 +24,7 @@ enum Seed001Init: Seedable {
 					category: desserts,
 					basePrice: 3.5,
 					originalPrice: 3.0,
-					availableSizes: [.md],
+					availableSizes: [.md, .xl],
 					rating: 4.9,
 					isFeatured: true
 				), "img-1"
@@ -49,7 +49,7 @@ enum Seed001Init: Seedable {
 						"Румяное печенье с хрустящей корочкой и мягкой серединкой, посыпанное крупной морской солью. Золотистое, воздушное — с тонким балансом сладкого и солёного в каждом укусе.",
 					category: desserts,
 					basePrice: 2.5,
-					availableSizes: [.md],
+					availableSizes: [.sm, .md, .lr],
 					rating: 5.0,
 					isFeatured: true
 				), "img-3"
