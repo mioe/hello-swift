@@ -11,22 +11,25 @@ struct SettingsView: View {
 	private var changelogs: [Changelog]
 
 	var body: some View {
-		ScrollView {
-			VStack(alignment: .leading, spacing: 32) {
-				CustomNavigationView(title: "Settings") {
-					CustomNavigationItemView(
-						icon: "house",
-						onTap: { handleOpenHomeView() }
-					)
-				}
+		VStack(alignment: .leading, spacing: 0) {
+			CustomNavigationView(title: "Settings") {
+				CustomNavigationItemView(
+					icon: "house",
+					onTap: { handleOpenHomeView() }
+				)
+			}
+			.padding(.bottom, 16)
+			.background(.background)
+
+			ScrollView {
 				ChangelogView()
 			}
+			.scrollIndicators(.hidden)
+			.contentMargins(.bottom, 120, for: .scrollContent)
 		}
-		.scrollClipDisabled()
-		.scrollIndicators(.hidden)
+		.toolbar(.hidden, for: .navigationBar)
 		.padding(.horizontal, 32)
 		.padding(.top, 20)
-		.padding(.bottom, 64)
 	}
 
 	@ViewBuilder
