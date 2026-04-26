@@ -68,7 +68,6 @@ enum Seed001Init: Seedable {
 					isPromoted: true,
 				), "img-4"
 			),
-			// MARK: Beverages
 			(
 				Yummy(
 					name: "Айс латте",
@@ -115,7 +114,7 @@ enum Seed001Init: Seedable {
 					originalPrice: 4.5,
 					availableSizes: [.sm, .md, .lr],
 					rating: 4.7
-				), nil
+				), "04-25-2026-img-4"
 			),
 			(
 				Yummy(
@@ -137,7 +136,7 @@ enum Seed001Init: Seedable {
 					basePrice: 7.5,
 					availableSizes: [.sm, .md],
 					rating: 4.5
-				), nil
+				), "04-25-2026-img-2"
 			),
 			(
 				Yummy(
@@ -148,7 +147,7 @@ enum Seed001Init: Seedable {
 					basePrice: 8.5,
 					availableSizes: [.sm, .md],
 					rating: 4.2
-				), nil
+				), "04-25-2026-img-3"
 			),
 			(
 				Yummy(
@@ -161,7 +160,7 @@ enum Seed001Init: Seedable {
 					availableSizes: [.md],
 					rating: 4.9,
 					isPromoted: true
-				), nil
+				), "04-25-2026-img-1"
 			),
 		]
 

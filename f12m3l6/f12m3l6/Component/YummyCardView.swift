@@ -12,30 +12,34 @@ struct YummyCardView: View {
 		Button {
 			onTap()
 		} label: {
-			VStack(alignment: .leading, spacing: 12) {
-				ImageView()
-				
-				VStack(alignment: .leading, spacing: 8) {
-					Text(yummy.category.name)
-						.iAWritterQuattroS(10)
-						.foregroundStyle(.sPrimary)
+			VStack(spacing: 0) {
+				VStack(alignment: .leading, spacing: 12) {
+					ImageView()
 					
-					Text(yummy.name)
-						.lora(15)
-						.foregroundStyle(.sPrimary)
-						.lineLimit(2)
-						.multilineTextAlignment(.leading)
+					VStack(alignment: .leading, spacing: 8) {
+						Text(yummy.category.name)
+							.iAWritterQuattroS(10)
+							.foregroundStyle(.sPrimary)
+						
+						Text(yummy.name)
+							.lora(15)
+							.foregroundStyle(.sPrimary)
+							.lineLimit(2)
+							.multilineTextAlignment(.leading)
+					}
+					
+					HStack(spacing: 12) {
+						PriceView(yummy.basePrice)
+						
+						Circle()
+							.fill(.sPrimary.opacity(0.2))
+							.frame(width: 4, height: 4)
+						
+						StarView(yummy.rating)
+					}
 				}
 				
-				HStack(spacing: 12) {
-					PriceView(yummy.basePrice)
-					
-					Circle()
-						.fill(.sPrimary.opacity(0.2))
-						.frame(width: 4, height: 4)
-					
-					StarView(yummy.rating)
-				}
+				Spacer()
 			}
 		}
 		.buttonStyle(.plain)
