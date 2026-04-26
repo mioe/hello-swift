@@ -1,31 +1,38 @@
 // by mioe
 
+import SwiftData
 import SwiftUI
 
 struct ContentView: View {
 	@State private var router = AppRouter()
-	
+	@State private var cart = CartObservableStore()
+
+	@Environment(\.modelContext) private var modelContext
+
 	init() {
 		UITabBar.appearance().isHidden = true
 	}
-	
+
 	var body: some View {
 		ZStack(alignment: .bottom) {
 			AppTabView(tabSelection: $router.currentTab)
 			CustomTabBar(currentTab: $router.currentTab)
 		}
 		.environment(router)
-		//		.onAppear {
-		//			// вывод списка доступных шрифтов
-		//			for f in UIFont.familyNames.filter({
-		//				$0.hasPrefix("iA") || $0.hasPrefix("Lora")
-		//			}) {
-		//				let v = UIFont.fontNames(forFamilyName: f)
-		//				print("\(f): \(v)")
-		//			}
-		//		}
+		.environment(cart)
+		.onAppear {
+			cart.modelContext = modelContext // передаем контекс базы в стор
+
+			// вывод списка доступных шрифтов
+			for f in UIFont.familyNames.filter({
+				$0.hasPrefix("iA") || $0.hasPrefix("Lora")
+			}) {
+				let v = UIFont.fontNames(forFamilyName: f)
+				print("\(f): \(v)")
+			}
+		}
 	}
-	
+
 	@ViewBuilder
 	private func AppTabView(tabSelection: Binding<AppTab>) -> some View {
 		TabView(selection: tabSelection) {
@@ -48,7 +55,7 @@ struct ContentView: View {
 private struct CustomTabBar: View {
 	@Binding var currentTab: AppTab
 	@Namespace private var dotNamespace
-	
+
 	var body: some View {
 		HStack(spacing: 0) {
 			ForEach(AppTab.allCases, id: \.self) { tab in
@@ -77,7 +84,7 @@ private struct TabItem: View {
 	let isActive: Bool
 	let dotNamespace: Namespace.ID
 	let onTap: () -> Void
-	
+
 	var body: some View {
 		Button {
 			onTap()
@@ -87,7 +94,7 @@ private struct TabItem: View {
 					.font(.system(size: 18))
 					.foregroundStyle(isActive ? .white : .white.opacity(0.75))
 					.offset(y: 2)
-				
+
 				Circle()
 					.fill(isActive ? .white : .clear)
 					.frame(width: 5, height: 5)

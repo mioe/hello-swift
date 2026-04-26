@@ -6,6 +6,7 @@ import SwiftUI
 struct CategoryView: View {
 
 	@Environment(AppRouter.self) private var router
+	@Environment(CartObservableStore.self) private var cart
 
 	@Query(sort: \Category.sortOrder)
 	private var categories: [Category]
@@ -50,7 +51,7 @@ struct CategoryView: View {
 										YummyCardView(
 											yummy: yummy,
 											onTap: { handleOpenYummyDetail(yummy) },
-											onTapCart: { print("onTap: cart") }
+											onTapCart: { handleAddToCart(yummy) }
 										)
 									}
 								}
@@ -122,5 +123,9 @@ struct CategoryView: View {
 
 	private func handleOpenBack() {
 		router.pop()
+	}
+	
+	private func handleAddToCart(_ yummy: Yummy) {
+		cart.addYummyToCart(yummy: yummy)
 	}
 }

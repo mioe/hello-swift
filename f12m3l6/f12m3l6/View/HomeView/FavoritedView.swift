@@ -6,6 +6,7 @@ import SwiftUI
 struct FavoritedView: View {
 
 	@Environment(AppRouter.self) private var router
+	@Environment(CartObservableStore.self) private var cart
 
 	@Query(filter: #Predicate<Yummy> { $0.isFeatured })
 	private var featured: [Yummy]
@@ -32,7 +33,7 @@ struct FavoritedView: View {
 						YummyCardView(
 							yummy: fav,
 							onTap: { handleOpenYummyDetail(fav) },
-							onTapCart: { print("onTap: cart") }
+							onTapCart: { handleAddToCart(fav) }
 						)
 					}
 				}
@@ -51,5 +52,9 @@ struct FavoritedView: View {
 
 	private func handleOpenYummyDetail(_ yummy: Yummy) {
 		router.openYummyDetail(yummy.id)
+	}
+	
+	private func handleAddToCart(_ yummy: Yummy) {
+		cart.addYummyToCart(yummy: yummy)
 	}
 }

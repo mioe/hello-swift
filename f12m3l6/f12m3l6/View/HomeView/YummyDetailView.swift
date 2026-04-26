@@ -5,6 +5,7 @@ import SwiftUI
 struct YummyDetailView: View {
 
 	@Environment(AppRouter.self) private var router
+	@Environment(CartObservableStore.self) private var cart
 
 	var yummy: Yummy
 
@@ -213,7 +214,7 @@ struct YummyDetailView: View {
 	@ViewBuilder
 	private func PlaceOrderButton() -> some View {
 		Button {
-			print("onTap: place order \(qty) × \(selectedSize.shortLabel)")
+			handleAddToCart()
 		} label: {
 			HStack(spacing: 16) {
 				Text("Place order")
@@ -238,5 +239,9 @@ struct YummyDetailView: View {
 			.clipShape(Capsule())
 		}
 		.buttonStyle(.plain)
+	}
+	
+	private func handleAddToCart() {
+		cart.addYummyToCart(yummy: yummy, yummySize: selectedSize, qty: qty)
 	}
 }

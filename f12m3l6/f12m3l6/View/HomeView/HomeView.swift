@@ -6,6 +6,7 @@ import SwiftUI
 struct HomeView: View {
 
 	@Environment(AppRouter.self) private var router
+	@Environment(CartObservableStore.self) private var cart
 
 	@Query(filter: #Predicate<Yummy> { $0.isPromoted })
 	private var promotions: [Yummy]
@@ -148,7 +149,7 @@ struct HomeView: View {
 						YummyCardView(
 							yummy: yummy,
 							onTap: { handleOpenYummyDetail(yummy) },
-							onTapCart: { print("onTap: cart") }
+							onTapCart: { handleAddToCart(yummy) }
 						)
 						.containerRelativeFrame(.horizontal, count: 2, spacing: 16)
 					}
@@ -177,5 +178,9 @@ struct HomeView: View {
 
 	private func handleOpenSettingsView() {
 		router.currentTab = .settings
+	}
+	
+	private func handleAddToCart(_ yummy: Yummy) {
+		cart.addYummyToCart(yummy: yummy)
 	}
 }
