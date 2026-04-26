@@ -17,6 +17,9 @@ struct HomeView: View {
 	@Query(filter: #Predicate<Yummy> { $0.isFeatured })
 	private var featured: [Yummy]
 
+	@Query(filter: #Predicate<Changelog> { $0.isViewed == false })
+	private var unviewedChangelogs: [Changelog]
+
 	var body: some View {
 		ScrollView {
 			VStack(alignment: .leading, spacing: 32) {
@@ -29,7 +32,7 @@ struct HomeView: View {
 		.scrollClipDisabled()
 		.scrollIndicators(.hidden)
 		.padding(.horizontal, 32)
-		.padding(.top, 24)
+		.padding(.top, 20)
 		.padding(.bottom, 64)
 	}
 
@@ -55,14 +58,16 @@ struct HomeView: View {
 						.frame(width: 48, height: 48)
 						.clipShape(Circle())
 
-					Circle()
-						.fill(.white)
-						.frame(width: 18, height: 18)
-						.overlay {
-							Circle()
-								.fill(.sSecondary)
-								.frame(width: 12, height: 12)
-						}
+					if !unviewedChangelogs.isEmpty {
+						Circle()
+							.fill(.white)
+							.frame(width: 18, height: 18)
+							.overlay {
+								Circle()
+									.fill(.sSecondary)
+									.frame(width: 12, height: 12)
+							}
+					}
 				}
 			}
 			.buttonStyle(.plain)

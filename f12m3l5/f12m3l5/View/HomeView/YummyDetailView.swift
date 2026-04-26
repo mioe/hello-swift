@@ -56,7 +56,7 @@ struct YummyDetailView: View {
 				}
 			}
 			.frame(maxWidth: .infinity)
-			.frame(minHeight: 96, maxHeight: withoutImage ? 96 : 320)
+			.frame(minHeight: 104, maxHeight: withoutImage ? 104 : 320)
 			.clipped()
 
 			HeaderOverlay()
@@ -65,37 +65,19 @@ struct YummyDetailView: View {
 
 	@ViewBuilder
 	private func HeaderOverlay() -> some View {
-		// #TODO - переместить в CustomNavigationView
-		HStack {
-			Button {
-				router.pop()
-			} label: {
-				Image(systemName: "arrow.left")
-					.font(.system(size: 18, weight: .medium))
-					.frame(width: 40, height: 40)
-					.contentShape(Circle())  // дает кликабильную зону (если нет background-а)
-			}
-			.buttonStyle(.plain)
-
-			Spacer()
-
-			Text("Details")
-				.lora(18)
-
-			Spacer()
-
-			Button {
-				print("onTap: bookmark")
-			} label: {
-				Image(systemName: "bookmark")
-					.font(.system(size: 18, weight: .medium))
-					.frame(width: 40, height: 40)
-					.contentShape(Circle())
-			}
-			.buttonStyle(.plain)
+		CustomNavigationView(title: "Details") {  // leading start
+			CustomNavigationItemView(
+				icon: "arrow.left",
+				onTap: { router.pop() }
+			)
+		} trailing: {
+			CustomNavigationItemView(
+				icon: "bookmark",
+				onTap: { print("onTap: bookmark") }
+			)
 		}
 		.padding(.horizontal, 32)
-		.padding(.top, 56)
+		.padding(.top, 64)
 		.foregroundStyle(withoutImage ? .sPrimary : .white)
 	}
 

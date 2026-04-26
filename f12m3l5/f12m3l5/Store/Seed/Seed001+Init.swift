@@ -171,12 +171,27 @@ enum Seed001Init: Seedable {
 			}
 			context.insert(yummy)
 		}
+
+		let changelog = Changelog(
+			title: "f12m3l5",
+			info: """
+				По домашке реализовано: HomeView, YummyDetailView, CustomTabBar.
+				
+				Остальное (CartView, HistoryView, SettingsView, CategoryView, FavoritedView, PromotionView, AppRouter, CustomNavigationView, кастомные шрифты, SwiftData схема и сиды) — overhead, сделано сверх задания для целостности приложения.
+				""",
+			type: .feat,
+			isViewed: false,
+			createdAt: Date(timeIntervalSince1970: 1_777_197_020)
+
+		)
+		context.insert(changelog)
 	}
 
 	// MARK: - Down
 	static func down(context: ModelContext) throws {
 		try context.delete(model: Yummy.self)
 		try context.delete(model: Category.self)
+		try context.delete(model: Changelog.self)
 	}
 
 	// MARK: - Private

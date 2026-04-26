@@ -9,7 +9,7 @@ enum AppSchemaV1: VersionedSchema {
 	static var models: [any PersistentModel.Type] {
 		[
 			SeedMigration.self, Category.self, Attachment.self, Yummy.self,
-			Ticket.self, History.self,
+			Ticket.self, History.self, Changelog.self,
 		]
 	}
 
@@ -38,6 +38,11 @@ enum AppSchemaV1: VersionedSchema {
 	// MARK: - OrderStatus
 	enum OrderStatus: String, Codable, CaseIterable {
 		case pending, completed
+	}
+
+	// MARK: - ChangelogType
+	enum ChangelogType: String, Codable, CaseIterable {
+		case feat, fix
 	}
 
 	// MARK: - Category
@@ -195,6 +200,31 @@ enum AppSchemaV1: VersionedSchema {
 			self.tickets = tickets
 			self.totalPrice = tickets.reduce(Decimal(0)) { $0 + $1.subtotal }
 			self.status = status
+		}
+	}
+
+	// MARK: - Changelog (уведомление об обновлении)
+	@Model
+	final class Changelog {
+		@Attribute(.unique) var id = UUID()
+		var title: String
+		var info: String
+		var type: ChangelogType
+		var isViewed: Bool
+		var createdAt = Date()
+
+		init(
+			title: String,
+			info: String,
+			type: ChangelogType = .feat,
+			isViewed: Bool = false,
+			createdAt: Date = .now
+		) {
+			self.title = title
+			self.info = info
+			self.type = type
+			self.isViewed = isViewed
+			self.createdAt = createdAt
 		}
 	}
 }
