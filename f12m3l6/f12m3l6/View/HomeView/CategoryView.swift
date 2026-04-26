@@ -3,10 +3,31 @@
 import SwiftUI
 
 struct CategoryView: View {
+	
+	@Environment(AppRouter.self) private var router
 
 	var category: Category
-
+	
 	var body: some View {
-		Text("CategoryView: \(category.name)")
+		ScrollView {
+			VStack(alignment: .leading, spacing: 32) {
+				CustomNavigationView(title: "Categories") {
+					CustomNavigationItemView(
+						icon: "arrow.left",
+						onTap: { handleOpenBack() }
+					)
+				}
+			}
+		}
+		.scrollClipDisabled()
+		.scrollIndicators(.hidden)
+		.toolbar(.hidden, for: .navigationBar)
+		.padding(.horizontal, 32)
+		.padding(.top, 20)
+		.padding(.bottom, 64)
+	}
+
+	private func handleOpenBack() {
+		router.pop()
 	}
 }
