@@ -44,6 +44,11 @@
 			path = "f12m3l7-uikit";
 			sourceTree = "<group>";
 		};
+		3778FA532F9FC2CE00062D04 /* .docs */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = .docs;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +75,7 @@
 				3778F9FD2F9F98A800062D04 /* .editorconfig */,
 				3778F9FE2F9F98A800062D04 /* .gitignore */,
 				3778F9FF2F9F98A800062D04 /* README.md */,
+				3778FA532F9FC2CE00062D04 /* .docs */,
 				3778F9F12F9F989400062D04 /* f12m3l7 */,
 				3778FA362F9FBA5100062D04 /* f12m3l7-uikit */,
 				3778F9F02F9F989400062D04 /* Products */,
@@ -102,6 +108,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				3778F9F12F9F989400062D04 /* f12m3l7 */,
+				3778FA532F9FC2CE00062D04 /* .docs */,
 			);
 			name = f12m3l7;
 			packageProductDependencies = (
