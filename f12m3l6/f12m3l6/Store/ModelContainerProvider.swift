@@ -9,9 +9,7 @@ typealias Attachment = AppSchemaV1.Attachment
 typealias Yummy = AppSchemaV1.Yummy
 typealias Ticket = AppSchemaV1.Ticket
 typealias History = AppSchemaV1.History
-typealias YummySize = AppSchemaV1.YummySize
 typealias Changelog = AppSchemaV1.Changelog
-typealias ChangelogType = AppSchemaV1.ChangelogType
 
 // MARK: - init db
 // > https://youtu.be/CrWqfCDmPVI?si=iMI8c60upB4ZwJJv

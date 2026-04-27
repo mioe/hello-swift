@@ -13,38 +13,6 @@ enum AppSchemaV1: VersionedSchema {
 		]
 	}
 
-	// MARK: - YummySize (размер порции)
-	/// protocol conformance synthesis - ближайший аналог в Rust это derive-макросы
-	/// js аналоги:
-	/// String == string union
-	/// Codable == JSON.stringify
-	/// CaseIterable == Object.values(E)
-	/// output -> YummySize[sm] = { priceMultiplier, shortLabel }
-	enum YummySize: String, Codable, CaseIterable {
-		case sm, md, lr, xl
-
-		var priceMultiplier: Decimal {  // умножаем стоимость при выборе размера
-			switch self {
-			case .sm: 1.0
-			case .md: 1.2
-			case .lr: 1.5
-			case .xl: 1.8
-			}
-		}
-
-		var shortLabel: String { rawValue.capitalized }
-	}
-
-	// MARK: - OrderStatus
-	enum OrderStatus: String, Codable, CaseIterable {
-		case pending, completed
-	}
-
-	// MARK: - ChangelogType
-	enum ChangelogType: String, Codable, CaseIterable {
-		case feat, fix
-	}
-
 	// MARK: - Category
 	@Model
 	final class Category {
@@ -188,14 +156,14 @@ enum AppSchemaV1: VersionedSchema {
 		@Attribute(.unique) var id = UUID()
 		var orderedAt: Date
 		var totalPrice: Decimal
-		var status: OrderStatus
+		var status: HistoryOrderStatus
 		var createdAt = Date()
 
 		// cascade - удалили заказ, удалились все тикеты !
 		@Relationship(deleteRule: .cascade, inverse: \Ticket.history)
 		var tickets: [Ticket] = []
 
-		init(tickets: [Ticket], status: OrderStatus = .pending) {
+		init(tickets: [Ticket], status: HistoryOrderStatus = .pending) {
 			self.orderedAt = .now
 			self.tickets = tickets
 			self.totalPrice = tickets.reduce(Decimal(0)) { $0 + $1.subtotal }

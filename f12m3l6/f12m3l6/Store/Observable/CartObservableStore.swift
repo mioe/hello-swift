@@ -18,7 +18,25 @@ class CartObservableStore {
 			? yummySize
 			: yummy.availableSizes.first
 		else { return }
-
+		
 		print("addYummyToCart: \(yummy.name) | \(resolvedSize) | \(qty)")
+
+		let ticket = Ticket(yummy: yummy, quantity: qty, size: resolvedSize)
+		context.insert(ticket)
+
+		// ищем активный (pending) заказ - если его нет, создаём новую History
+		let pendingStatus = HistoryOrderStatus.pending
+		let descriptor = FetchDescriptor<History>(
+			predicate: #Predicate { $0.status == pendingStatus }
+		)
+
+		if let pending = try? context.fetch(descriptor).first {
+			ticket.history = pending
+			pending.totalPrice += ticket.subtotal
+		} else {
+			context.insert(History(tickets: [ticket]))
+		}
+
+		try? context.save()
 	}
 }
