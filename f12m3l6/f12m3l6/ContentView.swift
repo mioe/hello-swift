@@ -56,15 +56,24 @@ private struct CustomTabBar: View {
 	@Binding var currentTab: AppTab
 	@Namespace private var dotNamespace
 
+	@Query(sort: \History.createdAt, order: .reverse)
+	private var histories: [History]
+
+	// число позиций в активном (pending) заказе - для бейджа на иконке корзины
+	private var pendingCount: Int {
+		histories.first(where: { $0.status == .pending })?.tickets.count ?? 0
+	}
+
 	var body: some View {
 		HStack(spacing: 0) {
 			ForEach(AppTab.allCases, id: \.self) { tab in
 				TabItem(
 					tab: tab,
 					isActive: currentTab == tab,
+					badge: tab == .cart && pendingCount > 0 ? pendingCount : nil,
 					dotNamespace: dotNamespace
 				) {
-					withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+					withAnimation {
 						currentTab = tab
 					}
 				}
@@ -82,6 +91,7 @@ private struct CustomTabBar: View {
 private struct TabItem: View {
 	let tab: AppTab
 	let isActive: Bool
+	let badge: Int?
 	let dotNamespace: Namespace.ID
 	let onTap: () -> Void
 
@@ -94,6 +104,16 @@ private struct TabItem: View {
 					.font(.system(size: 18))
 					.foregroundStyle(isActive ? .white : .white.opacity(0.75))
 					.offset(y: 2)
+					.overlay(alignment: .topTrailing) {
+						if let badge {
+							Text("\(badge)")
+								.iAWritterQuattroS(8)
+								.foregroundStyle(.sAccent)
+								.frame(minWidth: 14, minHeight: 14)
+								.background(.white, in: Capsule())
+								.offset(x: 8, y: -4)
+						}
+					}
 
 				Circle()
 					.fill(isActive ? .white : .clear)
