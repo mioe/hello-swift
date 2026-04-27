@@ -19,7 +19,7 @@ enum Seed002Done: Seedable {
 				""",
 			type: .feat,
 			isViewed: false,
-			createdAt: Date(timeIntervalSince1970: 1_777_500_000)
+			createdAt: Date(timeIntervalSince1970: 1_777_200_120)
 		)
 		context.insert(changelog)
 	}
