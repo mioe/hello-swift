@@ -12,6 +12,7 @@
 
 | #   | lesson                                  | repo                 | output                                                                       |
 | --- | --------------------------------------- | -------------------- | ---------------------------------------------------------------------------- |
+| 7   | Representable                           | [f12m3l7](./f12m3l7) | ![](./f12m3l7/.docs/Screenshot%202026-04-27%20at%207.13.45%E2%80%AFPM.webp)  |
 | 6   | 🔥 Grid. ObservableObject. ScrollReader | [f12m3l6](./f12m3l6) | ![](./f12m3l6/.docs/Screenshot%202026-04-27%20at%201.54.33%E2%80%AFPM.webp)  |
 | 5   | Навигация. TabView                      | [f12m3l5](./f12m3l5) | ![](./f12m3l5/.docs/Screenshot%202026-04-26%20at%201.11.28%E2%80%AFPM.webp)  |
 | 4   | MVVM. ObservableObject                  | [f12m3l4](./f12m3l4) | ![](./f12m3l4/.docs/Screenshot%202026-04-22%20at%206.18.21%E2%80%AFPM.webp)  |
