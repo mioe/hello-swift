@@ -10,16 +10,17 @@
 
 ### Поток 12. Модуль 3
 
-| #   | lesson                                  | repo                 | output                                                                       |
-| --- | --------------------------------------- | -------------------- | ---------------------------------------------------------------------------- |
-| 8   | GeometryReader. События. Жесты          | [f12m3l8](./f12m3l8) | ![](./f12m3l8/.docs/Screenshot%202026-05-02%20at%2011.44.25%E2%80%AFAM.webp) |
-| 7   | Representable                           | [f12m3l7](./f12m3l7) | ![](./f12m3l7/.docs/Screenshot%202026-04-27%20at%207.13.45%E2%80%AFPM.webp)  |
-| 6   | 🔥 Grid. ObservableObject. ScrollReader | [f12m3l6](./f12m3l6) | ![](./f12m3l6/.docs/Screenshot%202026-04-27%20at%201.54.33%E2%80%AFPM.webp)  |
-| 5   | Навигация. TabView                      | [f12m3l5](./f12m3l5) | ![](./f12m3l5/.docs/Screenshot%202026-04-26%20at%201.11.28%E2%80%AFPM.webp)  |
-| 4   | MVVM. ObservableObject                  | [f12m3l4](./f12m3l4) | ![](./f12m3l4/.docs/Screenshot%202026-04-22%20at%206.18.21%E2%80%AFPM.webp)  |
-| 3   | Шрифты. Binding. Foreach                | [f12m3l3](./f12m3l3) | ![](./f12m3l3/.docs/Screenshot%202026-04-21%20at%202.47.28%E2%80%AFPM.webp)  |
-| 2   | State. Модификаторы                     | [f12m3l2](./f12m3l2) | ![](./f12m3l2/.docs/Screenshot%202026-04-21%20at%2011.41.49%E2%80%AFAM.webp) |
-| 1   | Основа SwiftUI. Стеки. Модификаторы     | [f12m3l1](./f12m3l1) | ![](./f12m3l1/.docs/Screenshot%202026-04-19%20at%209.50.48%E2%80%AFPM.webp)  |
+| #   | lesson                                    | repo                 | output                                                                       |
+| --- | ----------------------------------------- | -------------------- | ---------------------------------------------------------------------------- |
+| 9   | 🔥 Shape. ContextMenu. Alert. ViewBuilder | [f12m3l9](./f12m3l9) | ![](./f12m3l9/.docs/Screenshot%202026-05-02%20at%204.56.30%E2%80%AFPM.webp)  |
+| 8   | GeometryReader. События. Жесты            | [f12m3l8](./f12m3l8) | ![](./f12m3l8/.docs/Screenshot%202026-05-02%20at%2011.44.25%E2%80%AFAM.webp) |
+| 7   | Representable                             | [f12m3l7](./f12m3l7) | ![](./f12m3l7/.docs/Screenshot%202026-04-27%20at%207.13.45%E2%80%AFPM.webp)  |
+| 6   | 🔥 Grid. ObservableObject. ScrollReader   | [f12m3l6](./f12m3l6) | ![](./f12m3l6/.docs/Screenshot%202026-04-27%20at%201.54.33%E2%80%AFPM.webp)  |
+| 5   | Навигация. TabView                        | [f12m3l5](./f12m3l5) | ![](./f12m3l5/.docs/Screenshot%202026-04-26%20at%201.11.28%E2%80%AFPM.webp)  |
+| 4   | MVVM. ObservableObject                    | [f12m3l4](./f12m3l4) | ![](./f12m3l4/.docs/Screenshot%202026-04-22%20at%206.18.21%E2%80%AFPM.webp)  |
+| 3   | Шрифты. Binding. Foreach                  | [f12m3l3](./f12m3l3) | ![](./f12m3l3/.docs/Screenshot%202026-04-21%20at%202.47.28%E2%80%AFPM.webp)  |
+| 2   | State. Модификаторы                       | [f12m3l2](./f12m3l2) | ![](./f12m3l2/.docs/Screenshot%202026-04-21%20at%2011.41.49%E2%80%AFAM.webp) |
+| 1   | Основа SwiftUI. Стеки. Модификаторы       | [f12m3l1](./f12m3l1) | ![](./f12m3l1/.docs/Screenshot%202026-04-19%20at%209.50.48%E2%80%AFPM.webp)  |
 
 ### Поток 12. Модуль 2
 
