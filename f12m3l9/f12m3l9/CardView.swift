@@ -39,13 +39,14 @@ struct CardView: View {
 					}
 				} label: {
 					HStack {
-						HStack {
-							Image(systemName: selected.icon)
+						Image(systemName: selected.icon)
+							.frame(width: 40, height: 40)
+							.background(.white.opacity(0.25))
+							.clipShape(Circle())
+						HStack(spacing: 4) {
+							Text(selected.title)
+							Image(systemName: "chevron.down")
 						}
-						.frame(width: 40, height: 40)
-						.background(.white.opacity(0.25))
-						.clipShape(Circle())
-						Text(selected.title)
 					}
 					.frame(width: 120, alignment: .leading)
 				}

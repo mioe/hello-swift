@@ -101,8 +101,27 @@ struct ContentView: View {
 						}
 
 						VStack {
-							
-							
+							HStack {
+								Text("Half")
+									.font(.system(size: 10))
+									.frame(width: 40, height: 28)
+									.glassEffect(.regular.tint(.orange).interactive())
+									.onTapGesture {
+										topPanelInputValue = "6,394.28"
+									}
+
+								Text("Max")
+									.font(.system(size: 10))
+									.frame(width: 40, height: 28)
+									.glassEffect(.regular.tint(.purple).interactive())
+									.onTapGesture {
+										topPanelInputValue = "12,788.56"
+									}
+							}
+							.padding(.top, 8)
+
+							Spacer()
+
 							Button {
 								print("onTap: refresh")
 							} label: {
@@ -113,6 +132,25 @@ struct ContentView: View {
 							.buttonStyle(.glass)
 							.buttonBorderShape(.circle)
 							.zIndex(1)
+
+							Spacer()
+
+							HStack {
+								Menu {
+									Button("todo") {}
+									Button("todo", role: .destructive) {}
+								} label: {
+									HStack(spacing: 4) {
+										Text("Overview")
+										Image(systemName: "chevron.down")
+									}
+									.font(.system(size: 10))
+									.frame(width: 84, height: 28)
+									.foregroundStyle(.white.opacity(0.75))
+									.glassEffect(.regular.tint(.black).interactive())
+								}
+							}
+							.padding(.bottom, 8)
 						}
 					}
 
