@@ -19,9 +19,22 @@
 		3723755B2FA7B91100ABE796 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3723757A2FA7C0DF00ABE796 /* Exceptions for "f12m3l10" folder in "f12m3l10" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 372375472FA7B88D00ABE796 /* f12m3l10 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3723754A2FA7B88D00ABE796 /* f12m3l10 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3723757A2FA7C0DF00ABE796 /* Exceptions for "f12m3l10" folder in "f12m3l10" target */,
+			);
 			path = f12m3l10;
 			sourceTree = "<group>";
 		};
@@ -271,6 +284,7 @@
 				DEVELOPMENT_TEAM = W2W4NJTVUT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = f12m3l10/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -303,6 +317,7 @@
 				DEVELOPMENT_TEAM = W2W4NJTVUT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = f12m3l10/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
