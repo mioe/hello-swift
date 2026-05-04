@@ -6,6 +6,8 @@ struct HomeView: View {
 
 	@Environment(ThemeStore.self) private var theme
 
+	private let articles: [Article] = Article.mock()
+
 	var body: some View {
 		@Bindable var theme = theme
 
@@ -19,12 +21,15 @@ struct HomeView: View {
 
 				ScrollView {
 					VStack(spacing: 24) {
-
+						ArticleCarouselView()
+						FooterView()
 					}
 				}
 				.scrollClipDisabled()
 				.scrollIndicators(.hidden)
-				.padding(32)
+				.padding(.top, 16)
+				.padding(.horizontal, 16)
+				.padding(.bottom, 24)
 			}
 		}
 	}
@@ -33,6 +38,13 @@ struct HomeView: View {
 	private func StickyHeaderView(
 		onTapTheme: @escaping (ThemeStore.Theme) -> Void
 	) -> some View {
+		let bandeTextColor =
+			theme.current == .youtube
+			? .white
+			: theme.current == .hacker
+				? .hackerBackgroundForeground
+				: theme.primary
+
 		HStack {
 			Button {
 				print("onTap: neo")
@@ -49,7 +61,7 @@ struct HomeView: View {
 				.clipShape(.circle)
 				.overlay {
 					Circle()
-						.stroke(theme.accent, lineWidth: 2)
+						.strokeBorder(theme.accent, lineWidth: 2)
 				}
 				VStack(alignment: .leading, spacing: 0) {
 					Text("Vip")
@@ -111,7 +123,7 @@ struct HomeView: View {
 					.badge(
 						5,
 						bgColor: theme.accent,
-						textColor: theme.current == .youtube ? .white : theme.primary
+						textColor: bandeTextColor,
 					)
 				}
 				.frame(width: 40, height: 40)
@@ -124,5 +136,33 @@ struct HomeView: View {
 		.padding(.horizontal, 16)
 		.background(theme.backgroundForeground)
 		.zIndex(1)
+	}
+
+	@ViewBuilder
+	private func ArticleCarouselView() -> some View {
+		ScrollView(.horizontal) {
+			HStack(spacing: 8) {
+				ForEach(articles, id: \.id) { a in
+					ArticleCardView(
+						article: a,
+						accentColor: theme.accent,
+					)
+				}
+			}
+		}
+		.scrollClipDisabled()
+		.scrollIndicators(.hidden)
+	}
+
+	@ViewBuilder
+	private func FooterView() -> some View {
+		DefaultButtonView(
+			onTap: { print("onTap: all market") },
+			bgColor: theme.accent
+		) {
+			Text("All Market")
+				.font(.system(size: 16, weight: .medium))
+				.foregroundStyle(theme.background)
+		}
 	}
 }
