@@ -7,22 +7,22 @@ struct ContentView: View {
 	private var isShowOnboardingView: Bool = true
 
 	var body: some View {
-//		ZStack {
-//			if isShowOnboardingView == false {
-				OnboardingView(onSubmit: {
-					isShowOnboardingView.toggle()
-				})
-//			} else {
-//				PackagesView()
+		if isShowOnboardingView == false {
+			OnboardingView(onSubmit: {
+				isShowOnboardingView.toggle()
+			})
+//			.onAppear {
+//				for f in UIFont.familyNames.filter({
+//					$0.hasPrefix("Poppins")
+//				}) {
+//					let v = UIFont.fontNames(forFamilyName: f)
+//					print("\(f): \(v)")
+//				}
 //			}
-//		}
-//		.onAppear {
-//			for f in UIFont.familyNames.filter({
-//				$0.hasPrefix("Poppins")
-//			}) {
-//				let v = UIFont.fontNames(forFamilyName: f)
-//				print("\(f): \(v)")
-//			}
-//		}
+		} else {
+			PackagesView(onTapCar: {
+				isShowOnboardingView.toggle()
+			})
+		}
 	}
 }

@@ -21,7 +21,7 @@ struct GradientButtonView<Label: View>: View {
 						endPoint: .trailing
 					)
 				}
-				.clipShape(Capsule())
+				.clipShape(.capsule)
 		}
 		.buttonStyle(.plain)
 	}
