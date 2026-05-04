@@ -156,6 +156,34 @@ struct HomeView: View {
 		.scrollClipDisabled()
 		.scrollIndicators(.hidden)
 	}
+	
+	@ViewBuilder
+	private func BalanceButtonView(onTap: @escaping() -> Void, icon: String, label: String) -> some View {
+		Button { onTap() } label: {
+			VStack(spacing: 8) {
+				HStack {
+					Image(icon)
+						.resizable()
+						.frame(width: 28, height: 28)
+						.foregroundStyle(theme.accent)
+				}
+				.frame(height: 60)
+				.frame(maxWidth: .infinity)
+				.background(theme.backgroundForeground)
+				.clipShape(.rect(cornerRadius: 16))
+				.overlay {
+					if theme.current == .youtube {
+						RoundedRectangle(cornerRadius: 16)
+							.strokeBorder(.youtubeSecondary.opacity(0.15), style: StrokeStyle(lineWidth: 2))
+					}
+				}
+				Text(label)
+					.font(.system(size: 14))
+					.foregroundStyle(theme.primary)
+			}
+			.clipShape(.rect(cornerRadius: 16))
+		}
+	}
 
 	@ViewBuilder
 	private func BalanceView() -> some View {
@@ -166,6 +194,20 @@ struct HomeView: View {
 				bgColor: theme.background,
 				bgForegroundColor: theme.backgroundForeground
 			)
+			HStack(spacing: 8) {
+				ForEach([
+					(icon: "i-stack", label: "Staking"),
+					(icon: "i-savings", label: "Savings"),
+					(icon: "i-copytrading", label: "Copy"),
+					(icon: "i-loans", label: "Loans"),
+				], id: \.icon) { item in
+					BalanceButtonView(
+						onTap: {},
+						icon: item.icon,
+						label: item.label
+					)
+				}
+			}
 		}
 	}
 
