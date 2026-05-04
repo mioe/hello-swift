@@ -20,9 +20,12 @@ struct HomeView: View {
 				})
 
 				ScrollView {
-					VStack(spacing: 24) {
-						ArticleCarouselView()
-						FooterView()
+					VStack(spacing: 32) {
+						VStack(spacing: 24) {
+							ArticleCarouselView()
+							BalanceView()
+							FooterView()
+						}
 					}
 				}
 				.scrollClipDisabled()
@@ -53,7 +56,7 @@ struct HomeView: View {
 					Image(.neoX2)
 						.resizable()
 						.scaledToFill()
-						.frame(width: 38, height: 38)
+						.frame(width: 34, height: 34)
 						.clipShape(.circle)
 				}
 				.frame(width: 42, height: 42)
@@ -67,13 +70,13 @@ struct HomeView: View {
 					Text("Vip")
 						.font(.system(size: 8, weight: .black))
 						.textCase(.uppercase)
-						.padding(.vertical, 4)
+						.padding(.vertical, 3)
 						.padding(.horizontal, 5)
 						.background(theme.accent.opacity(0.3))
 						.clipShape(.capsule)
 						.overlay {
 							Capsule()
-								.stroke(theme.accent, lineWidth: 2)
+								.strokeBorder(theme.accent, lineWidth: 2)
 						}
 					HStack(spacing: 0) {
 						Text("User01")
@@ -152,6 +155,18 @@ struct HomeView: View {
 		}
 		.scrollClipDisabled()
 		.scrollIndicators(.hidden)
+	}
+
+	@ViewBuilder
+	private func BalanceView() -> some View {
+		VStack(spacing: 24) {
+			BalanceCardView(
+				textPrimaryColor: theme.primary,
+				textSecondaryColor: theme.secondary,
+				bgColor: theme.background,
+				bgForegroundColor: theme.backgroundForeground
+			)
+		}
 	}
 
 	@ViewBuilder
