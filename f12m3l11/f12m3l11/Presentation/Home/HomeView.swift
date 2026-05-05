@@ -5,6 +5,15 @@ import SwiftUI
 struct HomeView: View {
 
 	@Environment(ThemeStore.self) private var theme
+	
+	enum MarketCategory: String, CaseIterable, CustomStringConvertible {
+		case change = "Change"
+		case name = "Name"
+		case volume = "Volume"
+		case price = "Price"
+		var description: String { rawValue }
+	}
+	@State private var selectedMarketCategory: MarketCategory = .change
 
 	private let articles: [Article] = Article.mock()
 	private let markets: [Coin] = Array(Coin.mock().dropFirst())
@@ -148,9 +157,9 @@ struct HomeView: View {
 	private func ArticleCarouselView() -> some View {
 		ScrollView(.horizontal) {
 			HStack(spacing: 8) {
-				ForEach(articles, id: \.id) { a in
+				ForEach(articles, id: \.id) {
 					ArticleCardView(
-						article: a,
+						article: $0,
 						accentColor: theme.accent,
 					)
 				}
@@ -250,11 +259,12 @@ struct HomeView: View {
 			VStack(alignment: .leading, spacing: 8) {
 				SectionTitleView(title: "Market")
 					.foregroundStyle(theme.primary)
+				MarketPicker(options: MarketCategory.allCases, selection: $selectedMarketCategory)
 			}
 
 			VStack {
-				ForEach(markets, id: \.id) { m in
-					Text("m: \(m.text)")
+				ForEach(markets, id: \.id) {
+					MarketCardView(coin: $0)
 				}
 			}
 

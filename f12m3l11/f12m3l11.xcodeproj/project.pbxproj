@@ -25,6 +25,11 @@
 			path = f12m3l11;
 			sourceTree = "<group>";
 		};
+		37F208BF2FAA5EB500AAEB18 /* .docs */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = .docs;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +49,7 @@
 				372375EF2FA89CFD00ABE796 /* .editorconfig */,
 				372375F02FA89CFD00ABE796 /* .gitignore */,
 				372375F12FA89CFD00ABE796 /* README.md */,
+				37F208BF2FAA5EB500AAEB18 /* .docs */,
 				372375E32FA89CE600ABE796 /* f12m3l11 */,
 				372375E22FA89CE600ABE796 /* Products */,
 			);
@@ -74,6 +80,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				372375E32FA89CE600ABE796 /* f12m3l11 */,
+				37F208BF2FAA5EB500AAEB18 /* .docs */,
 			);
 			name = f12m3l11;
 			packageProductDependencies = (
