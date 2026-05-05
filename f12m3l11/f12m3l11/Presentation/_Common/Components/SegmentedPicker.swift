@@ -17,7 +17,7 @@ struct SegmentedPicker<Option: Hashable & CustomStringConvertible>: View {
 		case .youtube: .youtubeSecondary.opacity(0.15)
 		}
 	}
-	
+
 	private var accentPicker: Color {
 		switch theme.current {
 		case .hacker: .hackerAccent
@@ -26,7 +26,7 @@ struct SegmentedPicker<Option: Hashable & CustomStringConvertible>: View {
 		case .youtube: .white
 		}
 	}
-	
+
 	private var thumbPicker: Color {
 		switch theme.current {
 		case .hacker: .hackerAccent.opacity(0.15)
@@ -35,7 +35,7 @@ struct SegmentedPicker<Option: Hashable & CustomStringConvertible>: View {
 		case .youtube: .youtubeAccent
 		}
 	}
-	
+
 	private var secondaryPicker: Color {
 		switch theme.current {
 		case .hacker: .hackerSecondary

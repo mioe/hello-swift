@@ -3,7 +3,7 @@
 import SwiftUI
 
 struct BalanceCardView: View {
-	
+
 	@Environment(ThemeStore.self) private var theme
 
 	enum TimeRange: String, CaseIterable, CustomStringConvertible {
@@ -20,7 +20,7 @@ struct BalanceCardView: View {
 	let textSecondaryColor: Color
 	let bgColor: Color
 	let bgForegroundColor: Color
-	
+
 	@State private var range: TimeRange = .m6
 
 	var body: some View {
@@ -66,7 +66,7 @@ struct BalanceCardView: View {
 
 				Spacer()
 			}
-			
+
 			SegmentedPicker(options: TimeRange.allCases, selection: $range)
 		}
 		.padding(16)
@@ -75,7 +75,10 @@ struct BalanceCardView: View {
 		.overlay {
 			if theme.current == .youtube {
 				RoundedRectangle(cornerRadius: 20)
-					.strokeBorder(.youtubeSecondary.opacity(0.15), style: StrokeStyle(lineWidth: 2))
+					.strokeBorder(
+						.youtubeSecondary.opacity(0.15),
+						style: StrokeStyle(lineWidth: 2)
+					)
 			}
 		}
 	}

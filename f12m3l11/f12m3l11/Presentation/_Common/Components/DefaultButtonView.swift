@@ -6,7 +6,7 @@ struct DefaultButtonView<Label: View>: View {
 	let onTap: () -> Void
 	let bgColor: Color
 	@ViewBuilder let label: () -> Label
-	
+
 	var body: some View {
 		Button {
 			onTap()

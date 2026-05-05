@@ -7,6 +7,7 @@ struct HomeView: View {
 	@Environment(ThemeStore.self) private var theme
 
 	private let articles: [Article] = Article.mock()
+	private let markets: [Coin] = Array(Coin.mock().dropFirst())
 
 	var body: some View {
 		@Bindable var theme = theme
@@ -20,12 +21,13 @@ struct HomeView: View {
 				})
 
 				ScrollView {
-					VStack(spacing: 32) {
+					VStack(spacing: 36) {
 						VStack(spacing: 24) {
 							ArticleCarouselView()
 							BalanceView()
-							FooterView()
 						}
+						FavoritesSectionView()
+						MarketSectionView()
 					}
 				}
 				.scrollClipDisabled()
@@ -210,16 +212,37 @@ struct HomeView: View {
 			}
 		}
 	}
-
+	
 	@ViewBuilder
-	private func FooterView() -> some View {
-		DefaultButtonView(
-			onTap: { print("onTap: all market") },
-			bgColor: theme.accent
-		) {
-			Text("All Market")
-				.font(.system(size: 16, weight: .medium))
-				.foregroundStyle(theme.background)
+	private func FavoritesSectionView() -> some View {
+		VStack(alignment: .leading, spacing: 8) {
+			SectionTitleView(title: "Favorites")
+				.foregroundStyle(theme.primary)
+		}
+	}
+	
+	@ViewBuilder
+	private func MarketSectionView() -> some View {
+		VStack(alignment: .leading, spacing: 16) {
+			VStack(alignment: .leading, spacing: 8) {
+				SectionTitleView(title: "Market")
+					.foregroundStyle(theme.primary)
+			}
+			
+			VStack {
+				ForEach(markets, id: \.id) { m in
+					Text("m: \(m.text)")
+				}
+			}
+			
+			DefaultButtonView(
+				onTap: { print("onTap: all market") },
+				bgColor: theme.accent
+			) {
+				Text("All Market")
+					.font(.system(size: 16, weight: .medium))
+					.foregroundStyle(theme.background)
+			}
 		}
 	}
 }
