@@ -8,6 +8,7 @@ struct HomeView: View {
 
 	private let articles: [Article] = Article.mock()
 	private let markets: [Coin] = Array(Coin.mock().dropFirst())
+	private let favorities: [Favorite] = Favorite.mock()
 
 	var body: some View {
 		@Bindable var theme = theme
@@ -158,10 +159,16 @@ struct HomeView: View {
 		.scrollClipDisabled()
 		.scrollIndicators(.hidden)
 	}
-	
+
 	@ViewBuilder
-	private func BalanceButtonView(onTap: @escaping() -> Void, icon: String, label: String) -> some View {
-		Button { onTap() } label: {
+	private func BalanceButtonView(
+		onTap: @escaping () -> Void,
+		icon: String,
+		label: String
+	) -> some View {
+		Button {
+			onTap()
+		} label: {
 			VStack(spacing: 8) {
 				HStack {
 					Image(icon)
@@ -176,7 +183,10 @@ struct HomeView: View {
 				.overlay {
 					if theme.current == .youtube {
 						RoundedRectangle(cornerRadius: 16)
-							.strokeBorder(.youtubeSecondary.opacity(0.15), style: StrokeStyle(lineWidth: 2))
+							.strokeBorder(
+								.youtubeSecondary.opacity(0.15),
+								style: StrokeStyle(lineWidth: 2)
+							)
 					}
 				}
 				Text(label)
@@ -197,12 +207,15 @@ struct HomeView: View {
 				bgForegroundColor: theme.backgroundForeground
 			)
 			HStack(spacing: 8) {
-				ForEach([
-					(icon: "i-stack", label: "Staking"),
-					(icon: "i-savings", label: "Savings"),
-					(icon: "i-copytrading", label: "Copy"),
-					(icon: "i-loans", label: "Loans"),
-				], id: \.icon) { item in
+				ForEach(
+					[
+						(icon: "i-stack", label: "Staking"),
+						(icon: "i-savings", label: "Savings"),
+						(icon: "i-copytrading", label: "Copy"),
+						(icon: "i-loans", label: "Loans"),
+					],
+					id: \.icon
+				) { item in
 					BalanceButtonView(
 						onTap: {},
 						icon: item.icon,
@@ -212,15 +225,25 @@ struct HomeView: View {
 			}
 		}
 	}
-	
+
 	@ViewBuilder
 	private func FavoritesSectionView() -> some View {
 		VStack(alignment: .leading, spacing: 8) {
 			SectionTitleView(title: "Favorites")
 				.foregroundStyle(theme.primary)
+
+			ScrollView(.horizontal) {
+				HStack(spacing: 8) {
+					ForEach(favorities, id: \.id) {
+						FavoriteCardView(favorite: $0)
+					}
+				}
+			}
+			.scrollClipDisabled()
+			.scrollIndicators(.hidden)
 		}
 	}
-	
+
 	@ViewBuilder
 	private func MarketSectionView() -> some View {
 		VStack(alignment: .leading, spacing: 16) {
@@ -228,13 +251,13 @@ struct HomeView: View {
 				SectionTitleView(title: "Market")
 					.foregroundStyle(theme.primary)
 			}
-			
+
 			VStack {
 				ForEach(markets, id: \.id) { m in
 					Text("m: \(m.text)")
 				}
 			}
-			
+
 			DefaultButtonView(
 				onTap: { print("onTap: all market") },
 				bgColor: theme.accent

@@ -19,5 +19,6 @@ struct CoinLogoView: View {
 		Image(img)
 			.resizable()
 			.frame(width: iconSize, height: iconSize)
+			.clipShape(.circle)
 	}
 }
