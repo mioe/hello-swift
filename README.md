@@ -12,7 +12,8 @@
 
 | #   | lesson                                    | repo                   | output                                                                        |
 | --- | ----------------------------------------- | ---------------------- | ----------------------------------------------------------------------------- |
-| 9   | Верстка. Часть 1                          | [f12m3l10](./f12m3l10) | ![](./f12m3l10/.docs/Screenshot%202026-05-04%20at%2011.17.59%E2%80%AFAM.webp) |
+| 11  | Верстка. Часть 2                          | [f12m3l11](./f12m3l11) | ![](./f12m3l11/.docs/Screenshot%202026-05-05%20at%208.21.48%E2%80%AFPM.webp)  |
+| 10  | Верстка. Часть 1                          | [f12m3l10](./f12m3l10) | ![](./f12m3l10/.docs/Screenshot%202026-05-04%20at%2011.17.59%E2%80%AFAM.webp) |
 | 9   | 🔥 Shape. ContextMenu. Alert. ViewBuilder | [f12m3l9](./f12m3l9)   | ![](./f12m3l9/.docs/Screenshot%202026-05-02%20at%204.56.30%E2%80%AFPM.webp)   |
 | 8   | GeometryReader. События. Жесты            | [f12m3l8](./f12m3l8)   | ![](./f12m3l8/.docs/Screenshot%202026-05-02%20at%2011.44.25%E2%80%AFAM.webp)  |
 | 7   | Representable                             | [f12m3l7](./f12m3l7)   | ![](./f12m3l7/.docs/Screenshot%202026-04-27%20at%207.13.45%E2%80%AFPM.webp)   |
