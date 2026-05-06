@@ -29,14 +29,15 @@ struct HomeView: View {
 								TaskProgressView(label: $viewModel.actionLabel)
 							}
 							VStack(spacing: 16) {
-								ForEach(viewModel.tweets.reversed(), id: \.id) { tw in
-									Text(tw.text ?? "")
+								ForEach(viewModel.tweets.reversed(), id: \.id) {
+									TweetCardView(tweet: $0)
 								}
 								if viewModel.tweets.isEmpty && viewModel.idle {
 									ZeroTweetView()
 								}
 							}
-							.padding(32)
+							.padding(.vertical, 32)
+							.padding(.horizontal, 16)
 						}
 						.frame(maxWidth: .infinity)
 						.animation(.default, value: viewModel.idle)
