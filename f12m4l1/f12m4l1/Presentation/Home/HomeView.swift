@@ -14,9 +14,15 @@ struct HomeView: View {
 					PullEffectScrollView(
 						dragDistance: 130,
 						actionTopPadding: safeAreaInsets.top + 32,
-						leadingAction: .init(symbol: "arrow.clockwise", action: { viewModel.reset() }),
+						leadingAction: .init(
+							symbol: "arrow.clockwise",
+							action: { viewModel.reset() }
+						),
 						centerAction: .init(symbol: "plus", action: { viewModel.add() }),
-						trailingAction: .init(symbol: "minus", action: { viewModel.remove() }),
+						trailingAction: .init(
+							symbol: "minus",
+							action: { viewModel.remove() }
+						),
 					) {
 						VStack(spacing: 0) {
 							if !viewModel.idle {
@@ -30,7 +36,7 @@ struct HomeView: View {
 									ZeroTweetView()
 								}
 							}
-							.padding(.vertical, 32)
+							.padding(32)
 						}
 						.frame(maxWidth: .infinity)
 						.animation(.default, value: viewModel.idle)
@@ -39,8 +45,8 @@ struct HomeView: View {
 					Spacer(minLength: 0)
 					FooterView()
 				}
+				.edgesIgnoringSafeArea(.bottom)
 			}
-			.padding(.horizontal, 32)
 			.onAppear {
 				viewModel.setup()
 			}
@@ -61,10 +67,23 @@ struct HomeView: View {
 
 	@ViewBuilder
 	private func FooterView() -> some View {
-		HStack {
-			Text("by mioe")
+		VStack(spacing: 8) {
+			Text("Потяни вниз, чтобы изменить состояния (Pull-to-Refresh)")
+				.font(.system(size: 12))
+			Image(.iTw)
+				.resizable()
+				.frame(width: 24, height: 20)
 		}
+		.padding(16)
 		.frame(maxWidth: .infinity)
-		.background(.red)
+		.background(.secondary.opacity(0.25))
+		.clipShape(
+			.rect(
+				topLeadingCorner: 32,
+				topTrailingCorner: 32,
+				bottomLeadingCorner: 0,
+				bottomTrailingCorner: 0
+			)
+		)
 	}
 }
