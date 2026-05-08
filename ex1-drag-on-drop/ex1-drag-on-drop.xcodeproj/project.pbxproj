@@ -25,6 +25,11 @@
 			path = "ex1-drag-on-drop";
 			sourceTree = "<group>";
 		};
+		371852902FADE02C0054068F /* .docs */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = .docs;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +49,7 @@
 				3718528A2FADDB130054068F /* .editorconfig */,
 				3718528B2FADDB130054068F /* .gitignore */,
 				3718528C2FADDB130054068F /* README.md */,
+				371852902FADE02C0054068F /* .docs */,
 				3718527E2FADDAFF0054068F /* ex1-drag-on-drop */,
 				3718527D2FADDAFF0054068F /* Products */,
 			);
@@ -74,6 +80,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				3718527E2FADDAFF0054068F /* ex1-drag-on-drop */,
+				371852902FADE02C0054068F /* .docs */,
 			);
 			name = "ex1-drag-on-drop";
 			packageProductDependencies = (
