@@ -19,6 +19,7 @@ struct ContentView: View {
 						)
 						.labelStyle(.titleAndIcon)
 						.buttonStyle(.glass)
+						.intelligenceGlow(isActive: token.text == "PenPineappleApplePen")
 						.mergeableItem(id: token.id)
 					}
 					.onMerge { (sourceIndex: Int, destinationIndex: Int) in
@@ -215,5 +216,67 @@ private struct WrappingHStack: Layout {
 	private struct Element {
 		let index: Int
 		let size: CGSize
+	}
+}
+
+struct IntelligenceGlow<S: InsettableShape>: ViewModifier {
+	var isActive: Bool
+	var shape: S
+	
+	@State private var stops: [Gradient.Stop] = IntelligenceGlow.makeStops()
+	
+	private static var palette: [Color] {
+		[
+			Color(red: 0.74, green: 0.51, blue: 0.95),
+			Color(red: 0.96, green: 0.73, blue: 0.92),
+			Color(red: 0.55, green: 0.62, blue: 1.00),
+			Color(red: 1.00, green: 0.40, blue: 0.47),
+			Color(red: 1.00, green: 0.73, blue: 0.44),
+			Color(red: 0.78, green: 0.53, blue: 1.00),
+		]
+	}
+	
+	static func makeStops() -> [Gradient.Stop] {
+		palette
+			.map { Gradient.Stop(color: $0, location: .random(in: 0...1)) }
+			.sorted { $0.location < $1.location }
+	}
+	
+	func body(content: Content) -> some View {
+		content
+			.overlay {
+				glow
+					.opacity(isActive ? 1 : 0)
+					.animation(.easeInOut(duration: 0.35), value: isActive)
+					.allowsHitTesting(false)
+			}
+		// таймер крутится только пока активно — без нагрузки в простое
+			.task(id: isActive) {
+				guard isActive else { return }
+				while !Task.isCancelled {
+					try? await Task.sleep(for: .milliseconds(280))
+					withAnimation(.easeInOut(duration: 0.6)) {
+						stops = Self.makeStops()
+					}
+				}
+			}
+	}
+	
+	private var glow: some View {
+		let gradient = AngularGradient(stops: stops, center: .center)
+		return ZStack {
+			shape.stroke(gradient, lineWidth: 6).blur(radius: 8)   // внешнее свечение
+			shape.stroke(gradient, lineWidth: 3).blur(radius: 2)   // средний слой
+			shape.stroke(gradient, lineWidth: 1.25)                // чёткая кромка
+		}
+	}
+}
+
+extension View {
+	func intelligenceGlow<S: InsettableShape>(
+		isActive: Bool,
+		in shape: S = Capsule()
+	) -> some View {
+		modifier(IntelligenceGlow(isActive: isActive, shape: shape))
 	}
 }
