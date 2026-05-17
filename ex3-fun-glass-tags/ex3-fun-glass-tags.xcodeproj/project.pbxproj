@@ -25,6 +25,11 @@
 			path = "ex3-fun-glass-tags";
 			sourceTree = "<group>";
 		};
+		379D3A472FB9B01C00BDB7D5 /* .docs */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = .docs;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +49,7 @@
 				379D3A0F2FB9A74200BDB7D5 /* .editorconfig */,
 				379D3A102FB9A74200BDB7D5 /* .gitignore */,
 				379D3A112FB9A74200BDB7D5 /* README.md */,
+				379D3A472FB9B01C00BDB7D5 /* .docs */,
 				379D3A032FB9A73900BDB7D5 /* ex3-fun-glass-tags */,
 				379D3A022FB9A73900BDB7D5 /* Products */,
 			);
@@ -74,6 +80,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				379D3A032FB9A73900BDB7D5 /* ex3-fun-glass-tags */,
+				379D3A472FB9B01C00BDB7D5 /* .docs */,
 			);
 			name = "ex3-fun-glass-tags";
 			packageProductDependencies = (
