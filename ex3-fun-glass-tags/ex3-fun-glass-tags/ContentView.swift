@@ -14,7 +14,7 @@ struct ContentView: View {
 						Button(
 							action: {},
 							label: {
-								Text(token.text)
+								Text(textDecorationByEmoji(token.text))
 							}
 						)
 						.labelStyle(.titleAndIcon)
@@ -26,7 +26,7 @@ struct ContentView: View {
 							source,
 							destination in
 							Token(
-								text: [source.text, destination.text].joined(separator: " ")
+								text: [source.text, destination.text].joined(separator: "")
 							)
 						}
 					}
@@ -45,6 +45,18 @@ struct ContentView: View {
 	private func resetTokens() {
 		tokens = Token.initialTokens
 	}
+	
+	private func textDecorationByEmoji(_ t: String) -> String {
+		switch(t) {
+		case "Pen": return "🖊️ \(t)"
+		case "Pineapple": return "🍍 \(t)"
+		case "Apple": return "🍎 \(t)"
+		case "PenPineapple": return "🖊️🍍 \(t)"
+		case "ApplePen": return "🍎🖊️ \(t)"
+		case "PenPineappleApplePen": return "🖊️🍍🍎🖊️ \(t) 🕺"
+		default: return t
+		}
+	}
 }
 
 struct Token: Identifiable, Hashable {
@@ -53,10 +65,10 @@ struct Token: Identifiable, Hashable {
 
 	static var initialTokens: [Token] {
 		[
-			Token(text: "🖊️ Pen"),
-			Token(text: "🍍 Pineapple"),
-			Token(text: "🍎 Apple"),
-			Token(text: "🖊️ Pen"),
+			Token(text: "Pen"),
+			Token(text: "Pineapple"),
+			Token(text: "Apple"),
+			Token(text: "Pen"),
 		]
 	}
 }
