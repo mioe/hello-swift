@@ -14,6 +14,7 @@
 
 | date        | repo                                                       | output                                                                                                |
 | ----------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| 17 May 2026 | [ex3-fun-glass-tags](./ex3-fun-glass-tags)                 | ![](./ex3-fun-glass-tags/.docs/Screen%20Recording%202026-05-17%20at%2011.09.55%E2%80%AFAM.gif)        |
 | 15 May 2026 | [ex2-metal-simple-animation](./ex2-metal-simple-animation) | ![](./ex2-metal-simple-animation/.docs/Screen%20Recording%202026-05-15%20at%201.22.00%E2%80%AFPM.gif) |
 | 08 May 2026 | [ex1-drag-on-drop](./ex1-drag-on-drop)                     | ![](./ex1-drag-on-drop/.docs/Screenshot%202026-05-08%20at%2012.09.34%E2%80%AFPM.webp)                 |
 
